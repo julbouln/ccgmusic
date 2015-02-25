@@ -10,7 +10,7 @@ class RenderEvent {
  int finalStep;
  int octave;
  Time timeOffset;
- double volMult;
+ float volMult;
  map<int,int> parameters;
 public:
  int trackId;

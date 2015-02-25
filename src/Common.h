@@ -12,7 +12,9 @@
 
 #include <stdint.h>
 
+#include <signal.h>
+#include <unistd.h>
+
 //#define double float
-//#define int short
 
 #endif // COMMON_H

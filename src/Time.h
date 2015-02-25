@@ -5,7 +5,7 @@ using namespace std;
 class Time {
 public:
  int8_t mBar;
- double mPos;
+ float mPos;
 
  Time();
  Time(int,double);

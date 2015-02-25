@@ -86,7 +86,6 @@
 #include "Time.h"
 #include "TempoMod.h"
 #include "Note.h"
-#include "PercussionNote.h"
 
 #include "MidiDriver.h"
 

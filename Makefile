@@ -1,8 +1,8 @@
 SRCS=$(wildcard src/*.cpp) $(wildcard src/*/*.cpp)
 OBJS=$(SRCS:.cpp=.o)
 
-CFLAGS_OPT=-O2 -ffast-math -fsingle-precision-constant
-#CFLAGS_OPT=-g -pg
+#CFLAGS_OPT=-O2 -ffast-math -fsingle-precision-constant
+CFLAGS_OPT=-g -Wall
 CFLAGS=$(CFLAGS_OPT) -I src/ -I src/structuregenerators/ -I src/rythmgenerators/ -I src/renderers/ -I src/melodycreators/ -I src/ornamentors/ -I src/innerstructuregenerators/ -I src/arrangers/ -I src/harmonygenerators/
 
 all: $(OBJS)
@@ -22,7 +22,7 @@ src/MidiRt.o: src/MidiRt.cpp
 test: $(OBJS)
 	g++ $(CFLAGS) -DTARGET_PLATFORM_LINUX=1 -DTARGET_PLATFORM_LINUX_I386=1 -DTARGET_PLATFORM_LINUX_X86_64=1 -DTARGET_PLATFORM_POSIX=1 -I/usr/include/jdksmidi \
 	test.cpp -c -o test.o
-	g++ $(CFLAGS) -Wall $(OBJS) test.o -ljdksmidi -o test
+	g++ $(CFLAGS) -Wall $(OBJS) test.o -lrtmidi -ljdksmidi -o test
 
 clean:
 	rm *.o

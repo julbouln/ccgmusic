@@ -11,7 +11,7 @@ using namespace std;
 
 class MidiRt : public MidiDriver {
 	RtMidiOut *midiout;
-	long startTime;
+	long currentTime;
 
 	double ticksToTime(long t);
 	long curMsTime();
@@ -20,6 +20,7 @@ public:
 	~MidiRt();
 
 	void process(bool);
+
 	void finish();
 
 	void setTrackName(int track, string name);

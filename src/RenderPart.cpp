@@ -2,8 +2,8 @@
 RenderPart::~RenderPart()
 {
     Utils::deleteVector(notes);
-    Utils::deleteVector(harmonics);
-    Utils::deleteVector(chromaticEvents);
+//    Utils::deleteVector(harmonics);
+ //   Utils::deleteVector(chromaticEvents);
 }
 
 int RenderPart::getTrackIndex()
@@ -26,18 +26,18 @@ void RenderPart::setData(Part *part, UniquePart *uniquePart, RenderEvent *re, So
 
     for (std::vector<ChromaticEvent *>::iterator ce = chromaticEventList->begin(); ce != chromaticEventList->end(); ++ce)
     {
-//          chromaticEvents.push_back(*ce);
-        ChromaticEvent *copy = (*ce)->copy();
-        chromaticEvents.push_back(copy);
+          chromaticEvents.push_back(*ce);
+//        ChromaticEvent *copy = (*ce)->copy();
+//        chromaticEvents.push_back(copy);
   
     }
     vector<Harmonic *> *harmonicList = uniquePart->getHarmonicList();
 
     for (std::vector<Harmonic *>::iterator h = harmonicList->begin(); h != harmonicList->end(); ++h)
     {
-//          harmonics.push_back(*h);
-        Harmonic *copy = (*h)->copy();
-        harmonics.push_back(copy);
+          harmonics.push_back(*h);
+//        Harmonic *copy = (*h)->copy();
+//        harmonics.push_back(copy);
     }
 
 }
@@ -181,7 +181,8 @@ void RenderPart::addPercNote(Time start, Time end, int key, int volume)
     int finalStep = renderEvent->getFinalStep() - part->getStartBar();
     if (start.mBar >= initialStep && start.mBar <= finalStep)
     {
-        notes.push_back(new Note(start, end, key, (int)(volume * renderEvent->getVolMult()),trackIndex,true));
+        Note *note=new Note(start, end, key, (int)(volume * renderEvent->getVolMult()),trackIndex,true);
+        notes.push_back(note);
     }
 }
 int RenderPart::getTempo()

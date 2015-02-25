@@ -7,7 +7,6 @@
 #include "UniquePart.h"
 #include "RenderEvent.h"
 #include "Note.h"
-#include "PercussionNote.h"
 #include "Song.h"
 #include "Time.h"
 #include "Interval2D.h"

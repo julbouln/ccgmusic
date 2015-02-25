@@ -8,7 +8,7 @@ class Part {
  int8_t startBar;
  int8_t endBar;
  int uniquePart;
- double tempoMod;
+ float tempoMod;
  int transpose;
  int scale;
  int arrHint;

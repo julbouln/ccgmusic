@@ -137,7 +137,7 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
         innerStructureGenerator->setSeed(innerStructureSeed);
         innerStructureGenerator->generateInnerStructure(up);
 
-//        printf("InnerStructure: script:%s seed:%d\n",up->getScriptStructure().c_str(), innerStructureSeed);
+        //        printf("InnerStructure: script:%s seed:%d\n",up->getScriptStructure().c_str(), innerStructureSeed);
 
         delete innerStructureGenerator;
     }
@@ -195,7 +195,7 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
         string scriptRhythm = up->getScriptRhythm();
 
         int rythmSeed = up->getScriptRhythmSeed();
-//        printf("Rhythm: script:%s seed:%d\n", scriptRhythm.c_str(), rythmSeed);
+        //        printf("Rhythm: script:%s seed:%d\n", scriptRhythm.c_str(), rythmSeed);
 
         for (int j = 0; j < up->getUniquePhrases(); ++j    )
         {
@@ -228,7 +228,7 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
                     Event *copy_event = (Event *)event->copy()->translate(bars);
 
                     up->addEvent(copy_event);
-  
+
                 }
                 bars += phrase->getBars();
             }
@@ -245,7 +245,7 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
 
         HarmonyGenerator *harmony = harmonies.at(scriptHarmony)();
         harmony->setSeed(harmonySeed);
-//        printf("Harmony: script:%s seed:%d\n", scriptHarmony.c_str(), harmonySeed);
+        //        printf("Harmony: script:%s seed:%d\n", scriptHarmony.c_str(), harmonySeed);
 
         harmony->generateHarmony(up);
 
@@ -265,7 +265,7 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
         string scriptMelody = up->getScriptMelody();
 
         int melodySeed = up->getScriptMelodySeed();
-//        printf("Melody: script:%s seed:%d\n", scriptMelody.c_str(), melodySeed);
+        //        printf("Melody: script:%s seed:%d\n", scriptMelody.c_str(), melodySeed);
 
         MelodyCreator *melody = melodies.at(scriptMelody)();
         melody->setSeed(melodySeed);
@@ -281,7 +281,7 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
         string scriptOrnamentation = uniquePart->getScriptOrnamentation();
 
         int ornamentationSeed = uniquePart->getScriptOrnamentationSeed();
-//        printf("Ornamentation: script:%s seed:%d\n", scriptOrnamentation.c_str(), ornamentationSeed);
+        //        printf("Ornamentation: script:%s seed:%d\n", scriptOrnamentation.c_str(), ornamentationSeed);
 
         Ornamentor *ornamentor = ornamentors.at(scriptOrnamentation)();
         ornamentor->setSeed(ornamentationSeed);
@@ -291,7 +291,7 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
     }
 
 
-//    std::sort(song->renderEvents.begin(), song->renderEvents.end());
+    //    std::sort(song->renderEvents.begin(), song->renderEvents.end());
 
     Arranger *arranger = arrangers.at(arrangementScript)();
     arranger->setSeed(seed);
@@ -301,90 +301,92 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
     this->initMidi(midiDriver);
 
 
-    song->sortRenderEvents();
-    int previousBar=0;
+    //    song->sortRenderEvents();
 
-    vector<RenderPart*> currentRenderParts;
+    int currentStartBar = 0;
+    int previousStartBar = 0;
 
-    for (std::vector<RenderEvent *>::iterator re = song->renderEvents.begin(); re != song->renderEvents.end(); ++re)
 
+    vector<RenderPart *> currentRenderParts;
+
+//    printf("Render events %d\n", song->renderEvents.size());
+
+    for (int j = 0; j < song->getParts(); ++j)
     {
-        int i=(*re)->trackId;
-        Track *track=tracks->at(i);
+        Part *part = song->getPart(j);
 
-        int renderSeed = (*re)->getSeed();
+//        printf("Part %d %d-%d\n", j, part->getStartBar(), part->getEndBar());
 
-        string scriptName = (*re)->getScriptName();
-        int initialStep = (*re)->getInitialStep();
-        int finalStep = (*re)->getFinalStep();
+        for (std::vector<RenderEvent *>::iterator re = song->renderEvents.begin(); re != song->renderEvents.end(); ++re)
 
-//        printf("RenderEvent %x script:%s initialStep:%d finalStep:%d seed:%d\n",*re,scriptName.c_str(),initialStep,finalStep,renderSeed);
+        {
+            int i = (*re)->trackId;
+            Track *track = tracks->at(i);
 
-            vector<Part *> parts;
-            for (int j = 0; j < song->getParts(); ++j)
+            int renderSeed = (*re)->getSeed();
+
+            string scriptName = (*re)->getScriptName();
+            int initialStep = (*re)->getInitialStep();
+            int finalStep = (*re)->getFinalStep();
+
+            if ((part->getStartBar() >= initialStep && part->getEndBar() <= finalStep)
+                    || (initialStep >= part->getStartBar() && finalStep <= part->getEndBar()))
             {
-                Part *part = song->getPart(j);
-                if ((part->getStartBar() >= initialStep && part->getEndBar() <= finalStep)
-                        || (initialStep >= part->getStartBar() && finalStep <= part->getEndBar()))
-                {
-                   parts.push_back(part);
-                }
-            }
 
+//                printf("RenderEvent script:%s initialStep:%d finalStep:%d seed:%d\n", scriptName.c_str(), initialStep, finalStep, renderSeed);
 
-            for (std::vector<Part *>::iterator p = parts.begin(); p != parts.end(); ++p)
-            {
-                currentBar=(*p)->getStartBar();
-                UniquePart *up = song->getUniquePart((*p)->getUniquePart());
+                currentStartBar = part->getStartBar();
+
+                UniquePart *up = song->getUniquePart(part->getUniquePart());
                 RenderPart *rp = new RenderPart(i);
                 Time timeOffset = (*re)->getTimeOffset();
+
+                //            printf("RenderParts %d-%d %d-%d/%d-%d\n", currentStep, previousStep, currentStartBar, currentEndBar, previousStartBar, previousEndBar);
+
+                if (currentStartBar > previousStartBar)
+                {
+                    renderPartsToMidi(&currentRenderParts, midiDriver);
+                    Utils::deleteVector(currentRenderParts);
+                    currentRenderParts.clear();
+                    midiDriver->process(false);
+                }
+
+
+                //            printf("(%d) %x UniquePart %d events\n", song->getUniqueParts(), up, up->getEvents());
 
                 currentRenderParts.push_back(rp);
 
                 Renderer *renderer = renderers.at(scriptName)();
 
-                rp->setData((*p), up, (*re), song);
+                rp->setData(part, up, (*re), song);
 
                 renderer->setSeed(renderSeed);
                 renderer->render(rp);
-                rp->translateNotes((*p)->getStartBar());
+                rp->translateNotes(part->getStartBar());
                 rp->translateNotes(timeOffset);
 
-                UniquePart *uniquePart = rp->getUniquePart();
-                int metrum = uniquePart->getMetrum();
+                //            printf("RenderPart track:%d startBar:%d endPart:%d metrum:%d script:%s scale:%d seed:%d\n", i, (*p)->getStartBar(), (*p)->getEndBar(), metrum, scriptName.c_str(), (*p)->getScale(), renderSeed);
 
-//                printf("RenderPart track:%d startBar:%d endPart:%d metrum:%d script:%s scale:%d seed:%d\n", i, (*p)->getStartBar(),(*p)->getEndBar(), metrum, scriptName.c_str(), (*p)->getScale(), renderSeed);
+                //    midiDriver->process(false);
 
-                midiDriver->process(false);
-
-                if(currentBar > previousBar)
-                {
-//                    printf("RenderParts %d right now\n",previousBar);
-
-                    renderPartsToMidi(&currentRenderParts,midiDriver);
-                   
-//                    renderParts.clear();
-                    Utils::deleteVector(currentRenderParts);
-                    currentRenderParts.clear();
-                }
 
                 //delete rp;
                 delete renderer;
-                previousBar=(*p)->getStartBar();
+                previousStartBar = currentStartBar;
+
             }
-
-
+        }
     }
-//    printf("RenderParts(final) %d right now\n",previousBar);
+    //    printf("RenderParts(final) %d right now\n",previousBar);
 
-    renderPartsToMidi(&currentRenderParts,midiDriver);
-                   
+    renderPartsToMidi(&currentRenderParts, midiDriver);
+
     // renderParts.clear();
     Utils::deleteVector(currentRenderParts);
     currentRenderParts.clear();
 
-            midiDriver->process(true);
-            midiDriver->finish();
+    midiDriver->process(true);
+    midiDriver->finish();
 
 
     delete arranger;
@@ -407,20 +409,25 @@ void SongCreator::initMidi(MidiDriver *midiDriver)
         int channel = i;
 
         if (track->isPercussion()) {
-                channel=9;
-            } else {
-                if(i>7)
-                    channel=i+3;
-            }
+            channel = 9;
+        } else {
+            if (i > 7)
+                channel = i + 3;
+        }
 
         midiDriver->setTrackName(i, track->getName());
         midiDriver->sendControlChange(0, i, channel, 0xA, pan);
         midiDriver->sendControlChange(0, i, channel, 0x7, vol);
 
-//               midiDriver->sendControlChange(0,i+1,channel,0x0,0x7F);
-//               midiDriver->sendControlChange(0,i+1,channel,0x20,0x8);
+        midiDriver->sendControlChange(0, i, channel, 0x0, 0x7F);
+        //               midiDriver->sendControlChange(0,i+1,channel,0x20,0x8);
 
-//               printf("ProgamChange track:%s(%d) channel:%d program:%d\n",track->getName().c_str(),i+1,channel,track->getPatch() - 1);
+        /*
+                       midiDriver->sendControlChange(0,i+1,channel,0x63,0x37);
+                       midiDriver->sendControlChange(0,i+1,channel,0x62,0x5F);
+                       midiDriver->sendControlChange(0,i+1,channel,0x06,0x45);
+        */
+        //               printf("ProgamChange track:%s(%d) channel:%d program:%d\n",track->getName().c_str(),i+1,channel,track->getPatch() - 1);
         midiDriver->sendProgramChange(0, i, channel, track->getPatch() - 1);
     }
 
@@ -450,27 +457,27 @@ void SongCreator::initMidi(MidiDriver *midiDriver)
                 int tempo = (int)(song->getTempo() * (*mod)->getMod() * tempoMod);
 
                 midiDriver->sendTempo(modTick, 0, 60000000 / tempo);
-//                printf("setTempo: %ld:%d\n", modTick, 60000000 / tempo);
+                //                printf("setTempo: %ld:%d\n", modTick, 60000000 / tempo);
 
             }
         }
         int tempo = song->getTempo() * tempoMod;
         midiDriver->sendTempo(tick, 0, 60000000 / tempo);
-//        printf("setTempo: %ld:%d\n", tick, 60000000 / tempo);
+        //        printf("setTempo: %ld:%d\n", tick, 60000000 / tempo);
     }
-    midiDriver->process(false);
+    //    midiDriver->process(false);
 
 }
 
 void SongCreator::renderPartsToMidi(vector<RenderPart *> *currentRenderParts, MidiDriver *midiDriver) {
-     int offset = 192;
-     int metrum=4;
+    int offset = 192;
+    int metrum = 4;
 
-    vector<Note*> currentNotes;
+    vector<Note *> currentNotes;
 
     for (std::vector<RenderPart *>::iterator crp = currentRenderParts->begin(); crp != currentRenderParts->end(); ++crp)
     {
-  //                  printf("RenderParts %d part %x\n",previousBar, (*crp));
+        //                  printf("RenderParts %d part %x\n",previousBar, (*crp));
 
         vector<Note *> *cnotes = (*crp)->getNotes();
 
@@ -480,40 +487,39 @@ void SongCreator::renderPartsToMidi(vector<RenderPart *> *currentRenderParts, Mi
 
 
     }
-    std::sort(currentNotes.begin(), currentNotes.end(),Note::Comparator());
+    std::sort(currentNotes.begin(), currentNotes.end(), Note::Comparator());
 
-//    printf("SongCreator::renderPartsToMidi render %d notes\n",currentNotes.size());
+    //    printf("SongCreator::renderPartsToMidi render %d notes\n", currentNotes.size());
 
-        for (std::vector<Note *>::iterator n = currentNotes.begin(); n != currentNotes.end(); ++n)
-        {
-            int trackIndex=(*n)->getTrackIndex();
-            int channel=trackIndex;
-            Time start = (*n)->getStart();
-            Time end = (*n)->getEnd();
-            long onTime = (long)(192 * (start.mBar + start.mPos / metrum)) + offset;
-            long offTime = (long)(192 * (end.mBar + end.mPos / metrum)) + offset;
-
-
-            int note = Utils::clampIntToInt((*n)->getPitch(), 0, 127);
-            int velocity = Utils::clampIntToInt((*n)->getVolume(), 0, 127);
+    for (std::vector<Note *>::iterator n = currentNotes.begin(); n != currentNotes.end(); ++n)
+    {
+        int trackIndex = (*n)->getTrackIndex();
+        int channel = trackIndex;
+        Time start = (*n)->getStart();
+        Time end = (*n)->getEnd();
+        long onTime = (long)(192 * (start.mBar + start.mPos / metrum)) + offset;
+        long offTime = (long)(192 * (end.mBar + end.mPos / metrum)) + offset;
 
 
-            if ((*n)->isPercussion()) {
-                channel=9;
-            } else {
-                if(trackIndex>7)
-                    channel=trackIndex+3;
-            }
+        int note = Utils::clampIntToInt((*n)->getPitch(), 0, 127);
+        int velocity = Utils::clampIntToInt((*n)->getVolume(), 0, 127);
 
-//            printf("Note %ld:%ld %d pitch:%d velocity:%d\n",onTime,offTime,trackIndex,note,velocity);
 
-            midiDriver->sendNoteOn(onTime, trackIndex, channel, note, velocity);
-            midiDriver->sendNoteOff(offTime, trackIndex, channel, note, velocity);
-//            midiDriver->process(false);
-
+        if ((*n)->isPercussion()) {
+            channel = 9;
+        } else {
+            if (trackIndex > 7)
+                channel = trackIndex + 3;
         }
 
-    midiDriver->process(false);
-        currentNotes.clear();
+        //                    printf("Note %ld:%ld %d pitch:%d velocity:%d\n",onTime,offTime,trackIndex,note,velocity);
+
+        midiDriver->sendNoteOn(onTime, trackIndex, channel, note, velocity);
+        midiDriver->sendNoteOff(offTime, trackIndex, channel, note, velocity);
+
+    }
+
+    //    midiDriver->process(false);
+    currentNotes.clear();
 
 }

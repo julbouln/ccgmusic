@@ -12,9 +12,9 @@
 
 #include <stdint.h>
 
-#include <signal.h>
-#include <unistd.h>
+#define INT_MAX 32000
 
-//#define double float
+//#define INT_MAX 32767
+//#define INT_MAX 2147483647
 
 #endif // COMMON_H

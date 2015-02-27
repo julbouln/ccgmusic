@@ -29,40 +29,40 @@ int PianoAdvancedClassical::ArrangeClassical1(Song *s) {
  int *seeds = new int[5];
  int *off = new int[5];
  for(int i = 0;i < Utils::arrayLength(seeds);++i ){
-       seeds[i] = this->rndInt(0,32000);
+       seeds[i] = this->rndInt(0,INT_MAX);
        off[i] = this->rndInt(0,1);
  }
- int bass_seed = this->rndInt(0,32000);
- int bass_seed_chorus = this->rndInt(0,32000);
+ int bass_seed = this->rndInt(0,INT_MAX);
+ int bass_seed_chorus = this->rndInt(0,INT_MAX);
  string melody = "Simple Melody";
  if(this->rndInt(0,2) == 0) {
   melody = "Accented Melody";
  }
  for(int i = 0;i < s->getParts();++i ){
        if(s->getPart(i)->getArrHint() == 0) {
-           s->addRenderEvent("Shortest Way Chords Simple",this->rndInt(0,32000),4,s->getPartStartBar(i),s->getPartEndBar(i) - 1,1,this->createTime(0,0),0.7);
+           s->addRenderEvent("Shortest Way Chords Simple",this->rndInt(0,INT_MAX),4,s->getPartStartBar(i),s->getPartEndBar(i) - 1,1,this->createTime(0,0),0.7);
            s->addRenderEvent("Arpeggio Chords",seeds[4],5,s->getPartStartBar(i),s->getPartEndBar(i) - 1,1 + off[0],this->createTime(0,0),0.7);
     }
     else {
      if(s->getPart(i)->getArrHint() == 1) {
-             s->addRenderEvent(melody,this->rndInt(0,32000),0,s->getPartStartBar(i),s->getPartEndBar(i),1,this->createTime(0,0),1);
+             s->addRenderEvent(melody,this->rndInt(0,INT_MAX),0,s->getPartStartBar(i),s->getPartEndBar(i),1,this->createTime(0,0),1);
      }
      else {
       if(s->getPart(i)->getArrHint() == 2) {
-               s->addRenderEvent(melody,this->rndInt(0,32000),1,s->getPartStartBar(i),s->getPartEndBar(i),1,this->createTime(0,0),1);
+               s->addRenderEvent(melody,this->rndInt(0,INT_MAX),1,s->getPartStartBar(i),s->getPartEndBar(i),1,this->createTime(0,0),1);
       }
       else {
        if(s->getPart(i)->getArrHint() == 3) {
-                 s->addRenderEvent("Chordal Melody",this->rndInt(0,32000),0,s->getPartStartBar(i),s->getPartEndBar(i),2 + this->rndInt(0,1),this->createTime(0,0),0.95);
-                 s->addRenderEvent(melody,this->rndInt(0,32000),1,s->getPartStartBar(i),s->getPartEndBar(i),1 + this->rndInt(0,1),this->createTime(0,0),1);
-                 s->addRenderEvent("Simple Chords",this->rndInt(0,32000),4,s->getPartStartBar(i),s->getPartEndBar(i) - 1,0,this->createTime(0,0),0.7);
-                 s->addRenderEvent("Arpeggio Chords",this->rndInt(0,32000),5,s->getPartStartBar(i),s->getPartEndBar(i) - 1,1 + off[3],this->createTime(0,0),0.65);
+                 s->addRenderEvent("Chordal Melody",this->rndInt(0,INT_MAX),0,s->getPartStartBar(i),s->getPartEndBar(i),2 + this->rndInt(0,1),this->createTime(0,0),0.95);
+                 s->addRenderEvent(melody,this->rndInt(0,INT_MAX),1,s->getPartStartBar(i),s->getPartEndBar(i),1 + this->rndInt(0,1),this->createTime(0,0),1);
+                 s->addRenderEvent("Simple Chords",this->rndInt(0,INT_MAX),4,s->getPartStartBar(i),s->getPartEndBar(i) - 1,0,this->createTime(0,0),0.7);
+                 s->addRenderEvent("Arpeggio Chords",this->rndInt(0,INT_MAX),5,s->getPartStartBar(i),s->getPartEndBar(i) - 1,1 + off[3],this->createTime(0,0),0.65);
        }
       }
      }
     }
        s->addRenderEvent("Arpeggio Chords",seeds[s->getPart(i)->getArrHint()],2,s->getPartStartBar(i),s->getPartEndBar(i) - 1,off[s->getPart(i)->getArrHint()],this->createTime(0,0),0.7);
-       s->addRenderEvent("Simple Chords",this->rndInt(0,32000),4,s->getPartEndBar(i) - 1,s->getPartEndBar(i),1 + (seeds[s->getPart(i)->getArrHint()] % 2),this->createTime(0,0),0.8);
+       s->addRenderEvent("Simple Chords",this->rndInt(0,INT_MAX),4,s->getPartEndBar(i) - 1,s->getPartEndBar(i),1 + (seeds[s->getPart(i)->getArrHint()] % 2),this->createTime(0,0),0.8);
        if(s->getPart(i)->getArrHint() == 3) {
      s->addRenderEvent("Random Bass ( Extended )",bass_seed_chorus,3,s->getPartStartBar(i),s->getPartEndBar(i),-1,this->createTime(0,0),1.0);
     }
@@ -71,7 +71,7 @@ int PianoAdvancedClassical::ArrangeClassical1(Song *s) {
     }
  }
  if(!organs) {
-  s->addRenderEvent("Simple Chords Smooth",this->rndInt(0,32000),2,bars - 1,bars,3,this->createTime(0,s->getUniquePart(s->getPart(0)->getUniquePart())->getMetrum() / 2),0.8);
+  s->addRenderEvent("Simple Chords Smooth",this->rndInt(0,INT_MAX),2,bars - 1,bars,3,this->createTime(0,s->getUniquePart(s->getPart(0)->getUniquePart())->getMetrum() / 2),0.8);
  }
  return 2;
 }

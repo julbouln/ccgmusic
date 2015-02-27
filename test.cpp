@@ -15,6 +15,7 @@ void dumpSize()
 
 printf("sizeof Time %d\n",sizeof(Time));
 printf("sizeof Note %d\n",sizeof(Note));
+printf("sizeof QueueMessage %d\n",sizeof(MidiRt::QueueMessage));
 
 printf("sizeof Event %d\n",sizeof(Event));
 
@@ -31,6 +32,8 @@ printf("sizeof Song %d\n",sizeof(Song));
 
 printf("sizeof Track pointer %d\n",sizeof(Track*));
 
+
+
 }
 
 int main()
@@ -45,26 +48,23 @@ string structureScript="Modern Song Structure";
 //string arrangementScript="Piano Simple Arrangement";
 //string arrangementScript="Piano Advanced Swinging Blues";
 //string arrangementScript="Piano Advanced Boogie Woogie";
-string arrangementScript="Piano Advanced Disco";
+//string arrangementScript="Piano Advanced Disco";
 //string arrangementScript="Piano Advanced Classical";
 //string arrangementScript="Simple Latin Style Arrangement";
 //string arrangementScript="Simple Dance Style Arrangement";
 //string arrangementScript="Simple Instrumental March Arrangement";
 //string arrangementScript="Simple Ballad Style Arrangement";
-//string arrangementScript="Simple Punk Rock Style Arrangement";
+string arrangementScript="Simple Punk Rock Style Arrangement";
 
 
-	MidiRt midiWriter(0);
+//	MidiRt midiWriter(0);
 //      MidiFileWriter midiWriter("create_midifile.mid");
-//     MidiDriver midiWriter;
+     MidiDriver midiWriter;
 
 //seed=3;
 seed=134;
 //seed=time(NULL);
     SongCreator *songCreator = new SongCreator();
-
-
-
     songCreator->createSong(seed,240,structureScript,arrangementScript,&midiWriter);
 
 //    songCreator->songToMidi(&midiWriter);

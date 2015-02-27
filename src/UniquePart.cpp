@@ -31,11 +31,11 @@ UniquePart::UniquePart()
 void UniquePart::randomize(Song *song)
 {
     //    printf("UniquePart::randomize\n");
-    structureSeed = Utils::getRandomInt(1, 32000);
-    rythmSeed = Utils::getRandomInt(1, 32000);
-    harmonySeed = Utils::getRandomInt(1, 32000);
-    melodySeed = Utils::getRandomInt(1, 32000);
-    ornamentationSeed = Utils::getRandomInt(1, 32000);
+    structureSeed = Utils::getRandomInt(1, INT_MAX);
+    rythmSeed = Utils::getRandomInt(1, INT_MAX);
+    harmonySeed = Utils::getRandomInt(1, INT_MAX);
+    melodySeed = Utils::getRandomInt(1, INT_MAX);
+    ornamentationSeed = Utils::getRandomInt(1, INT_MAX);
 
     /* structureScript = Utils::sampleUniformObjectDistribution(rnd,song->getCreator()->getInnerStructureScriptNames());
      rythmScript = Utils::sampleUniformObjectDistribution(rnd,song->getCreator().getRythmScriptNames());

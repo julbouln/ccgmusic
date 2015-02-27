@@ -25,6 +25,7 @@ public:
 	MidiFileWriter(string fn);
 	~MidiFileWriter();
 
+	void process(bool);
 	void finish();
 	void setTrackName(int track, string name);
 

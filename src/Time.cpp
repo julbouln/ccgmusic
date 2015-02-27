@@ -2,7 +2,7 @@
 
 Time::Time() {
 }
-Time::Time(int bar,double pos) {
+Time::Time(int8_t bar,float pos) {
  this->mBar = bar;
  this->mPos = pos;
 }

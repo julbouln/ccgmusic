@@ -30,24 +30,24 @@ void SimplePunkRockStyleArrangement::arrange(Song *s)
         {
             if (s->getPart(i)->getArrHint() == 1 || s->getPart(i)->getArrHint() == 3)
             {
-                s->addRenderEvent("Simple Melody", this->rndInt(0, 32000), 0, s->getPartStartBar(i), s->getPartEndBar(i), 2, this->createTime(0, 0), 0.7);
+                s->addRenderEvent("Simple Melody", this->rndInt(0, INT_MAX), 0, s->getPartStartBar(i), s->getPartEndBar(i), 2, this->createTime(0, 0), 0.7);
             }
             if (s->getPart(i)->getArrHint() == 2)
             {
-                s->addRenderEvent("Simple Melody", this->rndInt(0, 32000), 1, s->getPartStartBar(i), s->getPartEndBar(i), 2, this->createTime(0, 0), 0.8);
+                s->addRenderEvent("Simple Melody", this->rndInt(0, INT_MAX), 1, s->getPartStartBar(i), s->getPartEndBar(i), 2, this->createTime(0, 0), 0.8);
             }
         }
         if (s->getPart(i)->getArrHint() == 3)
         {
-            int seed = this->rndInt(0, 32000);
+            int seed = this->rndInt(0, INT_MAX);
             s->addRenderEvent("Punk Guitar Chords", seed, 4, s->getPartStartBar(i), s->getPartEndBar(i), 0, this->createTime(0, 0), 1.0);
             s->setParam(RenderEvent::MODE, 3);
-            s->addRenderEvent("Simple Melody", this->rndInt(0, 32000), 1, s->getPartStartBar(i), s->getPartEndBar(i), 2, this->createTime(0, 0), 0.8);
-            s->addRenderEvent("Fast Bass", this->rndInt(0, 32000), 5, s->getPartStartBar(i), s->getPartEndBar(i), -1, this->createTime(0, 0), 1.0);
-            s->addRenderEvent("Drums - Punk Rock", this->rndInt(0, 32000), 6, s->getPartStartBar(i), s->getPartEndBar(i) - 1, 1, this->createTime(0, 0), 1.0);
+            s->addRenderEvent("Simple Melody", this->rndInt(0, INT_MAX), 1, s->getPartStartBar(i), s->getPartEndBar(i), 2, this->createTime(0, 0), 0.8);
+            s->addRenderEvent("Fast Bass", this->rndInt(0, INT_MAX), 5, s->getPartStartBar(i), s->getPartEndBar(i), -1, this->createTime(0, 0), 1.0);
+            s->addRenderEvent("Drums - Punk Rock", this->rndInt(0, INT_MAX), 6, s->getPartStartBar(i), s->getPartEndBar(i) - 1, 1, this->createTime(0, 0), 1.0);
             s->setParam(RenderEvent::FOOT_SNARE, 1);
             s->setParam(RenderEvent::VERSE_HIHAT, 1);
-            s->addRenderEvent("Drums - Punk Rock", this->rndInt(0, 32000), 6, s->getPartEndBar(i) - 1, s->getPartEndBar(i), 1, this->createTime(0, 0), 1.0);
+            s->addRenderEvent("Drums - Punk Rock", this->rndInt(0, INT_MAX), 6, s->getPartEndBar(i) - 1, s->getPartEndBar(i), 1, this->createTime(0, 0), 1.0);
             s->setParam(RenderEvent::TRANSITION, 1);
             if (chorus_cnt > 1)
             {
@@ -63,7 +63,7 @@ void SimplePunkRockStyleArrangement::arrange(Song *s)
             int bars_cut = this->rndInt(1, 2);
             if (cnt == intro_start)
             {
-                s->addRenderEvent("Drums - Punk Rock", this->rndInt(0, 32000), 6, s->getPartStartBar(i), s->getPartEndBar(i) - bars_cut, 1, this->createTime(0, 0), 1.0);
+                s->addRenderEvent("Drums - Punk Rock", this->rndInt(0, INT_MAX), 6, s->getPartStartBar(i), s->getPartEndBar(i) - bars_cut, 1, this->createTime(0, 0), 1.0);
                 s->setParam(RenderEvent::INTRO_HIHAT, 1);
             }
             else
@@ -72,35 +72,35 @@ void SimplePunkRockStyleArrangement::arrange(Song *s)
                 {
                     if (this->rndInt(0, 4) != 0)
                     {
-                        s->addRenderEvent("Drums - Punk Rock", this->rndInt(0, 32000), 6, s->getPartStartBar(i), s->getPartEndBar(i) - bars_cut, 1, this->createTime(0, 0), 1.0);
+                        s->addRenderEvent("Drums - Punk Rock", this->rndInt(0, INT_MAX), 6, s->getPartStartBar(i), s->getPartEndBar(i) - bars_cut, 1, this->createTime(0, 0), 1.0);
                         s->setParam(RenderEvent::VERSE_HIHAT, 1);
                     }
                     if (this->rndInt(0, 4) != 0)
                     {
-                        s->addRenderEvent("Drums - Punk Rock", this->rndInt(0, 32000), 6, s->getPartStartBar(i), s->getPartEndBar(i) - bars_cut, 1, this->createTime(0, 0), 1.0);
+                        s->addRenderEvent("Drums - Punk Rock", this->rndInt(0, INT_MAX), 6, s->getPartStartBar(i), s->getPartEndBar(i) - bars_cut, 1, this->createTime(0, 0), 1.0);
                         s->setParam(RenderEvent::FOOT_SNARE, 1);
                     }
                 }
             }
-            s->addRenderEvent("Drums - Punk Rock", this->rndInt(0, 32000), 6, s->getPartEndBar(i) - bars_cut, s->getPartEndBar(i), 1, this->createTime(0, 0), 1.0);
+            s->addRenderEvent("Drums - Punk Rock", this->rndInt(0, INT_MAX), 6, s->getPartEndBar(i) - bars_cut, s->getPartEndBar(i), 1, this->createTime(0, 0), 1.0);
             s->setParam(RenderEvent::TRANSITION, 1);
-            s->addRenderEvent("Punk Guitar Chords", this->rndInt(0, 32000), 4, s->getPartEndBar(i) - bars_cut, s->getPartEndBar(i), 0, this->createTime(0, 0), 1.0);
+            s->addRenderEvent("Punk Guitar Chords", this->rndInt(0, INT_MAX), 4, s->getPartEndBar(i) - bars_cut, s->getPartEndBar(i), 0, this->createTime(0, 0), 1.0);
             s->setParam(RenderEvent::MODE, 3);
             if (cnt >= bass_start)
             {
-                s->addRenderEvent("Fast Bass", this->rndInt(0, 32000), 5, s->getPartStartBar(i), s->getPartEndBar(i) - 1, -1, this->createTime(0, 0), 1.0);
+                s->addRenderEvent("Fast Bass", this->rndInt(0, INT_MAX), 5, s->getPartStartBar(i), s->getPartEndBar(i) - 1, -1, this->createTime(0, 0), 1.0);
             }
-            s->addRenderEvent("Fast Bass", this->rndInt(0, 32000), 5, s->getPartEndBar(i) - 1, s->getPartEndBar(i), -1, this->createTime(0, 0), 1.0);
+            s->addRenderEvent("Fast Bass", this->rndInt(0, INT_MAX), 5, s->getPartEndBar(i) - 1, s->getPartEndBar(i), -1, this->createTime(0, 0), 1.0);
             if (cnt == 0)
             {
-                s->addRenderEvent("Punk Guitar Chords", this->rndInt(0, 32000), 4, s->getPartStartBar(i), s->getPartEndBar(i) - bars_cut, 0, this->createTime(0, 0), 1.0);
+                s->addRenderEvent("Punk Guitar Chords", this->rndInt(0, INT_MAX), 4, s->getPartStartBar(i), s->getPartEndBar(i) - bars_cut, 0, this->createTime(0, 0), 1.0);
                 s->setParam(RenderEvent::MODE, this->rndInt(1, 2));
             }
             if (cnt == 1)
             {
-                s->addRenderEvent("Punk Guitar Chords", this->rndInt(0, 32000), 4, s->getPartStartBar(i), s->getPartEndBar(i) - bars_cut, 0, this->createTime(0, 0), 1.0);
+                s->addRenderEvent("Punk Guitar Chords", this->rndInt(0, INT_MAX), 4, s->getPartStartBar(i), s->getPartEndBar(i) - bars_cut, 0, this->createTime(0, 0), 1.0);
                 s->setParam(RenderEvent::MODE, this->rndInt(1, 2));
-                s->addRenderEvent("Punk Guitar Chords", this->rndInt(0, 32000), 2, s->getPartStartBar(i), s->getPartEndBar(i) - bars_cut, 0, this->createTime(0, 0), 0.9);
+                s->addRenderEvent("Punk Guitar Chords", this->rndInt(0, INT_MAX), 2, s->getPartStartBar(i), s->getPartEndBar(i) - bars_cut, 0, this->createTime(0, 0), 0.9);
                 s->setParam(RenderEvent::MODE, this->rndInt(1, 2));
             }
             else
@@ -114,11 +114,11 @@ void SimplePunkRockStyleArrangement::arrange(Song *s)
                     }
                     if (!skip)
                     {
-                        s->addRenderEvent("Punk Guitar Chords", this->rndInt(0, 32000), 4, s->getPartStartBar(i), s->getPartEndBar(i) - bars_cut, 0, this->createTime(0, 0), 1.0);
+                        s->addRenderEvent("Punk Guitar Chords", this->rndInt(0, INT_MAX), 4, s->getPartStartBar(i), s->getPartEndBar(i) - bars_cut, 0, this->createTime(0, 0), 1.0);
                         s->setParam(RenderEvent::MODE, this->rndInt(1, 2));
-                        s->addRenderEvent("Punk Guitar Chords", this->rndInt(0, 32000), 2, s->getPartStartBar(i), s->getPartEndBar(i) - bars_cut, 0, this->createTime(0, 0), 0.9);
+                        s->addRenderEvent("Punk Guitar Chords", this->rndInt(0, INT_MAX), 2, s->getPartStartBar(i), s->getPartEndBar(i) - bars_cut, 0, this->createTime(0, 0), 0.9);
                         s->setParam(RenderEvent::MODE, this->rndInt(1, 2));
-                        s->addRenderEvent("Punk Guitar Chords", this->rndInt(0, 32000), 3, s->getPartStartBar(i), s->getPartEndBar(i) - bars_cut, 0, this->createTime(0, 0), 0.9);
+                        s->addRenderEvent("Punk Guitar Chords", this->rndInt(0, INT_MAX), 3, s->getPartStartBar(i), s->getPartEndBar(i) - bars_cut, 0, this->createTime(0, 0), 0.9);
                         s->setParam(RenderEvent::MODE, this->rndInt(1, 2));
                     }
                 }
@@ -130,13 +130,13 @@ void SimplePunkRockStyleArrangement::arrange(Song *s)
     int intro = this->rndInt(0, 1);
     if (intro == 1)
     {
-        s->addRenderEvent("Metronome", this->rndInt(0, 32000), 6, 0, 1, 0, this->createTime(-1, 0), 0.8);
+        s->addRenderEvent("Metronome", this->rndInt(0, INT_MAX), 6, 0, 1, 0, this->createTime(-1, 0), 0.8);
     }
     else
     {
         if (intro == 0)
         {
-            s->addRenderEvent("Metronome", this->rndInt(0, 32000), 6, 0, 1, 0, this->createTime(-1, 0), 0.8);
+            s->addRenderEvent("Metronome", this->rndInt(0, INT_MAX), 6, 0, 1, 0, this->createTime(-1, 0), 0.8);
             s->setParam(RenderEvent::PITCH, 51);
         }
     }

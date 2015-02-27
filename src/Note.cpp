@@ -2,12 +2,12 @@
 Note::~Note() {
 }
 
-Note::Note(Time start,Time end,int pitch,int volume,int trackIndex,bool percussion) {
+Note::Note(Time start,Time end,int8_t pitch,int8_t volume,int8_t trackIndex,bool percussion) {
  this->start = start;
  this->end = end;
- this->pitch = (int)pitch;
- this->volume = (int)volume;
- this->trackIndex = (int)trackIndex;
+ this->pitch = pitch;
+ this->volume = volume;
+ this->trackIndex = trackIndex;
  this->percussion = percussion;
 }
 void Note::translate(int bars) {
@@ -24,17 +24,17 @@ Time Note::getStart() {
 Time Note::getEnd() {
  return end;
 }
-int Note::getPitch() {
- return (int)pitch;
+int8_t Note::getPitch() {
+ return pitch;
 }
-int Note::getVolume() {
- return (int)volume;
+int8_t Note::getVolume() {
+ return volume;
 }
 
 bool Note::isPercussion() {
  return percussion;
 }
 
- int Note::getTrackIndex() {
- 	return (int)trackIndex;
+ int8_t Note::getTrackIndex() {
+ 	return trackIndex;
  }

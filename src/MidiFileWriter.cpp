@@ -24,6 +24,10 @@ MidiFileWriter::~MidiFileWriter()
     delete midiTracks;
 }
 
+
+void MidiFileWriter::process(bool finished) {
+}
+
 void MidiFileWriter::finish() {
     MIDITimedBigMessage m; 
     midiTracks->SortEventsOrder();

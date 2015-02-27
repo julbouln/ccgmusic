@@ -7,7 +7,6 @@
 using namespace std;
 class BasicTestPurposeRender : public Arranger {
 public:
- BasicTestPurposeRender(int);
  void arrange(Song*);
 };
 #endif // BASICTESTPURPOSERENDER_H

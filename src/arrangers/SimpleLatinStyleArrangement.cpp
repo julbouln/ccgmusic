@@ -16,29 +16,29 @@ void SimpleLatinStyleArrangement::arrange(Song *s) {
   s->addTrack("Accomp",25,127,64,false);
  }
  s->addTrack("Drums",1,127,64,true);
- int chorus_seed = this->rndInt(0,32000);
- int normal_seed = this->rndInt(0,32000);
+ int chorus_seed = this->rndInt(0,INT_MAX);
+ int normal_seed = this->rndInt(0,INT_MAX);
  for(int i = 0;i < s->getParts();++i ){
        if(s->getPart(i)->getArrHint() == 0) {
     }
        if(s->getPart(i)->getArrHint() == 1) {
-           s->addRenderEvent("Simple Melody",this->rndInt(0,32000),0,s->getPartStartBar(i),s->getPartEndBar(i),2,this->createTime(0,0),0.95);
+           s->addRenderEvent("Simple Melody",this->rndInt(0,INT_MAX),0,s->getPartStartBar(i),s->getPartEndBar(i),2,this->createTime(0,0),0.95);
     }
        if(s->getPart(i)->getArrHint() == 2) {
-           s->addRenderEvent("Simple Melody",this->rndInt(0,32000),1,s->getPartStartBar(i),s->getPartEndBar(i),2,this->createTime(0,0),0.95);
+           s->addRenderEvent("Simple Melody",this->rndInt(0,INT_MAX),1,s->getPartStartBar(i),s->getPartEndBar(i),2,this->createTime(0,0),0.95);
     }
        if(s->getPart(i)->getArrHint() == 3) {
-           s->addRenderEvent("Simple Melody",this->rndInt(0,32000),0,s->getPartStartBar(i),s->getPartEndBar(i),2,this->createTime(0,0),1.0);
-           s->addRenderEvent("Chordal Melody",this->rndInt(0,32000),1,s->getPartStartBar(i),s->getPartEndBar(i),2,this->createTime(0,0),1.0);
+           s->addRenderEvent("Simple Melody",this->rndInt(0,INT_MAX),0,s->getPartStartBar(i),s->getPartEndBar(i),2,this->createTime(0,0),1.0);
+           s->addRenderEvent("Chordal Melody",this->rndInt(0,INT_MAX),1,s->getPartStartBar(i),s->getPartEndBar(i),2,this->createTime(0,0),1.0);
            s->addRenderEvent("Latin Chords",chorus_seed,4,s->getPartStartBar(i),s->getPartEndBar(i),1,this->createTime(0,0),0.9);
-           s->addRenderEvent("Latin Bass",this->rndInt(0,32000),3,s->getPartStartBar(i),s->getPartEndBar(i),-1,this->createTime(0,0),1.0);
-           s->addRenderEvent("Shortest Way Chords Simple",this->rndInt(0,32000),2,s->getPartStartBar(i),s->getPartEndBar(i),1,this->createTime(0,0),0.65);
+           s->addRenderEvent("Latin Bass",this->rndInt(0,INT_MAX),3,s->getPartStartBar(i),s->getPartEndBar(i),-1,this->createTime(0,0),1.0);
+           s->addRenderEvent("Shortest Way Chords Simple",this->rndInt(0,INT_MAX),2,s->getPartStartBar(i),s->getPartEndBar(i),1,this->createTime(0,0),0.65);
            s->addRenderEvent("Drums - Latin",chorus_seed,5,s->getPartStartBar(i),s->getPartEndBar(i),1,this->createTime(0,0),0.85);
     }
     else {
            s->addRenderEvent("Latin Chords",normal_seed,4,s->getPartStartBar(i),s->getPartEndBar(i),1,this->createTime(0,0),0.75);
-           s->addRenderEvent("Latin Bass",this->rndInt(0,32000),3,s->getPartStartBar(i),s->getPartEndBar(i),-1,this->createTime(0,0),0.95);
-           s->addRenderEvent("Shortest Way Chords Simple",this->rndInt(0,32000),2,s->getPartStartBar(i),s->getPartEndBar(i),1,this->createTime(0,0),0.5);
+           s->addRenderEvent("Latin Bass",this->rndInt(0,INT_MAX),3,s->getPartStartBar(i),s->getPartEndBar(i),-1,this->createTime(0,0),0.95);
+           s->addRenderEvent("Shortest Way Chords Simple",this->rndInt(0,INT_MAX),2,s->getPartStartBar(i),s->getPartEndBar(i),1,this->createTime(0,0),0.5);
            s->addRenderEvent("Drums - Latin",normal_seed,5,s->getPartStartBar(i),s->getPartEndBar(i),1,this->createTime(0,0),0.8);
     }
  }

@@ -5,8 +5,8 @@
 #include "Time.h"
 using namespace std;
 class Part {
- int8_t startBar;
- int8_t endBar;
+ int startBar;
+ int endBar;
  int uniquePart;
  float tempoMod;
  int transpose;

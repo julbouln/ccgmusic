@@ -10,8 +10,6 @@
 //#include "ArrayUtils.h"
 #include "Utils.h"
 
-#define INT_MAX 32767
-
 using namespace std;
 class Song;
 class UniquePart {

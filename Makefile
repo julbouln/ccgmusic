@@ -1,8 +1,8 @@
 SRCS=$(wildcard src/*.cpp) $(wildcard src/*/*.cpp)
 OBJS=$(SRCS:.cpp=.o)
 
-#CFLAGS_OPT=-O2 -ffast-math -fsingle-precision-constant
-CFLAGS_OPT=-g -Wall
+CFLAGS_OPT=-O2 -ffast-math -fsingle-precision-constant
+#CFLAGS_OPT=-g -Wall
 CFLAGS=$(CFLAGS_OPT) -I src/ -I src/structuregenerators/ -I src/rythmgenerators/ -I src/renderers/ -I src/melodycreators/ -I src/ornamentors/ -I src/innerstructuregenerators/ -I src/arrangers/ -I src/harmonygenerators/
 
 all: $(OBJS)

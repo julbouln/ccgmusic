@@ -7,6 +7,8 @@
 #include "Part.h"
 #include "TempoMod.h"
 #include "RenderEvent.h"
+#include "Note.h"
+
 //#include "SongCreator.h"
 #include "Time.h"
 #include "Utils.h"
@@ -23,8 +25,14 @@ class Song : public Seedable
     int tempo;
     RenderEvent *latestRenderEvent;
     SongCreator *creator;
+
+     vector<Note*> notes;
+
 public:
      vector<RenderEvent*> renderEvents;
+    vector<Note *> *getNotes();
+    void sortNotes();
+    void clearNotes();
 
     Song();
     ~Song();
@@ -44,7 +52,7 @@ public:
     int getPartStartBar(int);
     int getPartEndBar(int);
     void addTrack(string, int, int, int, bool);
-    void addRenderEvent(string, int, int, int, int, int, Time, double);
+    void addRenderEvent(string, int, int, int, int, int8_t, Time, float);
     void setParam(int, int);
     void addTempoMod(Time, double);
     vector<TempoMod *> *getTempoMods();

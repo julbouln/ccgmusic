@@ -8,7 +8,7 @@ public:
  float mPos;
 
  Time();
- Time(int,double);
+ Time(int8_t,float);
  double getPosition(int);
  Time copy();
  void translate(int);

@@ -20,7 +20,7 @@ class RenderPart {
  Part *part;
  UniquePart *uniquePart;
  RenderEvent *renderEvent;
- vector<Note*> notes;
+// vector<Note*> notes;
  Song *song;
 public:
  int getTrackIndex();

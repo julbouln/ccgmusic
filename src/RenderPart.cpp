@@ -1,9 +1,9 @@
 #include "RenderPart.h"
 RenderPart::~RenderPart()
 {
-    Utils::deleteVector(notes);
-//    Utils::deleteVector(harmonics);
- //   Utils::deleteVector(chromaticEvents);
+    //    Utils::deleteVector(notes);
+    //    Utils::deleteVector(harmonics);
+    //   Utils::deleteVector(chromaticEvents);
 }
 
 int RenderPart::getTrackIndex()
@@ -12,7 +12,8 @@ int RenderPart::getTrackIndex()
 }
 vector<Note *> *RenderPart::getNotes()
 {
-    return &notes;
+    //    return &notes;
+    return song->getNotes();
 }
 
 void RenderPart::setData(Part *part, UniquePart *uniquePart, RenderEvent *re, Song *song)
@@ -26,18 +27,18 @@ void RenderPart::setData(Part *part, UniquePart *uniquePart, RenderEvent *re, So
 
     for (std::vector<ChromaticEvent *>::iterator ce = chromaticEventList->begin(); ce != chromaticEventList->end(); ++ce)
     {
-          chromaticEvents.push_back(*ce);
-//        ChromaticEvent *copy = (*ce)->copy();
-//        chromaticEvents.push_back(copy);
-  
+        chromaticEvents.push_back(*ce);
+        //        ChromaticEvent *copy = (*ce)->copy();
+        //        chromaticEvents.push_back(copy);
+
     }
     vector<Harmonic *> *harmonicList = uniquePart->getHarmonicList();
 
     for (std::vector<Harmonic *>::iterator h = harmonicList->begin(); h != harmonicList->end(); ++h)
     {
-          harmonics.push_back(*h);
-//        Harmonic *copy = (*h)->copy();
-//        harmonics.push_back(copy);
+        harmonics.push_back(*h);
+        //        Harmonic *copy = (*h)->copy();
+        //        harmonics.push_back(copy);
     }
 
 }
@@ -151,12 +152,12 @@ int RenderPart::alignPitch(int chromaticChordNote, int scaleOffset)
     int newPitchClass = pitchClasses[Utils::positiveMod(theOriginalScaleIndex + scaleOffset, Utils::arrayLength(pitchClasses))];
     int increment = scaleOffset > 0 ? 1 : -1;
     int currentNote = chromaticChordNote;
-    
+
     while ((currentNote % 12) != newPitchClass)
     {
         currentNote += increment;
     }
-  
+
     delete pitchClasses;
     return currentNote;
 }
@@ -171,8 +172,9 @@ void RenderPart::addNote(Time start, Time end, int pitch, int volume)
 
     if (start.mBar >= initialStep && start.mBar <= finalStep)
     {
-        Note *note=new Note(start, end, pitch, (volume * renderEvent->getVolMult()),trackIndex,false);
-        notes.push_back(note);
+        Note *note = new Note(start, end, pitch, (volume * renderEvent->getVolMult()), trackIndex, false);
+        //        notes.push_back(note);
+        song->getNotes()->push_back(note);
     }
 }
 void RenderPart::addPercNote(Time start, Time end, int key, int volume)
@@ -181,8 +183,10 @@ void RenderPart::addPercNote(Time start, Time end, int key, int volume)
     int finalStep = renderEvent->getFinalStep() - part->getStartBar();
     if (start.mBar >= initialStep && start.mBar <= finalStep)
     {
-        Note *note=new Note(start, end, key, (int)(volume * renderEvent->getVolMult()),trackIndex,true);
-        notes.push_back(note);
+        Note *note = new Note(start, end, key, (int)(volume * renderEvent->getVolMult()), trackIndex, true);
+        //        notes.push_back(note);
+        song->getNotes()->push_back(note);
+
     }
 }
 int RenderPart::getTempo()
@@ -211,21 +215,53 @@ int RenderPart::getParam(int param)
 }
 void RenderPart::translateNotes(int bars)
 {
-    for (std::vector<Note *>::iterator n = notes.begin(); n != notes.end(); ++n)
-    {
-        (*n)->translate(bars);
+
+    /*    for (std::vector<Note *>::iterator n = notes.begin(); n != notes.end(); ++n)
+        {
+            (*n)->translate(bars);
+        }
+        */
+    //    printf("translate bars %d\n",bars);
+    for (int i = 0; i < song->getNotes()->size(); i++) {
+        //    for (std::vector<Note *>::iterator n = song->getNotes()->begin(); n != song->getNotes()->end(); ++n)
+        //    {
+        //        (*n)->translate(bars);
+        Note *note = song->getNotes()->at(i);
+                     int initialStep = renderEvent->getInitialStep() - part->getStartBar();
+        int finalStep = renderEvent->getFinalStep() - part->getStartBar();
+//        if (note->getStart().mBar >= initialStep && note->getStart().mBar <= finalStep)
+        {
+
+            note->translate(bars);
+        }
     }
-    /*
-    for (std::vector<PercussionNote *>::iterator n = percNotes.begin(); n != percNotes.end(); ++n)
-    {
-        (*n)->translate(bars);
-    }*/
 }
 void RenderPart::translateNotes(Time t)
 {
-    for (std::vector<Note *>::iterator n = notes.begin(); n != notes.end(); ++n)
-    {
-        (*n)->translate(t);
+    /*    for (std::vector<Note *>::iterator n = notes.begin(); n != notes.end(); ++n)
+        {
+            (*n)->translate(t);
+        }
+        */
+    //        printf("translate time %d/%f\n",t.mBar,t.mPos);
+
+    for (int i = 0; i < song->getNotes()->size(); i++) {
+
+        //    for (std::vector<Note *>::iterator n = song->getNotes()->begin(); n != song->getNotes()->end(); ++n)
+        //    {
+        //        (*n)->translate(t);
+        Note *note = song->getNotes()->at(i);
+
+                     int initialStep = renderEvent->getInitialStep() - part->getStartBar();
+        int finalStep = renderEvent->getFinalStep() - part->getStartBar();
+        if (note->getStart().mBar >= initialStep && note->getStart().mBar <= finalStep)
+        {
+
+            note->translate(t);
+//       } else {
+  //          printf("exclude note %d\n",note->getStart().mBar);
+
+        }
     }
 }
 Part *RenderPart::getPart()

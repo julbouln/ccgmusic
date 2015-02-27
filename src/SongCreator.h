@@ -32,6 +32,8 @@
 #include "NoOrnamentation.h"
 #include "LightRandomizer.h"
 #include "SimpleOrnamentation.h"
+#include "BasicTestPurposeRender.h"
+
 #include "PianoSimpleArrangement.h"
 #include "PianoAdvancedClassical.h"
 #include "PianoAdvancedDisco.h"
@@ -175,7 +177,7 @@ public:
     SongCreator();
     void createSong(int, int, string, string,MidiDriver *);
     void initMidi(MidiDriver *);
-    void renderPartsToMidi(vector<RenderPart*>*,MidiDriver *);
+    void renderNotesToMidi(MidiDriver *);
 
     int getRandomSeed();
     long getTick(Time, int, int);

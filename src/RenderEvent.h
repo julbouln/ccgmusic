@@ -8,7 +8,7 @@ class RenderEvent {
  int seed;
  int initialStep;
  int finalStep;
- int octave;
+ int8_t octave;
  Time timeOffset;
  float volMult;
  map<int,int> parameters;
@@ -30,7 +30,7 @@ enum ParamType {
 
  ~RenderEvent();
  RenderEvent();
- RenderEvent(string,int,int,int,int,Time,double,int);
+ RenderEvent(string,int,int,int,int8_t,Time,float,int);
  int getParam(int);
  void setParam(int,int);
  string getScriptName();

@@ -7,7 +7,7 @@ RenderEvent::~RenderEvent() {
 	parameters.clear();
 }
 
-RenderEvent::RenderEvent(string scriptName,int seed,int initialBar,int finalBar,int octave,Time timeOffset,double volMult, int trackId) {
+RenderEvent::RenderEvent(string scriptName,int seed,int initialBar,int finalBar,int8_t octave,Time timeOffset,float volMult, int trackId) {
  this->scriptName = scriptName;
  this->seed = seed;
  this->initialStep = initialBar;

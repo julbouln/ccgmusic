@@ -23,6 +23,25 @@ Song::Song(SongCreator *creator)
     srand(this->seed);
     this->tempo = 120;
 }
+
+vector<Note *> *Song::getNotes()
+{
+    return &notes;
+}
+
+void Song::clearNotes()
+{
+        Utils::deleteVector(notes);
+    notes.clear();
+
+}
+
+void Song::sortNotes()
+{
+    std::sort(notes.begin(), notes.end(), Note::Comparator());
+}
+
+
 SongCreator *Song::getCreator()
 {
     return creator;
@@ -108,7 +127,7 @@ void Song::addTrack(string name, int patch, int vol, int pan, bool percussion)
 {
     tracks.push_back(new Track(name, patch, vol, pan, percussion));
 }
-void Song::addRenderEvent(string scriptName, int seed, int trackIndex, int initialBar, int finalBar, int octave, Time timeOffset, double volMult)
+void Song::addRenderEvent(string scriptName, int seed, int trackIndex, int initialBar, int finalBar, int8_t octave, Time timeOffset, float volMult)
 {
     Track *track = tracks.at(trackIndex);
 

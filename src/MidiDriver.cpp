@@ -4,6 +4,8 @@
 MidiDriver::MidiDriver() {
         currentTime = 0;
     tempo=120;
+        stopAsap=false;
+
 }
 
 float MidiDriver::ticksToTime(long t) {
@@ -17,6 +19,15 @@ void MidiDriver::sendTempo(long time, int track, int tempo)
 }
 
 
+void MidiDriver::mute() {
+    for (int c = 0; c < 16; c++) {
+        QueueMessage qm;
+        qm.setMessage(0,MIDI_CONTROL_CHANGE + c);
+        qm.setMessage(1,MIDI_ALL_NOTES_OFF);
+        qm.setMessage(2,0);
+        this->sendMessage( &qm );
+    }
+}
 void MidiDriver::process(bool finished) {
     long processTime = 0;
 
@@ -44,6 +55,11 @@ void MidiDriver::process(bool finished) {
         queueMessages.pop();
 
         processTime += msec;
+
+        if(stopAsap) {
+            this->clear();
+            return;
+        }
 
     }
     currentTime += processTime;

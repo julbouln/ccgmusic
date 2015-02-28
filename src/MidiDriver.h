@@ -19,10 +19,13 @@ class MidiDriver {
 
 
 public:
+	    bool stopAsap;
+
+
 	MidiDriver();
 	virtual ~MidiDriver() {};
 	virtual void process(bool finished);
-	virtual void finish() {};
+	virtual void mute();
 
 	virtual void msleep(int ms) {};
 
@@ -47,12 +50,18 @@ class QueueMessage {
 			return size;
 		};
 
+
 		void setTime(int t) {
 			timestamp = t;
 		};
 		int getTime() {
 			return timestamp;
 		};
+
+		void setMessage(uint8_t pos, uint8_t msg) {
+			message[pos] = msg;
+		};
+
 		uint8_t *getMessage() {
 			return message;
 		};
@@ -67,8 +76,14 @@ class QueueMessage {
 
 
 	priority_queue<QueueMessage, vector<QueueMessage>, QueueMessage::Comparator> queueMessages;
-		virtual void sendMessage(QueueMessage *) {};
+	virtual void sendMessage(QueueMessage *) {};
 
+
+	virtual void clear() {
+		 while (!queueMessages.empty()) {
+    	    queueMessages.pop();
+	    }
+	};
 
 };
 #endif // MIDIDRIVER_H

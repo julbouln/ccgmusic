@@ -16,7 +16,6 @@ public:
 	MidiRt(int port);
 	~MidiRt();
 
-	void finish();
 	void msleep(int);
 	
 	void setTrackName(int track, string name);

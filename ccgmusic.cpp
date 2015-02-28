@@ -5,21 +5,12 @@
 #include "MidiFileWriter.h"
 #include "MidiRt.h"
 
-        MidiDriver *midiDriver;
-
-
-void alarmInterruptHandler(int sig) {
-    printf("handle interrupt\n");
-        midiDriver->process(false);
-                   ualarm(100000,0);
-//alarm(1);
-//ualarm(100000,0);
-
-}
+MidiDriver *midiDriver;
 
 void sigInterruptHandler(int sig) {
-    midiDriver->finish();
-    exit(1);
+    midiDriver->mute();
+    midiDriver->stopAsap=true;
+//    exit(1);
 }
 
 char *getCmdOption(char **begin, char **end, const std::string &option)
@@ -42,7 +33,7 @@ int main(int argc, char *argv[])
     int seed = time(NULL);
     int tempo = 120;
     int port = 0;
-    string driver="file";
+    string driver = "file";
     string structureScript = "One Part Simple Structure";
     string arrangementScript = "Piano Simple Arrangement";
     string outputFile = "output.mid";
@@ -65,7 +56,7 @@ int main(int argc, char *argv[])
         printf("Description: ccgmusic command line utility\n");
         return 0;
     }
-    
+
 
     if (cmdOptionExists(argv, argv + argc, "--seed"))
     {
@@ -80,11 +71,11 @@ int main(int argc, char *argv[])
     if (cmdOptionExists(argv, argv + argc, "--structure"))
     {
         structureScript = getCmdOption(argv, argv + argc, "--structure");
-        if(songCreator->structures.count(structureScript)==0)
+        if (songCreator->structures.count(structureScript) == 0)
         {
             printf("Available structures:\n");
             for (map<string, SongCreator::StructureGeneratorCreator>::iterator it = songCreator->structures.begin(); it != songCreator->structures.end(); ++it)
-                printf("\t\"%s\"\n",it->first.c_str());
+                printf("\t\"%s\"\n", it->first.c_str());
             return 0;
         }
     }
@@ -92,11 +83,11 @@ int main(int argc, char *argv[])
     if (cmdOptionExists(argv, argv + argc, "--arranger"))
     {
         arrangementScript = getCmdOption(argv, argv + argc, "--arranger");
-        if(songCreator->arrangers.count(arrangementScript)==0)
+        if (songCreator->arrangers.count(arrangementScript) == 0)
         {
             printf("Available arrangers:\n");
             for (map<string, SongCreator::ArrangerCreator>::iterator it = songCreator->arrangers.begin(); it != songCreator->arrangers.end(); ++it)
-                printf("\t\"%s\"\n",it->first.c_str());
+                printf("\t\"%s\"\n", it->first.c_str());
             return 0;
         }
     }
@@ -116,27 +107,23 @@ int main(int argc, char *argv[])
         port = atoi(getCmdOption(argv, argv + argc, "--port"));
     }
 
-    printf("Using seed: %d, tempo: %d, structure: \"%s\", arrangement: \"%s\", driver: %s\n",seed,tempo,structureScript.c_str(),arrangementScript.c_str(),driver.c_str());
+    printf("Using seed: %d, tempo: %d, structure: \"%s\", arrangement: \"%s\", driver: %s\n", seed, tempo, structureScript.c_str(), arrangementScript.c_str(), driver.c_str());
 
-    if(driver=="file") {
-        midiDriver=new MidiFileWriter(outputFile);
+    if (driver == "file") {
+        midiDriver = new MidiFileWriter(outputFile);
         songCreator->createSong(seed, tempo, structureScript, arrangementScript, midiDriver);
     }
 
-    if(driver=="rt") {
-        midiDriver=new MidiRt(port);
+    if (driver == "rt") {
+        midiDriver = new MidiRt(port);
 
-        signal (SIGINT,&sigInterruptHandler);
+        signal (SIGINT, &sigInterruptHandler);
 
-//        signal(SIGALRM, &alarmInterruptHandler);  // set a signal handler
-  //          ualarm(10000,0);
-
-//            alarm(1);
         songCreator->createSong(seed, tempo, structureScript, arrangementScript, midiDriver);
     }
 
     delete songCreator;
-    
+
 
     return 0;
 }

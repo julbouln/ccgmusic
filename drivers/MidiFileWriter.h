@@ -26,7 +26,6 @@ public:
 	~MidiFileWriter();
 
 	void process(bool);
-	void finish();
 	void setTrackName(int track, string name);
 
 	void sendTempo(long time, int track, int tempo);

@@ -1,19 +1,21 @@
 SRCS=$(wildcard src/*.cpp) $(wildcard src/*/*.cpp)
 OBJS=$(SRCS:.cpp=.o)
 
+DRIVERS_OBJS=drivers/MidiFileWriter.o drivers/MidiRt.cpp
+
 CFLAGS_OPT=-O2 -ffast-math -fsingle-precision-constant
 #CFLAGS_OPT=-g -Wall
 CFLAGS=$(CFLAGS_OPT) -I src/ -I src/structuregenerators/ -I src/rythmgenerators/ -I src/renderers/ -I src/melodycreators/ -I src/ornamentors/ -I src/innerstructuregenerators/ -I src/arrangers/ -I src/harmonygenerators/
 
-all: $(OBJS)
-	g++ $(CFLAGS) -DTARGET_PLATFORM_LINUX=1 -DTARGET_PLATFORM_LINUX_I386=1 -DTARGET_PLATFORM_LINUX_X86_64=1 -DTARGET_PLATFORM_POSIX=1 -I/usr/include/jdksmidi \
+all: $(OBJS) $(DRIVERS_OBJS)
+	g++ $(CFLAGS) -Idrivers/ -DTARGET_PLATFORM_LINUX=1 -DTARGET_PLATFORM_LINUX_I386=1 -DTARGET_PLATFORM_LINUX_X86_64=1 -DTARGET_PLATFORM_POSIX=1 -I/usr/include/jdksmidi \
 	ccgmusic.cpp -c -o ccgmusic.o
 	g++ $(CFLAGS) -Wall $? ccgmusic.o -lrtmidi -ljdksmidi -o ccgmusic
 
-src/MidiFileWriter.o: src/MidiFileWriter.cpp
+drivers/MidiFileWriter.o: drivers/MidiFileWriter.cpp
 	g++ $(CFLAGS) -DTARGET_PLATFORM_LINUX=1 -DTARGET_PLATFORM_LINUX_I386=1 -DTARGET_PLATFORM_LINUX_X86_64=1 -DTARGET_PLATFORM_POSIX=1 -I/usr/include/jdksmidi $< -c -o $@
 
-src/MidiRt.o: src/MidiRt.cpp
+drivers/MidiRt.o: drivers/MidiRt.cpp
 	g++ $(CFLAGS) -I /usr/local/include $< -c -o $@
 
 %.o: %.cpp

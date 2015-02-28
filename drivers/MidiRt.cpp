@@ -18,20 +18,6 @@ void MidiRt::msleep(int ms) {
     usleep(ms * 1000);
 }
 
-void MidiRt::finish() {
-    for (int c = 0; c < 16; c++) {
-        usleep(1000 * 50);
-
-        vector<unsigned char> m;
-        m.push_back(MIDI_CONTROL_CHANGE + c);
-        m.push_back(MIDI_ALL_NOTES_OFF);
-        m.push_back(0);
-        midiout->sendMessage( &m );
-        //        printf("SENT %d %d %d\n",m.at(0),m.at(1),m.at(2));
-
-    }
-
-}
 
 int MidiRt::curMsTime() {
     struct timeval tp;

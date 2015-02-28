@@ -20,16 +20,7 @@ MidiFileWriter::MidiFileWriter(string fn)
 
 MidiFileWriter::~MidiFileWriter()
 {
-	
-    delete midiTracks;
-}
-
-
-void MidiFileWriter::process(bool finished) {
-}
-
-void MidiFileWriter::finish() {
-    MIDITimedBigMessage m; 
+	MIDITimedBigMessage m; 
     midiTracks->SortEventsOrder();
 
     MIDIFileWriteStreamFileName out_stream( filename.c_str() );
@@ -52,6 +43,11 @@ void MidiFileWriter::finish() {
     {
         cerr << "Error opening file " << filename << endl;
     }
+    delete midiTracks;
+}
+
+
+void MidiFileWriter::process(bool finished) {
 }
 
 

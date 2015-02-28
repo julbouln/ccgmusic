@@ -169,7 +169,6 @@ public:
     vector<string> melodyScripts;
     vector<string> ornamentScripts;
 
-
 //    vector<RenderPart *> renderParts;
     Song *song;
 

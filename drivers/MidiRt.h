@@ -6,10 +6,14 @@
 #include "MidiDriver.h"
 #include "RtMidi.h"
 
+
+
 using namespace std;
 
 class MidiRt : public MidiDriver {
 	RtMidiOut *midiout;
+
+	pthread_mutex_t mutex;
 
 	int curMsTime();
 public:
@@ -22,6 +26,9 @@ public:
 
 	vector<uint8_t> messageToRt(QueueMessage *);
 	void sendMessage(QueueMessage *);
+
+	void mutexLock();
+	void mutexUnlock();
 
 
 };

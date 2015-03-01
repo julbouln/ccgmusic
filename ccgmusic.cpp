@@ -5,10 +5,32 @@
 #include "MidiFileWriter.h"
 #include "MidiRt.h"
 
+#ifdef PTHREAD
+#include <pthread.h>
+#endif
+
 MidiDriver *midiDriver;
+    int seed = time(NULL);
+    int tempo = 120;
+    int port = 0;
+    string driver = "file";
+    string structureScript = "One Part Simple Structure";
+    string arrangementScript = "Piano Simple Arrangement";
+    string outputFile = "output.mid";
+
+    SongCreator *songCreator;
+
+void *processMidi(void *id) {
+//    midiDriver->msleep(3);
+    midiDriver->launch();
+
+}
+
+void *createSong(void *id) {
+    songCreator->createSong(seed, tempo, structureScript, arrangementScript, midiDriver);
+}
 
 void sigInterruptHandler(int sig) {
-    midiDriver->mute();
     midiDriver->stopAsap=true;
 //    exit(1);
 }
@@ -30,16 +52,8 @@ bool cmdOptionExists(char **begin, char **end, const std::string &option)
 
 int main(int argc, char *argv[])
 {
-    int seed = time(NULL);
-    int tempo = 120;
-    int port = 0;
-    string driver = "file";
-    string structureScript = "One Part Simple Structure";
-    string arrangementScript = "Piano Simple Arrangement";
-    string outputFile = "output.mid";
 
-    SongCreator *songCreator = new SongCreator();
-
+    songCreator = new SongCreator();
 
     if (cmdOptionExists(argv, argv + argc, "--help") || cmdOptionExists(argv, argv + argc, "-h"))
     {
@@ -109,18 +123,38 @@ int main(int argc, char *argv[])
 
     printf("Using seed: %d, tempo: %d, structure: \"%s\", arrangement: \"%s\", driver: %s\n", seed, tempo, structureScript.c_str(), arrangementScript.c_str(), driver.c_str());
 
+
     if (driver == "file") {
         midiDriver = new MidiFileWriter(outputFile);
         songCreator->createSong(seed, tempo, structureScript, arrangementScript, midiDriver);
     }
 
     if (driver == "rt") {
+
         midiDriver = new MidiRt(port);
+        midiDriver->mute();
+        #ifdef PTHREAD
+        pthread_t drvThread;
+        pthread_t sngThread;
+
+        pthread_create(&drvThread, NULL, 
+                          processMidi, NULL);
+
+        #endif
+                songCreator->createSong(seed, tempo, structureScript, arrangementScript, midiDriver);
 
         signal (SIGINT, &sigInterruptHandler);
 
-        songCreator->createSong(seed, tempo, structureScript, arrangementScript, midiDriver);
+        
+        #ifdef PTHREAD
+        pthread_join(drvThread,NULL);
+
+        #else
+        midiDriver->launch();
+        #endif
+
     }
+
 
     delete songCreator;
 

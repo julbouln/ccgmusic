@@ -9,9 +9,9 @@ void SimplePunkRockStyleArrangement::arrange(Song *s)
     int bars = s->getBars();
     s->addTrack("Melody", 86, 127, 64,false);
     s->addTrack("Alt Voice", 63, 127, 64,false);
-    s->addTrack("Guitar Left", this->rndInt(29, 31), 127, 20,false);
-    s->addTrack("Guitar Right", this->rndInt(29, 31), 127, 100,false);
-    s->addTrack("Guitar Center", this->rndInt(29, 31), 127, 64,false);
+    s->addTrack("Guitar Left", this->rndInt(30, 31), 127, 20,false);
+    s->addTrack("Guitar Right", this->rndInt(30, 31), 127, 100,false);
+    s->addTrack("Guitar Center", this->rndInt(30, 31), 127, 64,false);
     s->addTrack("Bass", this->rndInt(35,37), 127, 64,false);
     s->addTrack("Drums", 16, 127, 64,true);
     s->addTrack("Brass", 62, 127, 64,false);

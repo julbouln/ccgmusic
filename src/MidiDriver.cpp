@@ -2,10 +2,12 @@
 
 
 MidiDriver::MidiDriver() {
-        currentTime = 0;
+    currentTime = 0;
     tempo=120;
-        stopAsap=false;
+    stopAsap=false;
 
+    min_queue_size=0;
+    max_queue_size=INT_MAX;
 }
 
 float MidiDriver::ticksToTime(long t) {
@@ -21,26 +23,35 @@ void MidiDriver::sendTempo(long time, int track, int tempo)
 
 void MidiDriver::mute() {
     for (int c = 0; c < 16; c++) {
+//        this->msleep(50);
+
         QueueMessage qm;
         qm.setMessage(0,MIDI_CONTROL_CHANGE + c);
         qm.setMessage(1,MIDI_ALL_NOTES_OFF);
         qm.setMessage(2,0);
+        qm.setSize(3);
         this->sendMessage( &qm );
     }
 }
 void MidiDriver::process(bool finished) {
     long processTime = 0;
 
-    if (!queueMessages.empty()) {
+    int size=this->getQueueSize();
+    if (size > 0) {
+
         QueueMessage m = queueMessages.top();
         float mTime = (float)this->ticksToTime(m.getTime());
-        printf("MidiDriver::process desynchro %ld\n", (long)mTime - currentTime);
+ //       printf("MidiDriver::process desynchro %ld\n", (long)mTime - currentTime);
 
         currentTime = (long)mTime;
-        printf("MidiDriver::process (%d messages) RT %ld\n", queueMessages.size(), currentTime);
+//        printf("MidiDriver::process (%d messages) RT %ld\n", size, currentTime);
+
     }
 
-    while (!queueMessages.empty()) {
+    while (1) {
+        int size=this->getQueueSize();
+        if(size > 0) {
+//        printf("MidiDriver::process (%d messages) RT %ld\n", size, processTime);
 
         QueueMessage m = queueMessages.top();
 
@@ -59,6 +70,9 @@ void MidiDriver::process(bool finished) {
         if(stopAsap) {
             this->clear();
             return;
+        }
+        } else {
+            break;
         }
 
     }

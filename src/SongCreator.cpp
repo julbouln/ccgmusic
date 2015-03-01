@@ -1,4 +1,5 @@
 #include "SongCreator.h"
+#include <unistd.h>
 
 
 SongCreator::SongCreator()
@@ -202,7 +203,7 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
         string scriptRhythm = up->getScriptRhythm();
 
         int rythmSeed = up->getScriptRhythmSeed();
-        //        printf("Rhythm: script:%s seed:%d\n", scriptRhythm.c_str(), rythmSeed);
+//                printf("Rhythm: part:%d script:%s seed:%d\n", i, scriptRhythm.c_str(), rythmSeed);
 
         for (int j = 0; j < up->getUniquePhrases(); ++j    )
         {
@@ -252,7 +253,7 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
 
         HarmonyGenerator *harmony = harmonies.at(scriptHarmony)();
         harmony->setSeed(harmonySeed);
-        //        printf("Harmony: script:%s seed:%d\n", scriptHarmony.c_str(), harmonySeed);
+//                printf("Harmony: part: %d script:%s seed:%d\n", i, scriptHarmony.c_str(), harmonySeed);
 
         harmony->generateHarmony(up);
 
@@ -272,7 +273,7 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
         string scriptMelody = up->getScriptMelody();
 
         int melodySeed = up->getScriptMelodySeed();
-        //        printf("Melody: script:%s seed:%d\n", scriptMelody.c_str(), melodySeed);
+//                printf("Melody: part:%d script:%s seed:%d\n", i, scriptMelody.c_str(), melodySeed);
 
         MelodyCreator *melody = melodies.at(scriptMelody)();
         melody->setSeed(melodySeed);
@@ -288,7 +289,7 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
         string scriptOrnamentation = uniquePart->getScriptOrnamentation();
 
         int ornamentationSeed = uniquePart->getScriptOrnamentationSeed();
-        //        printf("Ornamentation: script:%s seed:%d\n", scriptOrnamentation.c_str(), ornamentationSeed);
+//                printf("Ornamentation: part:%d script:%s seed:%d\n", i,scriptOrnamentation.c_str(), ornamentationSeed);
 
         Ornamentor *ornamentor = ornamentors.at(scriptOrnamentation)();
         ornamentor->setSeed(ornamentationSeed);
@@ -322,7 +323,7 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
     {
         Part *part = song->getPart(j);
 
-        printf("Part %d %d-%d\n", j, part->getStartBar(), part->getEndBar());
+//        printf("Part %d %d-%d\n", j, part->getStartBar(), part->getEndBar());
 
         for (std::vector<RenderEvent *>::iterator re = song->renderEvents.begin(); re != song->renderEvents.end(); ++re)
 
@@ -354,10 +355,13 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
                 {
                     //                    Utils::deleteVector(currentRenderParts);
                     //                  currentRenderParts.clear();
-                    midiDriver->process(false);
+//                    midiDriver->process(false);
+                   
+                   midiDriver->wait();
+//                   printf("continue for driver queue %d\n",midiDriver->getQueueSize());
 
                 }
-                printf("RenderEvent script:%s initialStep:%d finalStep:%d seed:%d\n", scriptName.c_str(), initialStep, finalStep, renderSeed);
+//                printf("RenderEvent script:%s initialStep:%d finalStep:%d seed:%d\n", scriptName.c_str(), initialStep, finalStep, renderSeed);
 
                 UniquePart *up = song->getUniquePart(part->getUniquePart());
                 Time timeOffset = (*re)->getTimeOffset();
@@ -403,8 +407,7 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
     //    Utils::deleteVector(currentRenderParts);
     //    currentRenderParts.clear();
 
-    midiDriver->process(true);
-    midiDriver->mute();
+//    midiDriver->mute();
 
 
     delete arranger;
@@ -508,7 +511,7 @@ void SongCreator::renderNotesToMidi(MidiDriver *midiDriver) {
     vector<Note *> *currentNotes = song->getNotes();
 
     song->sortNotes();
-    printf("SongCreator::renderNotesToMidi render %d notes\n", currentNotes->size());
+//    printf("SongCreator::renderNotesToMidi render %d notes\n", currentNotes->size());
 
 
 

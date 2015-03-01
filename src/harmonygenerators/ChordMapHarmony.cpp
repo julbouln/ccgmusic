@@ -57,4 +57,7 @@ void ChordMapHarmony::generateHarmony(UniquePart *up) {
   up->addHarmonic(this->createTime(up->getBars() - 2,0),5,new int[4]{1,3,5,7});
  }
  up->addHarmonic(this->createTime(up->getBars() - 1,0),1,new int[3]{1,3,5});
+
+  Utils::deleteVector(map);
+
 }

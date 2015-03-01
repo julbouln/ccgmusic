@@ -172,7 +172,7 @@ void PunkGuitarChords::DoMode1(RenderPart *p)
             accents = this->GenerateAccents(p, speed, false);
         }
     }
-//    delete accents;
+    delete accents;
 }
 void PunkGuitarChords::DoMode2(RenderPart *p)
 {

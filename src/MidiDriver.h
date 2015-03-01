@@ -11,12 +11,12 @@
 #define MIDI_ALL_NOTES_OFF 0x7B
 #define MIDI_ALL_SOUND_OFF 0x78
 
+
 using namespace std;
 class MidiDriver {
-		long currentTime;
+	long currentTime;
 	int tempo;
-		float ticksToTime(long t);
-
+	float ticksToTime(long t);
 
 public:
 	    bool stopAsap;
@@ -50,7 +50,6 @@ class QueueMessage {
 			return size;
 		};
 
-
 		void setTime(int t) {
 			timestamp = t;
 		};
@@ -77,6 +76,42 @@ class QueueMessage {
 
 	priority_queue<QueueMessage, vector<QueueMessage>, QueueMessage::Comparator> queueMessages;
 	virtual void sendMessage(QueueMessage *) {};
+	virtual int getQueueSize() { 
+		int size;
+		this->mutexLock();
+		size=queueMessages.size();
+ 		this->mutexUnlock();
+		return size;
+	};
+
+	virtual void wait() {
+		while(1)
+        {
+            int size=this->getQueueSize();
+            if(size > max_queue_size) {
+                        //printf("wait for driver queue %d\n",size);
+                        this->msleep(100);
+            } else {
+                break;
+            }
+
+        }
+
+	}
+
+	void launch() {
+	while(this->getQueueSize() <= min_queue_size)
+    {
+      this->msleep(10);
+    }
+    //printf("launch process\n");
+    this->process(true);
+
+    this->mute();
+	}
+
+	virtual void mutexLock() {};
+	virtual void mutexUnlock() {};
 
 
 	virtual void clear() {
@@ -84,6 +119,9 @@ class QueueMessage {
     	    queueMessages.pop();
 	    }
 	};
+	int min_queue_size;
+	int max_queue_size;
+
 
 };
 #endif // MIDIDRIVER_H

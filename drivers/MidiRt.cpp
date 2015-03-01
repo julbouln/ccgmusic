@@ -2,16 +2,37 @@
 #include <unistd.h>
 #include <sys/time.h>
 
+#ifdef PTHREAD
+#include <pthread.h>
+#endif
 
 MidiRt::MidiRt(int port)
 {
     midiout = new RtMidiOut();
     midiout->openPort( port );
+    #ifdef PTHREAD
+    min_queue_size=500;
+    max_queue_size=500;
+
+    mutex=PTHREAD_MUTEX_INITIALIZER;
+    #endif
 }
 
 MidiRt::~MidiRt()
 {
     delete midiout;
+}
+
+void MidiRt::mutexLock() {
+    #ifdef PTHREAD
+    pthread_mutex_lock (&mutex);
+    #endif
+}
+
+void MidiRt::mutexUnlock() {
+    #ifdef PTHREAD
+    pthread_mutex_unlock (&mutex);
+    #endif
 }
 
 void MidiRt::msleep(int ms) {

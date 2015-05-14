@@ -32,7 +32,7 @@ MidiFileWriter::~MidiFileWriter()
         // write the output file
         if ( writer.Write( numTracks ) )
         {
-//            cout << "OK writing file " << filename << endl;
+            cout << "OK writing file " << filename << endl;
         }
         else
         {

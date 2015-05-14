@@ -55,29 +55,7 @@ Harmonic::Harmonic(Time time,int baseNote,int * chordData) {
  offsets = new int[Utils::arrayLength(chordData)];
 
  for(int i = 0;i < Utils::arrayLength(chordData);++i ){
-       switch(chordData[i]){
-      case 1:
-       offsets[i] = 0;
-       break;
-      case 2:
-       offsets[i] = 1;
-       break;
-      case 3:
-       offsets[i] = 2;
-       break;
-      case 4:
-       offsets[i] = 3;
-       break;
-      case 5:
-       offsets[i] = 4;
-       break;
-      case 6:
-       offsets[i] = 5;
-       break;
-      case 7:
-       offsets[i] = 6;
-       break;
-    }
+      offsets[i] = chordData[i] - 1;
  }
 }
 int* Harmonic::getScaleDegrees() {

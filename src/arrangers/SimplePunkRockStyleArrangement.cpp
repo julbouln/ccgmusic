@@ -7,14 +7,14 @@ void SimplePunkRockStyleArrangement::arrange(Song *s)
 {
 //  printf("SimplePunkRockStyleArrangement::arrange seed:%d\n",this->getSeed());
     int bars = s->getBars();
-    s->addTrack("Melody", 86, 127, 64,false);
+    s->addTrack("Melody", this->rndInt(81,87), 127, 64,false);
     s->addTrack("Alt Voice", 63, 127, 64,false);
-    s->addTrack("Guitar Left", this->rndInt(30, 31), 127, 20,false);
-    s->addTrack("Guitar Right", this->rndInt(30, 31), 127, 100,false);
-    s->addTrack("Guitar Center", this->rndInt(30, 31), 127, 64,false);
+    s->addTrack("Guitar Left", this->rndInt(28, 31), 127, 20,false);
+    s->addTrack("Guitar Right", this->rndInt(28, 31), 127, 100,false);
+    s->addTrack("Guitar Center", this->rndInt(28, 31), 127, 64,false);
     s->addTrack("Bass", this->rndInt(35,37), 127, 64,false);
     s->addTrack("Drums", 16, 127, 64,true);
-    s->addTrack("Brass", 62, 127, 64,false);
+    s->addTrack("Brass", this->rndInt(62,64), 127, 64,false);
     
     int cnt = 0;
     int chorus_cnt = 0;

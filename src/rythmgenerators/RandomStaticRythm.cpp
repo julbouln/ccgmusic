@@ -1,11 +1,9 @@
 #include "RandomStaticRythm.h"
-void RandomStaticRythm::Add(UniquePhrase *up,Time t1,Time t2) {
- up->addEvent(t1,t2);
-}
+
 void RandomStaticRythm::generateRythm(UniquePhrase *up) {
  int bars = up->getBars();
  if(up->endsSentence()) {
-  --bars;
+  bars--;
  }
  Time poz = Time(0,0);
  int start = this->rndInt(0,4);
@@ -52,7 +50,7 @@ void RandomStaticRythm::generateRythm(UniquePhrase *up) {
      if(t2.mPos >= up->getMetrum()) {
     t2.mPos = up->getMetrum();
    }
-     this->Add(up,poz,t2);
+     up->addEvent(poz,t2);
      poz.mPos += delta;
      if(poz.mPos >= up->getMetrum()) {
          poz.mPos = 0;

@@ -17,21 +17,27 @@
 #include "OnePartSimpleStructure.h"
 #include "RandomStructure.h"
 #include "FixedClassical.h"
+
 #include "RandomStaticRythm.h"
 #include "SimpleRandomRythm.h"
 #include "SimpleSwingRythm.h"
+
 #include "AdvancedRandomHarmony.h"
 #include "ChordMapHarmony.h"
 #include "RandomRiffHarmony.h"
 #include "SimpleFixedHarmony.h"
 #include "SimpleJazzHarmony.h"
 #include "SimpleRandomHarmony.h"
+
 #include "RandomPhrasedMelody.h"
 #include "SimpleRandomMelody.h"
 #include "WideRandomMelody.h"
+#include "MarkovMelody.h"
+
 #include "NoOrnamentation.h"
 #include "LightRandomizer.h"
 #include "SimpleOrnamentation.h"
+
 #include "BasicTestPurposeRender.h"
 
 #include "PianoSimpleArrangement.h"
@@ -176,7 +182,7 @@ public:
     SongCreator();
     void createSong(int, int, string, string,MidiDriver *);
     void initMidi(MidiDriver *);
-    void renderNotesToMidi(MidiDriver *);
+    void renderNotesToMidi(MidiDriver *,int);
 
     int getRandomSeed();
     long getTick(Time, int, int);

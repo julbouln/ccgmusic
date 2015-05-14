@@ -1,7 +1,6 @@
 #include "SimpleOrnamentation.h"
 double SimpleOrnamentation::getEventLen(UniquePart *up, int i)
 {
-//    printf("(%d - %d) * %d + (%f - %f)\n",up->getEventEnd(i).mBar, up->getEventStart(i).mBar,up->getMetrum(),up->getEventEnd(i).mPos,up->getEventStart(i).mPos);
     return (up->getEventEnd(i).mBar - up->getEventStart(i).mBar) * up->getMetrum() + (up->getEventEnd(i).mPos - up->getEventStart(i).mPos);
 }
 void SimpleOrnamentation::ornament(UniquePart *up, Part *p)
@@ -17,7 +16,6 @@ void SimpleOrnamentation::ornament(UniquePart *up, Part *p)
         Time t1 = up->getEventStart(i);
         Time t2 = up->getEventEnd(i);
         bool tril = false;
-//        printf("SimpleOrnamentation %d %f\n",i,this->getEventLen(up, i));
         if (this->rndInt(0, 2) != 0 && this->getEventLen(up, i) > 1.4)
         {
             double len = 0.25;
@@ -35,7 +33,6 @@ void SimpleOrnamentation::ornament(UniquePart *up, Part *p)
             }
             tril = true;
             t1.mPos += len * 4;
-//            printf("SimpleOrnamentation 4 %d %d",len,t1.mPos);
         }
         else
         {
@@ -53,7 +50,6 @@ void SimpleOrnamentation::ornament(UniquePart *up, Part *p)
                 }
                 t1.mPos += len * 2;
                 tril = true;
-//                            printf("SimpleOrnamentation 2 %d %d",len,t1.mPos);
 
             }
         }

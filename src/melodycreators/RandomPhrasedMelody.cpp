@@ -51,7 +51,12 @@ void RandomPhrasedMelody::createMelody(UniquePart *up)
             }
         }
     }
-    int last_note = 1;
+//    int last_note = 1;
+    int last_note = this->rndInt(0,4);
+    if(last_note % 2 == 0) {
+        last_note+=1;
+    }
+
     if (up->endsSong())
     {
         if (this->rndInt(0, 3) == 0)
@@ -80,7 +85,6 @@ void RandomPhrasedMelody::createMelody(UniquePart *up)
     {
         last_note += 7;
     }
-//        printf("RandomPhrasedMelody::createMelody %d %d\n",up->getEvents() - 1, last_note);
 
     up->setEventPitch(up->getEvents() - 1, last_note);
     Utils::deleteVector(melody);

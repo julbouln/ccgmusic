@@ -27,10 +27,11 @@ SongCreator::SongCreator()
     melodies["Random Phrased Melody"] = SongCreator::makeMelodyCreator<RandomPhrasedMelody>;
     melodies["Simple Random Melody"] = SongCreator::makeMelodyCreator<SimpleRandomMelody>;
     melodies["Wide Random Melody"] = SongCreator::makeMelodyCreator<WideRandomMelody>;
+    melodies["Markov Melody"] = SongCreator::makeMelodyCreator<MarkovMelody>;
 
     ornamentors["No Ornamentation"] = SongCreator::makeOrnamentor<NoOrnamentation>;
     ornamentors["Light Randomizer"] = SongCreator::makeOrnamentor<LightRandomizer>;
-    ornamentors["Simple Ornamentation"] = SongCreator::makeOrnamentor<SimpleOrnamentation>;
+//    ornamentors["Simple Ornamentation"] = SongCreator::makeOrnamentor<SimpleOrnamentation>;
 
     arrangers["Basic Test Purpose"] = SongCreator::makeArranger<BasicTestPurposeRender>;
     arrangers["Piano Simple Arrangement"] = SongCreator::makeArranger<PianoSimpleArrangement>;
@@ -168,12 +169,17 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
                 Phrase *phrase = sentence->getPhrase(k);
                 int uniquePhraseID = phrase->getUniquePhraseID();
                 UniquePhrase *uniquePhrase = uniquePart->getUniquePhrase(uniquePhraseID);
+
+                // Update the phrase reference to a unique phrase
                 phrase->setUniquePhrase(uniquePhrase);
                 phrase->setBars(uniquePhrase->getBars());
+
+                // Update the unique phrase position info into the part and
+                // sentence
                 uniquePhrase->setStartsSentence(k == 0);
                 uniquePhrase->setEndsSentence(k == phraseCount - 1);
                 uniquePhrase->setStartsPart(j == 0 && k == 0);
-                uniquePhrase->setEndsPart(j == sentenceCount - 1 && k == phraseCount - 1);
+                uniquePhrase->setEndsPart(j == (sentenceCount - 1) && k == (phraseCount - 1));
             }
         }
         int bars = uniquePart->getBars();
@@ -184,26 +190,28 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
     {
         UniquePart *up = song->getUniquePart(i);
 
-        string script = rythmScripts[Utils::getRandomInt(0, rythmScripts.size() - 1)];
+        string script = Utils::sampleUniformObjectDistribution(rythmScripts);
         up->setScriptRhythm(script);
 
-        script = harmonyScripts[Utils::getRandomInt(0, harmonyScripts.size() - 1)];
+        script = Utils::sampleUniformObjectDistribution(harmonyScripts);
         up->setScriptHarmony(script);
 
-        script = melodyScripts[Utils::getRandomInt(0, melodyScripts.size() - 1)];
+        script = Utils::sampleUniformObjectDistribution(melodyScripts);
         up->setScriptMelody(script);
 
-        script = ornamentScripts[Utils::getRandomInt(0, ornamentScripts.size() - 1)];
+        script = Utils::sampleUniformObjectDistribution(ornamentScripts);
         up->setScriptOrnamentation(script);
     }
 
+    // Generate rythms
     for (int i = 0; i < song->getUniqueParts(); ++i )
     {
         UniquePart *up = song->getUniquePart(i);
-        string scriptRhythm = up->getScriptRhythm();
+         string scriptRhythm = up->getScriptRhythm();
+//        string scriptRhythm = "Simple Swing Rythm";
 
         int rythmSeed = up->getScriptRhythmSeed();
-//                printf("Rhythm: part:%d script:%s seed:%d\n", i, scriptRhythm.c_str(), rythmSeed);
+//        printf("Rhythm part:%d script:%s seed:%d\n", i, scriptRhythm.c_str(), rythmSeed);
 
         for (int j = 0; j < up->getUniquePhrases(); ++j    )
         {
@@ -218,6 +226,8 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
         }
     }
 
+    // After the rythm is generated, we have events in the unique phrases
+    // that must be copied to the unique part
     for (int i = 0; i < song->getUniqueParts(); ++i )
     {
         UniquePart *up = song->getUniquePart(i);
@@ -233,7 +243,8 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
                 for (int l = 0; l < uniquePhrase->getEvents(); ++l)
                 {
                     Event *event = uniquePhrase->getEvent(l);
-                    Event *copy_event = (Event *)event->copy()->translate(bars);
+                    Event *copy_event = (Event *)event->copy();
+                    copy_event->translate(bars);
 
                     up->addEvent(copy_event);
 
@@ -248,12 +259,13 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
 
         UniquePart *up = song->getUniquePart(i);
         string scriptHarmony = up->getScriptHarmony();
+//        string scriptHarmony = "Simple Fixed Harmony";
 
         int harmonySeed = up->getScriptHarmonySeed();
 
         HarmonyGenerator *harmony = harmonies.at(scriptHarmony)();
         harmony->setSeed(harmonySeed);
-//                printf("Harmony: part: %d script:%s seed:%d\n", i, scriptHarmony.c_str(), harmonySeed);
+//        printf("Harmony part:%d script:%s seed:%d\n", i, scriptHarmony.c_str(), harmonySeed);
 
         harmony->generateHarmony(up);
 
@@ -271,9 +283,10 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
     {
         UniquePart *up = song->getUniquePart(i);
         string scriptMelody = up->getScriptMelody();
+//       string scriptMelody = "Markov Melody";
 
         int melodySeed = up->getScriptMelodySeed();
-//                printf("Melody: part:%d script:%s seed:%d\n", i, scriptMelody.c_str(), melodySeed);
+//        printf("Melody part:%d script:%s seed:%d\n", i, scriptMelody.c_str(), melodySeed);
 
         MelodyCreator *melody = melodies.at(scriptMelody)();
         melody->setSeed(melodySeed);
@@ -287,9 +300,10 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
         int uniquePartIndex = part->getUniquePart();
         UniquePart *uniquePart = song->getUniquePart(uniquePartIndex);
         string scriptOrnamentation = uniquePart->getScriptOrnamentation();
+//        string scriptOrnamentation = "No Ornamentation";
 
         int ornamentationSeed = uniquePart->getScriptOrnamentationSeed();
-//                printf("Ornamentation: part:%d script:%s seed:%d\n", i,scriptOrnamentation.c_str(), ornamentationSeed);
+//        printf("Ornamentation part:%d script:%s seed:%d\n", i,scriptOrnamentation.c_str(), ornamentationSeed);
 
         Ornamentor *ornamentor = ornamentors.at(scriptOrnamentation)();
         ornamentor->setSeed(ornamentationSeed);
@@ -313,9 +327,6 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
 
     int currentStartBar = 0;
     int previousStartBar = 0;
-
-
-    //    vector<RenderPart *> currentRenderParts;
 
     //    printf("Render events %d\n", song->renderEvents.size());
 
@@ -349,13 +360,10 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
 
                 currentStartBar = part->getStartBar();
 
-                //            printf("RenderParts %d-%d %d-%d/%d-%d\n", currentStep, previousStep, currentStartBar, currentEndBar, previousStartBar, previousEndBar);
+//                            printf("RenderParts %d-%d %d-%d/%d-%d\n", currentStep, previousStep, currentStartBar, currentEndBar, previousStartBar, previousEndBar);
 
                 if (currentStartBar > previousStartBar)
                 {
-                    //                    Utils::deleteVector(currentRenderParts);
-                    //                  currentRenderParts.clear();
-//                    midiDriver->process(false);
                    
                    midiDriver->wait();
 //                   printf("continue for driver queue %d\n",midiDriver->getQueueSize());
@@ -364,6 +372,7 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
 //                printf("RenderEvent script:%s initialStep:%d finalStep:%d seed:%d\n", scriptName.c_str(), initialStep, finalStep, renderSeed);
 
                 UniquePart *up = song->getUniquePart(part->getUniquePart());
+                int metrum = up->getMetrum();
                 Time timeOffset = (*re)->getTimeOffset();
 
                 RenderPart *rp = new RenderPart(i);
@@ -385,11 +394,9 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
                 //                rp->translateNotes(part->getStartBar());
                 rp->translateNotes(timeOffset);
 
-                renderNotesToMidi(midiDriver);
+                renderNotesToMidi(midiDriver,metrum);
 
                 //                            printf("RenderPart track:%d startBar:%d endPart:%d metrum:%d script:%s scale:%d seed:%d\n", i, (*p)->getStartBar(), (*p)->getEndBar(), metrum, scriptName.c_str(), (*p)->getScale(), renderSeed);
-
-                //    midiDriver->process(false);
 
 
                 delete rp;
@@ -399,15 +406,6 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
             }
         }
     }
-    //    printf("RenderParts(final) %d right now\n",previousBar);
-
-    renderNotesToMidi(midiDriver);
-
-    // renderParts.clear();
-    //    Utils::deleteVector(currentRenderParts);
-    //    currentRenderParts.clear();
-
-//    midiDriver->mute();
 
 
     delete arranger;
@@ -490,29 +488,13 @@ void SongCreator::initMidi(MidiDriver *midiDriver)
 
 }
 
-void SongCreator::renderNotesToMidi(MidiDriver *midiDriver) {
+void SongCreator::renderNotesToMidi(MidiDriver *midiDriver,int metrum) {
     int offset = 192;
-    int metrum = 4;
 
-    /*    vector<Note *> currentNotes;
-
-        for (std::vector<RenderPart *>::iterator crp = currentRenderParts->begin(); crp != currentRenderParts->end(); ++crp)
-        {
-
-            vector<Note *> *cnotes = (*crp)->getNotes();
-
-            for (std::vector<Note *>::iterator cn = cnotes->begin(); cn != cnotes->end(); ++cn) {
-                currentNotes.push_back(*cn);
-            }
-
-
-        }
-        */
     vector<Note *> *currentNotes = song->getNotes();
 
     song->sortNotes();
 //    printf("SongCreator::renderNotesToMidi render %d notes\n", currentNotes->size());
-
 
 
     for (std::vector<Note *>::iterator n = currentNotes->begin(); n != currentNotes->end(); ++n)
@@ -540,11 +522,9 @@ void SongCreator::renderNotesToMidi(MidiDriver *midiDriver) {
 
         midiDriver->sendNoteOn(onTime, trackIndex, channel, note, velocity);
         midiDriver->sendNoteOff(offTime, trackIndex, channel, note, velocity);
-        //            midiDriver->process(false);
 
     }
 
-    //    midiDriver->process(false);
     song->clearNotes();
 
 }

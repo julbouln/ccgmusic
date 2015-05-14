@@ -47,6 +47,7 @@ int Part::getScale() {
  return scale;
 }
 void Part::setScale(int scale) {
+//	printf("setScale %d\n", scale);
  this->scale = scale;
  currentScale = MusicScript::getScaleOffsets(scale);
 }
@@ -68,6 +69,7 @@ void Part::addEvent(Time start,Time end,int chromaticNote) {
 int Part::computePitch(int scaleNote) {
  int scaleIndex = scaleNote - 1;
  int octaveOffset = 0;
+ int pitch = 0;
 
  while(scaleIndex < 0){
      scaleIndex += 7;
@@ -78,7 +80,11 @@ int Part::computePitch(int scaleNote) {
      ++octaveOffset;
  }
 
- return Part::CHROMATIC_BASE + transpose + currentScale[scaleIndex] + 12 * octaveOffset;
+ pitch=Part::CHROMATIC_BASE + transpose + currentScale[scaleIndex] + 12 * octaveOffset;
+
+// printf("ComputePitch %d %d %d %d -> %d\n",scaleIndex, scale,currentScale[scaleIndex],scaleNote,pitch);
+
+ return pitch;
 }
 int* Part::getScaleOffsets() {
  return currentScale;

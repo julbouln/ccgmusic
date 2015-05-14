@@ -1,32 +1,29 @@
 #include "SimpleRandomRythm.h"
-void SimpleRandomRythm::Add(UniquePhrase *up, Time t1, Time t2)
-{
-    up->addEvent(t1, t2);
-}
+
 void SimpleRandomRythm::generateRythm(UniquePhrase *up)
 {
     int bars = up->getBars();
     if (up->endsSentence())
     {
-        --bars;
+        bars--;
     }
-    int przednutki = this->rndInt(0, 4);
-    if (przednutki == 0)
+    int appoggiatura = this->rndInt(0, 4);
+    if (appoggiatura == 0)
     {
-        this->Add(up, this->createTime(-1, up->getMetrum() - 1), this->createTime(-1, up->getMetrum()));
+        up->addEvent(this->createTime(-1, up->getMetrum() - 1), this->createTime(-1, up->getMetrum()));
     }
     else
     {
-        if (przednutki == 1)
+        if (appoggiatura == 1)
         {
-            this->Add(up, this->createTime(-1, up->getMetrum() - 0.5), this->createTime(-1, up->getMetrum()));
+            up->addEvent(this->createTime(-1, up->getMetrum() - 0.5), this->createTime(-1, up->getMetrum()));
         }
         else
         {
-            if (przednutki == 2)
+            if (appoggiatura == 2)
             {
-                this->Add(up, this->createTime(-1, up->getMetrum() - 1), this->createTime(-1, up->getMetrum() - 0.5));
-                this->Add(up, this->createTime(-1, up->getMetrum() - 0.5), this->createTime(-1, up->getMetrum()));
+                up->addEvent(this->createTime(-1, up->getMetrum() - 1), this->createTime(-1, up->getMetrum() - 0.5));
+                up->addEvent(this->createTime(-1, up->getMetrum() - 0.5), this->createTime(-1, up->getMetrum()));
             }
         }
     }
@@ -37,12 +34,12 @@ void SimpleRandomRythm::generateRythm(UniquePhrase *up)
             int t = this->rndInt(0, 1);
             if (t == 0)
             {
-                this->Add(up, this->createTime(i, b), this->createTime(i, b + 1));
+                up->addEvent(this->createTime(i, b), this->createTime(i, b + 1));
             }
             if (t == 1)
             {
-                this->Add(up, this->createTime(i, b), this->createTime(i, b + 0.5));
-                this->Add(up, this->createTime(i, b + 0.5), this->createTime(i, b + 1));
+                up->addEvent(this->createTime(i, b), this->createTime(i, b + 0.5));
+                up->addEvent(this->createTime(i, b + 0.5), this->createTime(i, b + 1));
             }
         }
     }

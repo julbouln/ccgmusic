@@ -3,10 +3,16 @@
 
 int MusicScript::scales[][7] = {
     { 0, 2, 4, 5, 7, 9, 11 }, // MAJOR_SCALE
+
+    // see http://en.wikipedia.org/wiki/Mode_%28music%29
+    { 0, 2, 4, 5, 7, 9, 11 }, // IONIAN_SCALE
+    { 0, 2, 3, 5, 7, 9, 10 }, // DORIAN_SCALE 
+    { 0, 1, 3, 5, 7, 8, 10 }, // PHRYGIAN_SCALE 
+    { 0, 2, 4, 6, 7, 9, 11 }, // LYDIAN_SCALE 
+    { 0, 2, 4, 5, 7, 9, 10 }, // MIXOLYDIAN_SCALE 
     { 0, 2, 3, 5, 7, 8, 10 }, // AEOLIEN_SCALE
     { 0, 1, 3, 5, 6, 8, 10 }, // LOCRIAN_SCALE
-    { 0, 2, 4, 5, 7, 9, 11 }, // IONIAN_SCALE
-    { 0, 2, 4, 6, 7, 9, 11 }, // LYDIAN_SCALE 
+    
     { 0, 2, 3, 5, 7, 8, 10 }, // NATURAL_MINOR_SCALE
     { 0, 2, 3, 5, 7, 8, 11 }, // HARMONIC_MINOR_SCALE
     { 0, 2, 3, 5, 7, 9, 11 }, // MELODIC_MINOR_SCALE

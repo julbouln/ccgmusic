@@ -198,6 +198,7 @@ int UniquePart::getEventPitch(int index)
 }
 int UniquePart::setEventPitch(int index, int pitch)
 {
+//    printf("UniquePart::setEventPitch %d %d\n",index,pitch);
     events.at(index)->setPitch(pitch);
     return pitch;
 }
@@ -312,6 +313,7 @@ int UniquePart::alignPitchToHarm(int eventIndex, int scaleNote)
             scaleDegree = Utils::positiveMod(i - 1, 7);
             if (Utils::contains(scaleDegrees, scaleDegree))
             {
+//                printf("scaleDegree %d\n",scaleDegree);
                 int distance = abs(i - scaleNote);
                 if (distance < closestDistance)
                 {
@@ -322,11 +324,14 @@ int UniquePart::alignPitchToHarm(int eventIndex, int scaleNote)
         }
     }
     
+//        printf("alignPitchToHarm %d %d : %d %d\n",eventIndex,scaleNote,scaleDegree,closestNote);
+
     delete scaleDegrees;
     return closestNote;
 }
 void UniquePart::addEvent(Event *event)
 {
+//    printf("UniquePart::addEvent %d\n",event->getPitch());
     events.push_back(event);
 }
 Harmonic *UniquePart::getEventHarmonic(Event *event)

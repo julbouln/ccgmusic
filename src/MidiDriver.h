@@ -19,8 +19,7 @@ class MidiDriver {
 	float ticksToTime(long t);
 
 public:
-	    bool stopAsap;
-
+	bool stopAsap;
 
 	MidiDriver();
 	virtual ~MidiDriver() {};
@@ -89,8 +88,7 @@ class QueueMessage {
         {
             int size=this->getQueueSize();
             if(size > max_queue_size) {
-                        //printf("wait for driver queue %d\n",size);
-                        this->msleep(100);
+                this->msleep(100);
             } else {
                 break;
             }
@@ -100,14 +98,12 @@ class QueueMessage {
 	}
 
 	void launch() {
-	while(this->getQueueSize() <= min_queue_size)
-    {
-      this->msleep(10);
-    }
-    //printf("launch process\n");
-    this->process(true);
-
-    this->mute();
+		while(this->getQueueSize() <= min_queue_size)
+    	{
+      		this->msleep(10);
+	    }
+        this->process(true);
+	    this->mute();
 	}
 
 	virtual void mutexLock() {};
@@ -115,10 +111,11 @@ class QueueMessage {
 
 
 	virtual void clear() {
-		 while (!queueMessages.empty()) {
+		while (!queueMessages.empty()) {
     	    queueMessages.pop();
 	    }
 	};
+
 	int min_queue_size;
 	int max_queue_size;
 

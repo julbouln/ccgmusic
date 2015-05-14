@@ -32,6 +32,7 @@ void *createSong(void *id) {
 
 void sigInterruptHandler(int sig) {
     midiDriver->stopAsap=true;
+
 //    exit(1);
 }
 
@@ -133,6 +134,8 @@ int main(int argc, char *argv[])
 
         midiDriver = new MidiRt(port);
         midiDriver->mute();
+        signal (SIGINT, &sigInterruptHandler);
+
         #ifdef PTHREAD
         pthread_t drvThread;
         pthread_t sngThread;
@@ -141,9 +144,9 @@ int main(int argc, char *argv[])
                           processMidi, NULL);
 
         #endif
-                songCreator->createSong(seed, tempo, structureScript, arrangementScript, midiDriver);
 
-        signal (SIGINT, &sigInterruptHandler);
+        songCreator->createSong(seed, tempo, structureScript, arrangementScript, midiDriver);
+
 
         
         #ifdef PTHREAD
@@ -152,10 +155,11 @@ int main(int argc, char *argv[])
         #else
         midiDriver->launch();
         #endif
+        midiDriver->mute();
 
     }
 
-
+    delete midiDriver;
     delete songCreator;
 
 

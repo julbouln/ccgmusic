@@ -16,7 +16,7 @@ void ChordMapHarmony::generateHarmony(UniquePart *up) {
  if(this->rndInt(0,2) == 0) {
   reset = 2;
  }
- this->resetSeed();
+// this->resetSeed();
  int cur_chord = 1;
  if(this->rndInt(0,3) == 0) {
   cur_chord = this->rndInt(1,6);
@@ -24,15 +24,22 @@ void ChordMapHarmony::generateHarmony(UniquePart *up) {
  int r = 0;
  for(int i = 0;i < up->getBars() - 2;++i ){
        if(r == 0 || this->rndInt(0,2) != 0) {
-           up->addHarmonic(this->createTime(i,0),cur_chord,new int[3]{1,3,5});
+           up->addHarmonic(this->createTime(i,0),cur_chord,MusicScript::triadChord(MAJOR_TRIAD_CHORD));
            if(this->rndInt(0,1) == 0) {
                if(this->rndInt(0,1) == 0) {
-                   up->addHarmonic(this->createTime(i,this->rndInt(1,up->getMetrum() - 1)),cur_chord,new int[4]{1,3,5,this->rndInt(6,7)});
+                  if(this->rndInt(0,1)==0) {
+                   up->addHarmonic(this->createTime(i,this->rndInt(1,up->getMetrum() - 1)),cur_chord,MusicScript::quadChord(MAJ7_QUAD_CHORD));
+                  }
+                  else
+                  {
+                   up->addHarmonic(this->createTime(i,this->rndInt(1,up->getMetrum() - 1)),cur_chord,MusicScript::quadChord(MAJ6_QUAD_CHORD));
+
+                  }
                    cur_chord = map[cur_chord - 1][this->rndInt(0,Utils::arrayLength(map[cur_chord - 1]) - 1)];
         }
         else {
                    cur_chord = map[cur_chord - 1][this->rndInt(0,Utils::arrayLength(map[cur_chord - 1]) - 1)];
-                   up->addHarmonic(this->createTime(i,this->rndInt(1,up->getMetrum() - 1)),cur_chord,new int[3]{1,3,5});
+                   up->addHarmonic(this->createTime(i,this->rndInt(1,up->getMetrum() - 1)),cur_chord,MusicScript::triadChord(MAJOR_TRIAD_CHORD));
                    cur_chord = map[cur_chord - 1][this->rndInt(0,Utils::arrayLength(map[cur_chord - 1]) - 1)];
         }
       }
@@ -40,23 +47,23 @@ void ChordMapHarmony::generateHarmony(UniquePart *up) {
        cur_chord = map[cur_chord - 1][this->rndInt(0,Utils::arrayLength(map[cur_chord - 1]) - 1)];
       }
     }
-       ++r;
+       r++;
        if(r >= reset) {
            r = 0;
-           this->resetSeed();
+//           this->resetSeed();
            cur_chord = 1;
            if(this->rndInt(0,3) == 0) {
-       cur_chord = this->rndInt(1,6);
-      }
+             cur_chord = this->rndInt(1,6);
+          }
     }
  }
  if(this->rndInt(0,1) == 0) {
-  up->addHarmonic(this->createTime(up->getBars() - 2,0),5,new int[3]{1,3,5});
+  up->addHarmonic(this->createTime(up->getBars() - 2,0),5,MusicScript::triadChord(MAJOR_TRIAD_CHORD));
  }
  else {
-  up->addHarmonic(this->createTime(up->getBars() - 2,0),5,new int[4]{1,3,5,7});
+  up->addHarmonic(this->createTime(up->getBars() - 2,0),5,MusicScript::quadChord(MAJ7_QUAD_CHORD));
  }
- up->addHarmonic(this->createTime(up->getBars() - 1,0),1,new int[3]{1,3,5});
+ up->addHarmonic(this->createTime(up->getBars() - 1,0),1,MusicScript::triadChord(MAJOR_TRIAD_CHORD));
 
   Utils::deleteVector(map);
 

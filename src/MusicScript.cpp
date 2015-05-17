@@ -1,5 +1,23 @@
 #include "MusicScript.h"
 
+int MusicScript::triadChords[][3] = {
+    {1,3,5}, // MAJOR_TRIAD_CHORD
+    {1,5,7}, // MAJ7_TRIAD_CHORD
+    {1,2,5}, // SUS2_TRIAD_CHORD
+    {1,5,6}, // SUS4_TRIAD_CHORD
+
+};
+
+int MusicScript::quadChords[][4] = {
+    {1,3,5,7}, // MAJ7_QUAD_CHORD
+    {1,3,5,6}, // MAJ6_QUAD_CHORD
+
+};
+
+int MusicScript::fifthChords[][5] = {
+    {1,3,5,6,7}, // MAJ7_FIFTH_CHORD
+};
+
 
 int MusicScript::scales[][7] = {
     { 0, 2, 4, 5, 7, 9, 11 }, // MAJOR_SCALE
@@ -16,7 +34,27 @@ int MusicScript::scales[][7] = {
     { 0, 2, 3, 5, 7, 8, 10 }, // NATURAL_MINOR_SCALE
     { 0, 2, 3, 5, 7, 8, 11 }, // HARMONIC_MINOR_SCALE
     { 0, 2, 3, 5, 7, 9, 11 }, // MELODIC_MINOR_SCALE
-    { 0, 2, 4, 6, 7, 9, 10 }  // ACCOUSTIC_SCALE
+    { 0, 2, 4, 6, 7, 9, 10 }, // ACCOUSTIC_SCALE
+
+    { 0, 2, 3, 5, 6, 9, 10 }, // BLUES_SCALE
+    { 0, 2, 3, 6, 7, 8, 10 }, // GYPSY_SCALE
+    { 0, 1, 4, 5, 7, 8, 11 }, // DOUBLE_HARMONIC_SCALE
+    { 0, 1, 4, 6, 8, 10, 11 }, // ENIGMATIC_SCALE
+    { 0, 1, 4, 5, 7, 8, 11 }, // FLAMENCO_SCALE
+
+    { 0, 1, 3, 5, 7, 8, 11 }, // NEAPOLITAN_MINOR_SCALE
+    { 0, 1, 4, 5, 7, 9, 11 }, // NEAPOLITAN_MAJOR_SCALE
+    { 0, 1, 3, 5, 7, 9, 10 }, // NEAPOLITAN_DORIAN_SCALE
+    { 0, 1, 4, 5, 7, 9, 10 }, // NEAPOLITAN_MIXOLYDIAN_SCALE
+
+    { 0, 1, 4, 5, 6, 9, 10 }, // ORIENTAL_SCALE
+    { 0, 2, 4, 5, 6, 9, 10 }, // ARABIAN_SCALE
+    { 0, 1, 4, 5, 7, 8, 11 }, // EGYPTIAN_SCALE
+    { 0, 1, 4, 5, 6, 8, 11 }, // PERSIAN_SCALE
+
+    { 0, 2, 3, 6, 7, 8, 11 }, // HUNGARIAN_MINOR
+    { 0, 3, 4, 6, 7, 9, 10 }, // HUNGARIAN_MAJOR
+
   };
 
 int* MusicScript::getScaleOffsets(int scale)
@@ -29,8 +67,28 @@ int* MusicScript::getScaleOffsets(int scale)
         offsets = scales[MAJOR_SCALE];
     }
 
+//    offsets = scales[ENIGMATIC_SCALE];
     return offsets;
 }
+
+vector<int> MusicScript::triadChord(int chord)
+{
+    vector<int> r(MusicScript::triadChords[chord],MusicScript::triadChords[chord]+3);
+    return r;
+}
+
+vector<int> MusicScript::quadChord(int chord)
+{
+    vector<int> r(MusicScript::quadChords[chord],MusicScript::quadChords[chord]+4);
+    return r;
+}
+
+vector<int> MusicScript::fifthChord(int chord)
+{
+    vector<int> r(MusicScript::fifthChords[chord],MusicScript::fifthChords[chord]+5);
+    return r;
+}
+
 
 MusicScript::~MusicScript()
 {
@@ -72,13 +130,17 @@ int MusicScript::getRandomScale()
     int result = this->rndInt(0, SCALES_COUNT-1);
     return result;
 }
+
+
 int MusicScript::getSongTempo()
 {
     return song->getTempo();
 }
+
+
 int MusicScript::getRandom(int patches[])
 {
-    return patches[this->rndInt(0, Utils::arrayLength(patches) - 1)];
+    return patches[this->rndInt(0, ARRAY_LENGTH(patches) - 1)];
 }
 
 MusicScript::Pattern *MusicScript::newPattern(double l, int pit[], double pat[], int v1, int v2)
@@ -97,11 +159,11 @@ void MusicScript::realizePattern(RenderPart *p, Pattern *pat)
     {
         for (double m = 0; m < p->getUniquePart()->getMetrum(); m += pat->Length)
         {
-            for (int n = 0; n < Utils::arrayLength(pat->pattern); ++n)
+            for (int n = 0; n < ARRAY_LENGTH(pat->pattern); ++n)
             {
                 if (pat->pattern[n] + m < p->getUniquePart()->getMetrum())
                 {
-                    for (int q = 0; q < Utils::arrayLength(pat->Pitches); ++q)
+                    for (int q = 0; q < ARRAY_LENGTH(pat->Pitches); ++q)
                     {
                         p->addPercNote(this->createTime(i, m + pat->pattern[n]), this->createTime(i, m + pat->pattern[n] + 0.1), pat->Pitches[q], this->rndInt(pat->velfrom, pat->velto));
                     }

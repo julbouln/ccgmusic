@@ -28,7 +28,7 @@ int PianoAdvancedClassical::ArrangeClassical1(Song *s) {
  }
  int *seeds = new int[5];
  int *off = new int[5];
- for(int i = 0;i < Utils::arrayLength(seeds);++i ){
+ for(int i = 0;i < 5;++i ){
        seeds[i] = this->rndInt(0,INT_MAX);
        off[i] = this->rndInt(0,1);
  }

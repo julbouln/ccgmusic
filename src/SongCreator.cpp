@@ -1,6 +1,7 @@
 #include "SongCreator.h"
 #include <unistd.h>
 
+#define RVERBOSE 1
 
 SongCreator::SongCreator()
 {
@@ -20,18 +21,18 @@ SongCreator::SongCreator()
     harmonies["Advanced Random Harmony"] = SongCreator::makeHarmony<AdvancedRandomHarmony>;
     harmonies["Chord Map Harmony"] = SongCreator::makeHarmony<ChordMapHarmony>;
     harmonies["Random Riff Harmony"] = SongCreator::makeHarmony<RandomRiffHarmony>;
-    harmonies["Simple Fixed Harmony"] = SongCreator::makeHarmony<SimpleFixedHarmony>;
+//    harmonies["Simple Fixed Harmony"] = SongCreator::makeHarmony<SimpleFixedHarmony>;
     harmonies["Simple Jazz Harmony"] = SongCreator::makeHarmony<SimpleJazzHarmony>;
     harmonies["Simple Random Harmony"] = SongCreator::makeHarmony<SimpleRandomHarmony>;
 
     melodies["Random Phrased Melody"] = SongCreator::makeMelodyCreator<RandomPhrasedMelody>;
-    melodies["Simple Random Melody"] = SongCreator::makeMelodyCreator<SimpleRandomMelody>;
+//    melodies["Simple Random Melody"] = SongCreator::makeMelodyCreator<SimpleRandomMelody>;
     melodies["Wide Random Melody"] = SongCreator::makeMelodyCreator<WideRandomMelody>;
     melodies["Markov Melody"] = SongCreator::makeMelodyCreator<MarkovMelody>;
 
     ornamentors["No Ornamentation"] = SongCreator::makeOrnamentor<NoOrnamentation>;
     ornamentors["Light Randomizer"] = SongCreator::makeOrnamentor<LightRandomizer>;
-//    ornamentors["Simple Ornamentation"] = SongCreator::makeOrnamentor<SimpleOrnamentation>;
+//     ornamentors["Simple Ornamentation"] = SongCreator::makeOrnamentor<SimpleOrnamentation>;
 
     arrangers["Basic Test Purpose"] = SongCreator::makeArranger<BasicTestPurposeRender>;
     arrangers["Piano Simple Arrangement"] = SongCreator::makeArranger<PianoSimpleArrangement>;
@@ -42,8 +43,10 @@ SongCreator::SongCreator()
     arrangers["Simple Ballad Style Arrangement"] = SongCreator::makeArranger<SimpleBalladStyleArrangement>;
     arrangers["Simple Dance Style Arrangement"] = SongCreator::makeArranger<SimpleDanceStyleArrangement>;
     arrangers["Simple Instrumental March Arrangement"] = SongCreator::makeArranger<SimpleInstrumentalMarchArrangement>;
+    arrangers["Light Instrumental March Arrangement"] = SongCreator::makeArranger<LightInstrumentalMarchArrangement>;
     arrangers["Simple Latin Style Arrangement"] = SongCreator::makeArranger<SimpleLatinStyleArrangement>;
     arrangers["Simple Punk Rock Style Arrangement"] = SongCreator::makeArranger<SimplePunkRockStyleArrangement>;
+    arrangers["Random Electro Rock"] = SongCreator::makeArranger<RandomElectroRock>;
 
     renderers["Accented Melody"] = SongCreator::makeRenderer<AccentedMelody>;
     renderers["Arpeggio Chords"] = SongCreator::makeRenderer<ArpeggioChords>;
@@ -70,6 +73,7 @@ SongCreator::SongCreator()
     renderers["Quick Intro Bass"] = SongCreator::makeRenderer<QuickIntroBass>;
     renderers["Random Bass"] = SongCreator::makeRenderer<RandomBass>;
     renderers["Random Bass ( Extended )"] = SongCreator::makeRenderer<RandomBassExtended>;
+    renderers["Drums Euclidean"] = SongCreator::makeRenderer<DrumsEuclidean>;
     renderers["Shortest Way Chords Simple"] = SongCreator::makeRenderer<ShortestWayChordsSimple>;
     renderers["Shortest Way Chords Smooth"] = SongCreator::makeRenderer<ShortestWayChordsSmooth>;
     renderers["Simple Bass"] = SongCreator::makeRenderer<SimpleBass>;
@@ -135,7 +139,9 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
     //structureGenerator.setSong(song);
     structureGenerator->setSeed(seed);
     structureGenerator->generateStructure(song);
-    //        printf("Structure: script:%s seed:%d\n",structureScript.c_str(),seed);
+    #ifdef RVERBOSE
+            printf("Structure: script:%s seed:%d\n",structureScript.c_str(),seed);
+    #endif
     delete structureGenerator;
 
     for (int i = 0; i < song->getUniqueParts(); ++i )
@@ -145,9 +151,9 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
         int innerStructureSeed = up->getScriptStructureSeed();
         innerStructureGenerator->setSeed(innerStructureSeed);
         innerStructureGenerator->generateInnerStructure(up);
-
-        //        printf("InnerStructure: script:%s seed:%d\n",up->getScriptStructure().c_str(), innerStructureSeed);
-
+    #ifdef RVERBOSE
+        printf("InnerStructure: script:%s seed:%d\n",up->getScriptStructure().c_str(), innerStructureSeed);
+    #endif
         delete innerStructureGenerator;
     }
 
@@ -208,10 +214,12 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
     {
         UniquePart *up = song->getUniquePart(i);
          string scriptRhythm = up->getScriptRhythm();
-//        string scriptRhythm = "Simple Swing Rythm";
+//        string scriptRhythm = "Simple Random Rythm";
 
         int rythmSeed = up->getScriptRhythmSeed();
-//        printf("Rhythm part:%d script:%s seed:%d\n", i, scriptRhythm.c_str(), rythmSeed);
+            #ifdef RVERBOSE
+            printf("Rhythm part:%d script:%s seed:%d\n", i, scriptRhythm.c_str(), rythmSeed);
+            #endif
 
         for (int j = 0; j < up->getUniquePhrases(); ++j    )
         {
@@ -265,8 +273,9 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
 
         HarmonyGenerator *harmony = harmonies.at(scriptHarmony)();
         harmony->setSeed(harmonySeed);
-//        printf("Harmony part:%d script:%s seed:%d\n", i, scriptHarmony.c_str(), harmonySeed);
-
+        #ifdef RVERBOSE
+          printf("Harmony part:%d script:%s seed:%d\n", i, scriptHarmony.c_str(), harmonySeed);
+        #endif
         harmony->generateHarmony(up);
 
         delete harmony;
@@ -286,8 +295,9 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
 //       string scriptMelody = "Markov Melody";
 
         int melodySeed = up->getScriptMelodySeed();
-//        printf("Melody part:%d script:%s seed:%d\n", i, scriptMelody.c_str(), melodySeed);
-
+        #ifdef RVERBOSE
+            printf("Melody part:%d script:%s seed:%d\n", i, scriptMelody.c_str(), melodySeed);
+        #endif
         MelodyCreator *melody = melodies.at(scriptMelody)();
         melody->setSeed(melodySeed);
         melody->createMelody(up);
@@ -303,8 +313,9 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
 //        string scriptOrnamentation = "No Ornamentation";
 
         int ornamentationSeed = uniquePart->getScriptOrnamentationSeed();
-//        printf("Ornamentation part:%d script:%s seed:%d\n", i,scriptOrnamentation.c_str(), ornamentationSeed);
-
+        #ifdef RVERBOSE
+            printf("Ornamentation part:%d script:%s seed:%d\n", i,scriptOrnamentation.c_str(), ornamentationSeed);
+        #endif
         Ornamentor *ornamentor = ornamentors.at(scriptOrnamentation)();
         ornamentor->setSeed(ornamentationSeed);
         ornamentor->ornament(uniquePart, part);

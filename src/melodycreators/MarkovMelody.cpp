@@ -10,23 +10,22 @@ void MarkovMelody::updateChain(uint8_t a, uint8_t b, uint8_t c, uint8_t d)
 
 uint8_t MarkovMelody::chooseNote(uint8_t a, uint8_t b, uint8_t c){
   
-//  count the total hits in the relevant chain 
+  //  count the total hits in the relevant chain 
   int total=0;
   for (uint8_t y=0;y<MARKOV_CHAIN_SIZE;y++){
     total=total+markov[a][b][c][y]; 
   }
 
-// pick and return a new number, based on weighted dice throw 
-int running_total=0;
-int random_number = this->rndInt(0,total);
-for( uint8_t i=0; i<MARKOV_CHAIN_SIZE; i++){
-  running_total=running_total+markov[a][b][c][i];
-  if (random_number<=running_total){
-    return i;
-    break;
+  // pick and return a new number, based on weighted dice throw 
+  int running_total=0;
+  int random_number = this->rndInt(0,total);
+  for( uint8_t i=0; i<MARKOV_CHAIN_SIZE; i++){
+    running_total=running_total+markov[a][b][c][i];
+    if (random_number<=running_total){
+      return i;
+      break;
+    }
   }
-}
-  
 }
 
 void MarkovMelody::createMelody(UniquePart *up)
@@ -56,7 +55,7 @@ void MarkovMelody::createMelody(UniquePart *up)
         note_store[3] = chooseNote(note_store[0],note_store[1],note_store[2]);
 
         note=note_store[3];
-//        note = up->alignPitchToHarm(i, note);
+        note = up->alignPitchToHarm(i, note);
         note = up->setEventPitch(i, note);
 
 //        printf("ADD NOTE %d\n",note);

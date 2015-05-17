@@ -1,9 +1,8 @@
 #include "PunkGuitarChords.h"
 
 
-bool *PunkGuitarChords::GenerateAccents(RenderPart *p, double speed, bool first)
+bool *PunkGuitarChords::GenerateAccents(int count, double speed, bool first)
 {
-    int count = (int)(p->getUniquePart()->getMetrum() / speed);
 //    printf("PunkGuitarChords::GenerateAccents: %f %d\n",speed,count);
 
     bool *accents = new bool[count];
@@ -124,15 +123,17 @@ void PunkGuitarChords::DoMode1(RenderPart *p)
         reset = 4;
     }
     this->resetSeed();
-    bool *accents = this->GenerateAccents(p, speed, true);
+    
+    int accentsLength = (int)(p->getUniquePart()->getMetrum() / speed);
+    bool *accents = this->GenerateAccents(accentsLength, speed, true);
     int reset_counter = 0;
     for (int i = p->getStartBar(); i < p->getEndBar(); i++)
     {
         Time t = this->createTime(i, 0);
-        for (int a = 0; a < Utils::arrayLength(accents); a++)
+        for (int a = 0; a < accentsLength; a++)
         {
             int harm = p->getHarmonic(t);
-            if (wyprz > 0 && a == Utils::arrayLength(accents) - 1)
+            if (wyprz > 0 && a == accentsLength - 1)
             {
                 if (wyprz == 1 || (wyprz == 2 && this->rndInt(0, 1) == 0))
                 {
@@ -151,7 +152,7 @@ void PunkGuitarChords::DoMode1(RenderPart *p)
                 t2 = this->createTime(t.mBar, t.mPos + speed * 0.4);
             }
             this->PlacePunkChord(p, t, t2, vel, harm, accents[a], 0);
-            if (speed_up > 0 && !accents[a] && a == (Utils::arrayLength(accents) - 1))
+            if (speed_up > 0 && !accents[a] && a == (accentsLength - 1))
             {
                 this->PlacePunkChord(p, this->createTime(t.mBar, t.mPos + speed / 2.0), this->createTime(t2.mBar, t2.mPos + speed * 0.4), vel, harm, accents[a], 0);
             }
@@ -164,12 +165,14 @@ void PunkGuitarChords::DoMode1(RenderPart *p)
             this->resetSeed();
             last_harm = -1000;
             delete accents;
-            accents = this->GenerateAccents(p, speed, true);
+            accentsLength = (int)(p->getUniquePart()->getMetrum() / speed);
+            accents = this->GenerateAccents(accentsLength, speed, true);
         }
         else
         {
             delete accents;
-            accents = this->GenerateAccents(p, speed, false);
+            accentsLength = (int)(p->getUniquePart()->getMetrum() / speed);
+            accents = this->GenerateAccents(accentsLength, speed, false);
         }
     }
     delete accents;

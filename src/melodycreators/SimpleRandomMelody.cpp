@@ -19,9 +19,9 @@ void SimpleRandomMelody::createMelody(UniquePart *up)
 
     }
     
-//    int last_note = 1;
+    int last_note = 1;
 
-    int last_note = this->rndInt(0,4);
+//    int last_note = this->rndInt(0,4);
     if(last_note % 2 == 0) {
         last_note+=1;
     }
@@ -42,7 +42,7 @@ void SimpleRandomMelody::createMelody(UniquePart *up)
 
 //    printf("set last note %d\n",last_note);
 
-    last_note = up->alignPitchToHarm(up->getEvents() - 1, last_note);
+//    last_note = up->alignPitchToHarm(up->getEvents() - 1, last_note);
 
     up->setEventPitch(up->getEvents() - 1, last_note);
 }

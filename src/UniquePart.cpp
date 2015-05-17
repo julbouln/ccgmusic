@@ -288,15 +288,16 @@ int UniquePart::getEventBasis(int index)
     Harmonic *harmonic = eventHarmony.at(event);
     return harmonic->getBaseNote();
 }
-void UniquePart::addHarmonic(Time time, int baseNote, int * chordData)
+void UniquePart::addHarmonic(Time time, int baseNote, vector<int> chordData)
 {
+//    printf("addHarmonic %d\n",baseNote);
     harmonics.push_back(new Harmonic(time, baseNote, chordData));
 }
 int UniquePart::alignPitchToHarm(int eventIndex, int scaleNote)
 {
     Event *event = events.at(eventIndex);
     Harmonic *harmonic = eventHarmony.at(event);
-    int *scaleDegrees = harmonic->getScaleDegrees();
+    vector<int> scaleDegrees = harmonic->getScaleDegrees();
     int scaleDegree = Utils::positiveMod(scaleNote - 1, 7);
 
     int closestNote = harmonic->getBaseNote();
@@ -313,7 +314,6 @@ int UniquePart::alignPitchToHarm(int eventIndex, int scaleNote)
             scaleDegree = Utils::positiveMod(i - 1, 7);
             if (Utils::contains(scaleDegrees, scaleDegree))
             {
-//                printf("scaleDegree %d\n",scaleDegree);
                 int distance = abs(i - scaleNote);
                 if (distance < closestDistance)
                 {
@@ -324,9 +324,9 @@ int UniquePart::alignPitchToHarm(int eventIndex, int scaleNote)
         }
     }
     
-//        printf("alignPitchToHarm %d %d : %d %d\n",eventIndex,scaleNote,scaleDegree,closestNote);
+//    printf("alignPitchToHarm %d %d : %d %d\n",eventIndex,scaleNote,scaleDegree,closestNote);
 
-    delete scaleDegrees;
+//    delete scaleDegrees;
     return closestNote;
 }
 void UniquePart::addEvent(Event *event)

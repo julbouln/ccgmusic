@@ -17,12 +17,21 @@ double Utils::getRandomBetween(double lower,double upper) {
 
 bool Utils::contains(int arr[],int value) {
  if(arr != NULL) {
-     for(int i = 0;i < Utils::arrayLength(arr);++i   ){
+     for(int i = 0;i < ARRAY_LENGTH(arr);++i   ){
            if(arr[i] == value) {
                return true;
       }
    }
  }
+ return false;
+}
+
+bool Utils::contains(vector<int> arr,int value) {
+     for(int i = 0;i < arr.size();++i   ){
+           if(arr.at(i) == value) {
+               return true;
+      }
+   }
  return false;
 }
 

@@ -7,25 +7,26 @@
 
 using namespace std;
 class Harmonic {
- int *offsets;
  Time startTime;
  Time endTime;
  int8_t baseNote;
- int *chordData;
+// vector<int> chordData;
+ vector <int> offsets;
+
 public:
  ~Harmonic();
  Harmonic();
  Interval2D toInterval2D(int);
  Harmonic* copy();
- int* getOffsets();
+ vector<int> getOffsets();
  Time getStartTime();
  Time getEndTime();
  int getBaseNote();
- int *getChordData();
+// vector<int> getChordData();
 
  void setEndTime(Time);
- Harmonic(Time,int,int*);
- int* getScaleDegrees();
+ Harmonic(Time,int,vector<int>);
+ vector<int> getScaleDegrees();
  void translate(int);
 };
 #endif // HARMONIC_H

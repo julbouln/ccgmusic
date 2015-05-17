@@ -25,6 +25,7 @@ public:
 private:
 	// one more dimension than the chain size 
 	// if max_count > 256, use int, otherwise use byte 
+	// 6*6*6*6 = 1296 
 	uint8_t markov[MARKOV_CHAIN_SIZE][MARKOV_CHAIN_SIZE][MARKOV_CHAIN_SIZE][MARKOV_CHAIN_SIZE];
 
 	//Holder for notes in play, 

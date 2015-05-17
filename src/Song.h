@@ -26,10 +26,10 @@ class Song : public Seedable
     RenderEvent *latestRenderEvent;
     SongCreator *creator;
 
-     vector<Note*> notes;
+    vector<Note*> notes;
 
 public:
-     vector<RenderEvent*> renderEvents;
+    vector<RenderEvent*> renderEvents;
     vector<Note *> *getNotes();
     void sortNotes();
     void clearNotes();
@@ -53,6 +53,8 @@ public:
     int getPartEndBar(int);
     void addTrack(string, int, int, int, bool);
     void addRenderEvent(string, int, int, int, int, int8_t, Time, float);
+    void addRenderEvent(RenderEvent *);
+
     void setParam(int, int);
     void addTempoMod(Time, double);
     vector<TempoMod *> *getTempoMods();

@@ -31,9 +31,8 @@ vector<Note *> *Song::getNotes()
 
 void Song::clearNotes()
 {
-        Utils::deleteVector(notes);
+    Utils::deleteVector(notes);
     notes.clear();
-
 }
 
 void Song::sortNotes()
@@ -127,14 +126,19 @@ void Song::addTrack(string name, int patch, int vol, int pan, bool percussion)
 {
     tracks.push_back(new Track(name, patch, vol, pan, percussion));
 }
+
+void Song::addRenderEvent(RenderEvent *event) {
+    latestRenderEvent = event;
+    renderEvents.push_back(event);    
+}
+
 void Song::addRenderEvent(string scriptName, int seed, int trackIndex, int initialBar, int finalBar, int8_t octave, Time timeOffset, float volMult)
 {
-    Track *track = tracks.at(trackIndex);
-
     RenderEvent *event = new RenderEvent(scriptName, seed, initialBar, finalBar, octave, timeOffset, volMult, trackIndex);
-    latestRenderEvent = event;
-    renderEvents.push_back(event);
+
+    addRenderEvent(event);
 }
+
 void Song::setParam(int param, int value)
 {
     latestRenderEvent->setParam(param, value);

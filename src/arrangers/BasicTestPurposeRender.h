@@ -7,6 +7,7 @@
 using namespace std;
 class BasicTestPurposeRender : public Arranger {
 public:
+ string getScriptName();
  void arrange(Song*);
 };
 #endif // BASICTESTPURPOSERENDER_H

@@ -39,8 +39,9 @@ void SineVelocitySimpleMelody::render(RenderPart *p)
         delta = 0.25;
     }
     Time t = this->createTime(p->getStartBar(), 0);
-    int *pattern = new int[this->rndInt(3, 8)];
-    for (int i = 0; i < Utils::arrayLength(pattern); ++i )
+    int patternLength=this->rndInt(3, 8);
+    int *pattern = new int[patternLength];
+    for (int i = 0; i < patternLength; ++i )
     {
         pattern[i] = this->rndInt(-1, 1);
         if (this->rndInt(0, 4) == 0)
@@ -55,15 +56,15 @@ void SineVelocitySimpleMelody::render(RenderPart *p)
     {
         int harm = p->getHarmonic(t);
         int pit = this->GetNextPitch(p->getHarmonicEventPitch(harm, 0));
-        if (pattern[n % Utils::arrayLength(pattern)] == 0)
+        if (pattern[n % patternLength] == 0)
         {
             p->addNote(t, this->createTime(t.mBar, t.mPos + delta / 2.0), pit, this->GetVel(al));
         }
-        if (pattern[n % Utils::arrayLength(pattern)] == 1)
+        if (pattern[n % patternLength] == 1)
         {
             p->addNote(t, this->createTime(t.mBar, t.mPos + delta / 2.0), p->alignPitch(pit, 7), this->GetVel(al));
         }
-        if (pattern[n % Utils::arrayLength(pattern)] == -1)
+        if (pattern[n % patternLength] == -1)
         {
             p->addNote(t, this->createTime(t.mBar, t.mPos + delta / 2.0), p->alignPitch(pit, -7), this->GetVel(al));
         }

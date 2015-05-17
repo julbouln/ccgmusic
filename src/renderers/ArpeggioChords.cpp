@@ -1,6 +1,10 @@
 #include "ArpeggioChords.h"
 
 ArpeggioChords::ArpeggioChords() {
+
+
+  
+
   arp.push_back(new int[4] { 0, 2, 1, 2 });
   arp.push_back(new int[4] { 0, 1, 2, 1 });
   arp.push_back(new int[4] { 0, 1, 2, 3 });
@@ -13,10 +17,20 @@ ArpeggioChords::ArpeggioChords() {
   arp.push_back(new int[3] { 0, 2, 4 });
   arp.push_back(new int[8] { 0, 1, 2, 3, 4, 5, 6, 7 });
 
-/*  { { 0, 2, 1, 2 }, { 0, 1, 2, 1 }, { 0, 1, 2, 3 },
-      { 0, 1, 2, 3 }, { 2, 0, 3, 0 }, { 2, 0, 1, 0 },
-      { 0, 1, 2, 3, 2, 1 }, { 0, 1, 2 }, { 0, 2, 3 }, { 0, 2, 4 },
-      { 0, 1, 2, 3, 4, 5, 6, 7 } } */
+/*
+  { 
+                  { 0, 2, 1, 2 }, 
+                  { 0, 1, 2, 1 }, 
+                  { 0, 1, 2, 3 },
+                  { 0, 1, 2, 3 }, 
+                  { 2, 0, 3, 0 }, 
+                  { 2, 0, 1, 0 },
+                  { 0, 1, 2, 3, 2, 1 }, 
+                  { 0, 1, 2 }, 
+                  { 0, 2, 3 }, 
+                  { 0, 2, 4 },
+                  { 0, 1, 2, 3, 4, 5, 6, 7 } 
+                } */
 }
 void ArpeggioChords::render(RenderPart *p) {
  Time t = this->createTime(p->getStartBar(),0);
@@ -76,7 +90,7 @@ void ArpeggioChords::render(RenderPart *p) {
      note = (note + 1) % Utils::arrayLength(arp[a]);
      t.mPos += basic_tempo;
      if(t.mPos >= p->getUniquePart()->getMetrum()) {
-         ++t.mBar;
+         t.mBar++;
          t.mPos = 0;
          if(reset_on_bar == 1) {
       note = 0;

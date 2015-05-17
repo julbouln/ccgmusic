@@ -3,6 +3,7 @@
 RenderEvent::RenderEvent()
 {
 }
+
 RenderEvent::~RenderEvent() {
 	parameters.clear();
 }

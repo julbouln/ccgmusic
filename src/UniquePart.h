@@ -72,7 +72,7 @@ public:
  void setScriptHarmonySeed(int);
  void setScriptOrnamentationSeed(int);
  int getEventBasis(int);
- void addHarmonic(Time,int,int*);
+ void addHarmonic(Time,int,vector<int>);
  int alignPitchToHarm(int,int);
  void addEvent(Event*);
  Harmonic* getEventHarmonic(Event*);

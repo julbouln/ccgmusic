@@ -54,7 +54,7 @@ int RenderPart::getHarmonic(Time t)
 {
     int metrum = uniquePart->getMetrum();
     double pos = t.getPosition(metrum);
-    for (int i = 0; i < harmonics.size(); ++i )
+    for (int i = 0; i < harmonics.size(); i++ )
     {
         Harmonic *h = harmonics.at(i);
         Interval2D interval = h->toInterval2D(metrum);
@@ -91,28 +91,32 @@ int RenderPart::getHarmonicEvents()
 int RenderPart::getHarmonicComponents(int index)
 {
     Harmonic *harmonic = harmonics.at(index);
-    return Utils::arrayLength(harmonic->getOffsets());
+    return harmonic->getOffsets().size();
 }
 int RenderPart::getHarmonicEventPitch(int index, int chordNoteIndex)
 {
     Harmonic *harmonic = harmonics.at(index);
-    int *offsets = harmonic->getOffsets();
-    int offsetsLength = Utils::arrayLength(offsets);
+    vector<int> offsets = harmonic->getOffsets();
+    int offsetsLength = offsets.size();
     int octaveOffset = 0;
     while (chordNoteIndex < 0)
     {
         chordNoteIndex += offsetsLength;
-        --octaveOffset;
+        octaveOffset--;
     }
     while (chordNoteIndex >= offsetsLength)
     {
         chordNoteIndex -= offsetsLength;
-        ++octaveOffset;
+        octaveOffset++;
     }
     int baseNote = harmonic->getBaseNote();
     int scaleIndex = baseNote + offsets[chordNoteIndex];
 
-    return 12 * renderEvent->getOctave() + octaveOffset * 12 + part->computePitch(scaleIndex);
+    int pitch=12 * renderEvent->getOctave() + octaveOffset * 12 + part->computePitch(scaleIndex);
+
+//    pitch=12+part->computePitch(scaleIndex);
+//    printf("pitch: %%d\n",pitch);
+    return pitch;
 }
 Time RenderPart::getHarmonicEventStart(int index)
 {
@@ -128,20 +132,25 @@ int RenderPart::alignPitch(int chromaticChordNote, int scaleOffset)
 {
     int baseChrScaleNote = part->computePitch(1);
     int *partScaleOffsets = part->getScaleOffsets();
-    int *pitchClasses = new int[Utils::arrayLength(partScaleOffsets)];
-    for (int i = 0; i < Utils::arrayLength(partScaleOffsets); ++i )
+    int partScaleOffsetsLength = 7;
+    int *pitchClasses = new int[partScaleOffsetsLength];
+    for (int i = 0; i < partScaleOffsetsLength; i++ )
     {
         pitchClasses[i] = (baseChrScaleNote + partScaleOffsets[i]) % 12;
     }
     int inPitchClass = chromaticChordNote % 12;
     int theOriginalScaleIndex = 0;
+    /*
     if (!Utils::contains(pitchClasses, inPitchClass))
     {
-        for (int i = chromaticChordNote - 7; i < chromaticChordNote + 8; ++i   )
+//        printf("HAPPEN?\n");
+        // Find the closest scale note
+        for (int i = chromaticChordNote - 7; i < chromaticChordNote + 8; i++   )
         {
         }
     }
-    for (int i = 0; i < Utils::arrayLength(pitchClasses); ++i )
+    */
+    for (int i = 0; i < partScaleOffsetsLength; i++ )
     {
         if (inPitchClass == pitchClasses[i])
         {
@@ -149,13 +158,22 @@ int RenderPart::alignPitch(int chromaticChordNote, int scaleOffset)
             break;
         }
     }
-    int newPitchClass = pitchClasses[Utils::positiveMod(theOriginalScaleIndex + scaleOffset, Utils::arrayLength(pitchClasses))];
-    int increment = scaleOffset > 0 ? 1 : -1;
+
     int currentNote = chromaticChordNote;
+
+    if(scaleOffset==0) {
+        currentNote=0;
+    } else {
+
+    int newPitchClass = pitchClasses[Utils::positiveMod(theOriginalScaleIndex + scaleOffset, partScaleOffsetsLength)];
+    int increment = scaleOffset > 0 ? 1 : -1;
 
     while ((currentNote % 12) != newPitchClass)
     {
+//            printf("alignPitch %d %d %d %d\n",scaleOffset,currentNote,newPitchClass,increment);
+
         currentNote += increment;
+    }
     }
 
     delete pitchClasses;
@@ -216,20 +234,11 @@ int RenderPart::getParam(int param)
 void RenderPart::translateNotes(int bars)
 {
 
-    /*    for (std::vector<Note *>::iterator n = notes.begin(); n != notes.end(); ++n)
-        {
-            (*n)->translate(bars);
-        }
-        */
-    //    printf("translate bars %d\n",bars);
     for (int i = 0; i < song->getNotes()->size(); i++) {
-        //    for (std::vector<Note *>::iterator n = song->getNotes()->begin(); n != song->getNotes()->end(); ++n)
-        //    {
-        //        (*n)->translate(bars);
         Note *note = song->getNotes()->at(i);
-                     int initialStep = renderEvent->getInitialStep() - part->getStartBar();
+        int initialStep = renderEvent->getInitialStep() - part->getStartBar();
         int finalStep = renderEvent->getFinalStep() - part->getStartBar();
-//        if (note->getStart().mBar >= initialStep && note->getStart().mBar <= finalStep)
+        if (note->getStart().mBar >= initialStep && note->getStart().mBar <= finalStep)
         {
 
             note->translate(bars);
@@ -238,21 +247,10 @@ void RenderPart::translateNotes(int bars)
 }
 void RenderPart::translateNotes(Time t)
 {
-    /*    for (std::vector<Note *>::iterator n = notes.begin(); n != notes.end(); ++n)
-        {
-            (*n)->translate(t);
-        }
-        */
-    //        printf("translate time %d/%f\n",t.mBar,t.mPos);
-
     for (int i = 0; i < song->getNotes()->size(); i++) {
-
-        //    for (std::vector<Note *>::iterator n = song->getNotes()->begin(); n != song->getNotes()->end(); ++n)
-        //    {
-        //        (*n)->translate(t);
         Note *note = song->getNotes()->at(i);
 
-                     int initialStep = renderEvent->getInitialStep() - part->getStartBar();
+        int initialStep = renderEvent->getInitialStep() - part->getStartBar();
         int finalStep = renderEvent->getFinalStep() - part->getStartBar();
         if (note->getStart().mBar >= initialStep && note->getStart().mBar <= finalStep)
         {

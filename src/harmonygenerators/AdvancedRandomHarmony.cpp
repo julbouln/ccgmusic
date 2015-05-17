@@ -1,5 +1,6 @@
 #include "AdvancedRandomHarmony.h"
 void AdvancedRandomHarmony::generateHarmony(UniquePart *up) {
+
  int mode = this->rndInt(1,3);
  if(mode == 3) {
   mode = 1;
@@ -26,58 +27,59 @@ void AdvancedRandomHarmony::generateHarmony(UniquePart *up) {
  if(up->getMetrum() == 8) {
   sec_placement = 4;
  }
+
  if(mode == 1) {
-     up->addHarmonic(this->createTime(0,0),1,new int[3]{1,3,5});
+     up->addHarmonic(this->createTime(0,0),1,MusicScript::triadChord(MAJOR_TRIAD_CHORD));
      for(int i = 1;i < up->getBars() - 2;++i   ){
            int basis = this->rndInt(1,7);
            if(basis == 4) {
-       up->addHarmonic(this->createTime(i,0),basis,new int[4]{1,3,5,6});
+       up->addHarmonic(this->createTime(i,0),basis,MusicScript::quadChord(MAJ6_QUAD_CHORD));
       }
       else {
        if(basis == 5) {
-        up->addHarmonic(this->createTime(i,0),basis,new int[5]{1,3,5,6,7});
+        up->addHarmonic(this->createTime(i,0),basis,MusicScript::fifthChord(MAJ7_FIFTH_CHORD));
        }
        else {
-        up->addHarmonic(this->createTime(i,0),basis,new int[3]{1,3,5});
+        up->addHarmonic(this->createTime(i,0),basis,MusicScript::triadChord(MAJOR_TRIAD_CHORD));
        }
       }
    }
-     up->addHarmonic(this->createTime(up->getBars() - 2,0),5,new int[5]{1,3,5,6,7});
-     up->addHarmonic(this->createTime(up->getBars() - 1,0),1,new int[3]{1,3,5});
+     up->addHarmonic(this->createTime(up->getBars() - 2,0),5,MusicScript::fifthChord(MAJ7_FIFTH_CHORD));
+     up->addHarmonic(this->createTime(up->getBars() - 1,0),1,MusicScript::triadChord(MAJOR_TRIAD_CHORD));
  }
  else {
-     up->addHarmonic(this->createTime(0,0),1,new int[3]{1,3,5});
+     up->addHarmonic(this->createTime(0,0),1,MusicScript::triadChord(MAJOR_TRIAD_CHORD));
      for(int i = 0;i < up->getBars() - 1;++i   ){
            if(i != 0) {
                int basis = this->rndInt(1,7);
                if(basis == 4) {
-         up->addHarmonic(this->createTime(i,0),basis,new int[4]{1,3,5,6});
+         up->addHarmonic(this->createTime(i,0),basis,MusicScript::quadChord(MAJ6_QUAD_CHORD));
         }
         else {
          if(basis == 5) {
-          up->addHarmonic(this->createTime(i,0),basis,new int[5]{1,3,5,6,7});
+          up->addHarmonic(this->createTime(i,0),basis,MusicScript::fifthChord(MAJ7_FIFTH_CHORD));
          }
          else {
-          up->addHarmonic(this->createTime(i,0),basis,new int[3]{1,3,5});
+          up->addHarmonic(this->createTime(i,0),basis,MusicScript::triadChord(MAJOR_TRIAD_CHORD));
          }
         }
       }
            if(i != up->getBars() - 2) {
                int basis = this->rndInt(1,7);
                if(basis == 4) {
-         up->addHarmonic(this->createTime(i,sec_placement),basis,new int[4]{1,3,5,6});
-        }
-        else {
-         if(basis == 5) {
-          up->addHarmonic(this->createTime(i,sec_placement),basis,new int[5]{1,3,5,6,7});
-         }
-         else {
-          up->addHarmonic(this->createTime(i,sec_placement),basis,new int[3]{1,3,5});
-         }
+                 up->addHarmonic(this->createTime(i,sec_placement),basis,MusicScript::quadChord(MAJ6_QUAD_CHORD));
+                }
+                else {
+                 if(basis == 5) {
+                  up->addHarmonic(this->createTime(i,sec_placement),basis,MusicScript::fifthChord(MAJ7_FIFTH_CHORD));
+                 }
+                 else {
+                  up->addHarmonic(this->createTime(i,sec_placement),basis,MusicScript::triadChord(MAJOR_TRIAD_CHORD));
+                 }
         }
       }
    }
-     up->addHarmonic(this->createTime(up->getBars() - 2,sec_placement),5,new int[5]{1,3,5,6,7});
-     up->addHarmonic(this->createTime(up->getBars() - 1,0),1,new int[3]{1,3,5});
+     up->addHarmonic(this->createTime(up->getBars() - 2,sec_placement),5,MusicScript::fifthChord(MAJ7_FIFTH_CHORD));
+     up->addHarmonic(this->createTime(up->getBars() - 1,0),1,MusicScript::triadChord(MAJOR_TRIAD_CHORD));
  }
 }

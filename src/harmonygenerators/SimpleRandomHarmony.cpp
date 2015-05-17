@@ -28,7 +28,7 @@ void SimpleRandomHarmony::generateHarmony(UniquePart *up) {
   }
 
   if (mode == 1) {
-    up->addHarmonic(this->createTime(0, 0), 1, new int[3] {1, 3, 5});
+    up->addHarmonic(this->createTime(0, 0), 1, MusicScript::triadChord(MAJOR_TRIAD_CHORD));
     for (int i = 1; i < up->getBars() - 2; ++i   ) {
       int tmp = this->rndInt(0, 2);
       int basis = 1;
@@ -38,13 +38,13 @@ void SimpleRandomHarmony::generateHarmony(UniquePart *up) {
       if (tmp == 2) {
         basis = 5;
       }
-      up->addHarmonic(this->createTime(i, 0), basis, new int[3] {1, 3, 5});
+      up->addHarmonic(this->createTime(i, 0), basis, MusicScript::triadChord(MAJOR_TRIAD_CHORD));
     }
-    up->addHarmonic(this->createTime(up->getBars() - 2, 0), 5, new int[3] {1, 3, 5});
-    up->addHarmonic(this->createTime(up->getBars() - 1, 0), 1, new int[3] {1, 3, 5});
+    up->addHarmonic(this->createTime(up->getBars() - 2, 0), 5, MusicScript::triadChord(MAJOR_TRIAD_CHORD));
+    up->addHarmonic(this->createTime(up->getBars() - 1, 0), 1, MusicScript::triadChord(MAJOR_TRIAD_CHORD));
   }
   else {
-    up->addHarmonic(this->createTime(0, 0), 1, new int[3] {1, 3, 5});
+    up->addHarmonic(this->createTime(0, 0), 1, MusicScript::triadChord(MAJOR_TRIAD_CHORD));
     for (int i = 0; i < up->getBars() - 1; ++i   ) {
       if (i != 0) {
         int tmp = this->rndInt(0, 2);
@@ -55,7 +55,7 @@ void SimpleRandomHarmony::generateHarmony(UniquePart *up) {
         if (tmp == 2) {
           basis = 5;
         }
-        up->addHarmonic(this->createTime(i, 0), basis, new int[3] {1, 3, 5});
+        up->addHarmonic(this->createTime(i, 0), basis, MusicScript::triadChord(MAJOR_TRIAD_CHORD));
       }
       if (i != up->getBars() - 2) {
         int tmp = this->rndInt(0, 2);
@@ -66,10 +66,10 @@ void SimpleRandomHarmony::generateHarmony(UniquePart *up) {
         if (tmp == 2) {
           basis = 5;
         }
-        up->addHarmonic(this->createTime(i, sec_placement), basis, new int[3] {1, 3, 5});
+        up->addHarmonic(this->createTime(i, sec_placement), basis, MusicScript::triadChord(MAJOR_TRIAD_CHORD));
       }
     }
-    up->addHarmonic(this->createTime(up->getBars() - 2, sec_placement), 5, new int[3] {1, 3, 5});
-    up->addHarmonic(this->createTime(up->getBars() - 1, 0), 1, new int[3] {1, 3, 5});
+    up->addHarmonic(this->createTime(up->getBars() - 2, sec_placement), 5, MusicScript::triadChord(MAJOR_TRIAD_CHORD));
+    up->addHarmonic(this->createTime(up->getBars() - 1, 0), 1, MusicScript::triadChord(MAJOR_TRIAD_CHORD));
   }
 }

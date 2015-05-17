@@ -48,8 +48,11 @@
 #include "SimpleBalladStyleArrangement.h"
 #include "SimpleDanceStyleArrangement.h"
 #include "SimpleInstrumentalMarchArrangement.h"
+#include "LightInstrumentalMarchArrangement.h"
 #include "SimpleLatinStyleArrangement.h"
 #include "SimplePunkRockStyleArrangement.h"
+#include "RandomElectroRock.h"
+
 #include "AccentedMelody.h"
 #include "ArpeggioChords.h"
 #include "ArpeggioChordsFast.h"
@@ -75,6 +78,8 @@
 #include "QuickIntroBass.h"
 #include "RandomBass.h"
 #include "RandomBassExtended.h"
+#include "DrumsEuclidean.h"
+
 #include "ShortestWayChordsSimple.h"
 #include "ShortestWayChordsSmooth.h"
 #include "SimpleBass.h"

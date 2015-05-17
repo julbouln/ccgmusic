@@ -2,6 +2,9 @@
 #define UTILS_H
 #include "Common.h"
 
+#define ARRAY_LENGTH(V) sizeof(V)/sizeof(V[0])
+
+
 using namespace std;
 
 class Utils {
@@ -22,6 +25,7 @@ public:
 // static void setSize(int,vector<T>,T);
 
 template <typename T> static int arrayLength(T* a) {return sizeof(a)/sizeof(T);};
+
 template <typename T> static T sampleUniformObjectDistribution(std::vector<T> v) {
 	double rndValue = Utils::getRandomDouble();
 	double d1=v.size() - 1;
@@ -32,6 +36,7 @@ template <typename T> static T sampleUniformObjectDistribution(std::vector<T> v)
 	return v.at(index);
 };
 
+/*
 template <typename T> static T sampleUniformObjectDistribution(T* a) {
 	double rndValue = Utils::getRandomDouble();
 	double d1=Utils::arrayLength(a) - 1;
@@ -41,12 +46,13 @@ template <typename T> static T sampleUniformObjectDistribution(T* a) {
 	
 	return a[index];
 };
-
+*/
 
  static int getRandomInt(int,int);
  static double getRandomDouble();
  static double getRandomBetween(double,double);
  static bool contains(int[],int);
+ static bool contains(vector<int>,int);
 
 static int positiveMod(int,int);
 

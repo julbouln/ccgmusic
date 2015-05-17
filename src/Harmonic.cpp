@@ -1,8 +1,9 @@
 #include "Harmonic.h"
 
 Harmonic::~Harmonic() {
-      delete offsets;
-      delete chordData;
+	offsets.clear();
+//      delete offsets;
+  //    delete chordData;
 }
 
 Harmonic::Harmonic() {
@@ -13,22 +14,14 @@ Interval2D Harmonic::toInterval2D(int metrum) {
 Harmonic* Harmonic::copy() {
  Harmonic *result = new Harmonic();
 
- result->offsets=new int[Utils::arrayLength(offsets)];
- for(int i=0;i < Utils::arrayLength(offsets);i++) {
-      result->offsets[i]=offsets[i];
- }
- 
+ result->offsets=offsets;
  result->startTime = startTime;
  result->endTime = endTime;
  result->baseNote = baseNote;
 
- result->chordData = new int[Utils::arrayLength(chordData)];
-for(int i=0;i < Utils::arrayLength(chordData);i++) {
-      result->chordData[i]=chordData[i];
- }
  return result;
 }
-int* Harmonic::getOffsets() {
+vector<int> Harmonic::getOffsets() {
  return offsets;
 }
 
@@ -41,29 +34,21 @@ Time Harmonic::getEndTime() {
 int Harmonic::getBaseNote() {
  return baseNote;
 }
-int * Harmonic::getChordData() {
- return chordData;
-}
 
 void Harmonic::setEndTime(Time t) {
  endTime = t;
 }
-Harmonic::Harmonic(Time time,int baseNote,int * chordData) {
+Harmonic::Harmonic(Time time,int baseNote,vector<int> chordData) {
  this->startTime = time;
  this->baseNote = baseNote;
- this->chordData = chordData;
- offsets = new int[Utils::arrayLength(chordData)];
-
- for(int i = 0;i < Utils::arrayLength(chordData);++i ){
-      offsets[i] = chordData[i] - 1;
- }
+ for(int i=0;i<chordData.size();i++) 
+ 	offsets.push_back(chordData.at(i) - 1);
 }
-int* Harmonic::getScaleDegrees() {
+vector<int> Harmonic::getScaleDegrees() {
+	vector<int> result;
+	for(int i=0;i<offsets.size();i++) 
+       result.push_back((baseNote - 1 + offsets.at(i)) % 7);
 
- int *result = new int[Utils::arrayLength(offsets)];
- for(int i = 0;i < Utils::arrayLength(offsets);++i ){
-       result[i] = (baseNote - 1 + offsets[i]) % 7;
- }
  return result;
 }
 void Harmonic::translate(int bars) {

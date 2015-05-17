@@ -10,11 +10,13 @@ class PunkGuitarChords : public Renderer {
  int last_harm;
  int low_pit;
 public:
- bool* GenerateAccents(RenderPart*,double,bool);
+ void render(RenderPart*);
+private:
+ bool* GenerateAccents(int,double,bool);
  void PlacePunkChord(RenderPart*,Time,Time,int,int,bool,int);
  void DoMode1(RenderPart*);
  void DoMode2(RenderPart*);
  void DoMode3(RenderPart*);
- void render(RenderPart*);
+	
 };
 #endif // PUNKGUITARCHORDS_H

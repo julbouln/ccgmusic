@@ -63,7 +63,7 @@ void LatinChords::render(RenderPart *p) {
  int note = start_note;
  while(t.mBar < p->getEndBar()){
      Time t2 = t;
-     t.mPos += off[note % Utils::arrayLength(off)] * speed;
+     t.mPos += off[note % 3] * speed;
      if(t.mPos >= p->getUniquePart()->getMetrum()) {
          ++t.mBar;
          t.mPos = start;

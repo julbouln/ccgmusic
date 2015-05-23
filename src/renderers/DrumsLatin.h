@@ -9,8 +9,8 @@ using namespace std;
 class DrumsLatin : public Renderer {
 public:
  int GetVel(Time);
- void RealizePattern(RenderPart*,double,double[],int,int);
- void SpeedUpPattern(double[]);
+ void RealizePattern(RenderPart*,double,vector<double>,int,int);
+ void SpeedUpPattern(vector<double>);
  void render(RenderPart*);
 };
 #endif // DRUMSLATIN_H

@@ -99,24 +99,29 @@ string RandomElectroRock::rndChords() {
  return chords;
 }
 
+int RandomElectroRock::rndStep() {
+	return (4*this->rndInt(1,4));
+}
+
 void RandomElectroRock::arrange(Song *s) {
 
  s->addTrack("Melody", GM_RAND_SYNTH_LEAD,127,64,false);
  s->addTrack("Bass", GM_RAND_BASS, 127, 64,false);
  s->addTrack("Drums", 1,127,64,true);
- s->addTrack("Slow Strings",GM_RAND_STRINGS_ORCHESTRA,127,64,false);
+ s->addTrack("Slow Strings",GM_FRETLESS_BASS,127,64,false);
  s->addTrack("Guitar",GM_RAND_GUITAR,127,64,false);
  s->addTrack("Accomp",GM_RAND_SYNTH_EFFECT,127,64,false);
 
  int snare=this->rndInt(38,40);
- int tom=41;
+ int tom=45;
  int cymbal=49;
  int kick=this->rndInt(35,37);
 
  int cymbals[]={49,57};
- cymbal=cymbals[this->rndInt(0,1)];
+ cymbal=49;
+ //cymbals[this->rndInt(0,1)];
  
- int steps=4*this->rndInt(1,8);//this->rndInt(16,128);
+ int steps=4;//this->rndInt(16,128);
 
  int metrum=this->rndInt(0,2);
  switch(metrum) {
@@ -155,6 +160,7 @@ void RandomElectroRock::arrange(Song *s) {
 
 
  //	printf("arrHint %d\n",s->getPart(i)->getArrHint());
+
  	if (s->getPart(i)->getArrHint() != 0) {
 	    if(accomp==i) {
 			s->addRenderEvent(melody,this->rndInt(0,INT_MAX),5,s->getPartStartBar(i),s->getPartEndBar(i),1,this->createTime(0,0),1);
@@ -164,10 +170,27 @@ void RandomElectroRock::arrange(Song *s) {
  			s->addRenderEvent(melody,this->rndInt(0,INT_MAX),0,s->getPartStartBar(i),s->getPartEndBar(i),0,this->createTime(0,0),1);
 		}
  	}
+/*
+ 	s->addRenderEvent("Drums Euclidean", this->rndInt(0,INT_MAX), 2, s->getPartStartBar(i),s->getPartEndBar(i), 0,this->createTime(0, 0), 1);
+	steps=8;
+	s->setParam(RenderEvent::PULSES, 4);
+    s->setParam(RenderEvent::STEPS, 8);
+    s->setParam(RenderEvent::METRUM, metrum);
+    s->setParam(RenderEvent::VOL, vol);
+    s->setParam(RenderEvent::PITCH, 38);
 
-	s->addRenderEvent(bass, this->rndInt(0,INT_MAX), 1, s->getPartStartBar(i),s->getPartEndBar(i), 0,this->createTime(0, 0), 1);
+ 	s->addRenderEvent("Drums Euclidean", this->rndInt(0,INT_MAX), 2, s->getPartStartBar(i),s->getPartEndBar(i), 0,this->createTime(0, 0), 1);
+	steps=8;
+	s->setParam(RenderEvent::PULSES, 3);
+    s->setParam(RenderEvent::STEPS, 12);
+    s->setParam(RenderEvent::METRUM, metrum);
+    s->setParam(RenderEvent::VOL, vol);
+    s->setParam(RenderEvent::PITCH, 39);
+*/
+	s->addRenderEvent(bass, this->rndInt(0,INT_MAX), 1, s->getPartStartBar(i),s->getPartEndBar(i), 0,this->createTime(0, 0), 0.9);
 
 	s->addRenderEvent("Drums Euclidean", this->rndInt(0,INT_MAX), 2, s->getPartStartBar(i),s->getPartEndBar(i), 0,this->createTime(0, 0), 1);
+	steps=rndStep();
 	s->setParam(RenderEvent::PULSES, this->rndInt(steps/3+1,steps));
     s->setParam(RenderEvent::STEPS, steps);
     s->setParam(RenderEvent::METRUM, metrum);
@@ -176,40 +199,50 @@ void RandomElectroRock::arrange(Song *s) {
 //    s->setParam(RenderEvent::PITCH, 65);
 
 	s->addRenderEvent("Drums Euclidean", this->rndInt(0,INT_MAX), 2, s->getPartStartBar(i),s->getPartEndBar(i), 0,this->createTime(0, 0), 1);
-	s->setParam(RenderEvent::PULSES, this->rndInt(steps/2+1,steps));
+	steps=rndStep();
+	s->setParam(RenderEvent::PULSES, this->rndInt(steps/3+1,steps));
     s->setParam(RenderEvent::STEPS, steps);
     s->setParam(RenderEvent::METRUM, metrum);
     s->setParam(RenderEvent::VOL, vol);
     s->setParam(RenderEvent::PITCH, kick);
-
+    
+/*
 	s->addRenderEvent("Drums Euclidean", this->rndInt(0,INT_MAX), 2, s->getPartStartBar(i),s->getPartEndBar(i), 0,this->createTime(0, 0), 1);
+	steps=rndStep();
 	s->setParam(RenderEvent::PULSES, this->rndInt(steps/8+1,steps/4));
     s->setParam(RenderEvent::STEPS, steps);
     s->setParam(RenderEvent::METRUM, metrum);
     s->setParam(RenderEvent::VOL, vol);
     s->setParam(RenderEvent::PITCH, tom);
+*/
 
 	s->addRenderEvent("Drums Euclidean", this->rndInt(0,INT_MAX), 2, s->getPartStartBar(i),s->getPartEndBar(i), 0,this->createTime(0, 0), 1);
-	s->setParam(RenderEvent::PULSES, this->rndInt(1,steps/6+1));
+	steps=rndStep();
+	s->setParam(RenderEvent::PULSES, this->rndInt(steps/3+1,steps));
     s->setParam(RenderEvent::STEPS, steps);
     s->setParam(RenderEvent::METRUM, metrum);
     s->setParam(RenderEvent::VOL, vol);
 
-    s->setParam(RenderEvent::PITCH, 46);
+    s->setParam(RenderEvent::PITCH, 48);
 
+
+/*
     if(this->rndInt(0,4)>0) {
 		s->addRenderEvent("Drums Euclidean", this->rndInt(0,INT_MAX), 2, s->getPartStartBar(i),s->getPartEndBar(i), 0,this->createTime(0, 0), 1);
-		s->setParam(RenderEvent::PULSES, this->rndInt(1,2));
+		steps=rndStep();
+		s->setParam(RenderEvent::PULSES, 1);
 		s->setParam(RenderEvent::STEPS, steps);
         s->setParam(RenderEvent::METRUM, metrum);
         s->setParam(RenderEvent::VOL, vol);
     	s->setParam(RenderEvent::PITCH, cymbal);
 //    	printf("%d\n",cymbal);
 	}	
+	*/
 
     if(this->rndInt(0,1)==0) {
-		s->addRenderEvent("Simple Bass",this->rndInt(0,INT_MAX),3,s->getPartStartBar(i),s->getPartEndBar(i),1,this->createTime(0,0),0.5);
+//		s->addRenderEvent("Simple Bass",this->rndInt(0,INT_MAX),3,s->getPartStartBar(i),s->getPartEndBar(i),1,this->createTime(0,0),0.5);
 	}
+		s->addRenderEvent("Simple Bass",this->rndInt(0,INT_MAX),3,s->getPartStartBar(i),s->getPartEndBar(i),1,this->createTime(0,0),0.5);
 
     if (s->getPart(i)->getArrHint() == 3) {
     	s->addRenderEvent(chords,this->rndInt(0,INT_MAX),4,s->getPartStartBar(i),s->getPartEndBar(i),0,this->createTime(0,0),0.9);

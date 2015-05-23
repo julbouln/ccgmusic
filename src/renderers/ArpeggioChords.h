@@ -7,7 +7,7 @@
 #include "Time.h"
 using namespace std;
 class ArpeggioChords : public Renderer {
-	vector<int*> arp;
+	vector<vector<int> > arp;
 public:
  ArpeggioChords();
  void render(RenderPart*);

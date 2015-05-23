@@ -8,5 +8,7 @@ using namespace std;
 class SimpleFixedHarmony : public HarmonyGenerator {
 public:
  void generateHarmony(UniquePart*);
+private:
+	vector<int> rndChord();
 };
 #endif // SIMPLEFIXEDHARMONY_H

@@ -5,7 +5,7 @@ void FixedClassical::generateInnerStructure(UniquePart* up) {
  up->getSentence(1)->setPhrases(2);
  up->setUniquePhrases(this->rndInt(1,4));
 
- for(int i = 0;i < up->getUniquePhrases();++i ){
+ for(int i = 0;i < up->getUniquePhrases();i++){
    up->getUniquePhrase(i)->setBars(2);
  }
  if(up->getUniquePhrases() == 1) {

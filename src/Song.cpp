@@ -63,19 +63,20 @@ vector<Track *> *Song::getTracks()
 {
     return &tracks;
 }
+
+
+
 void Song::setUniqueParts(int count)
 {
-    for (int i = 0; i < count; i++)
-    {
-        uniqueParts.push_back(new UniquePart());
-    }
-
     this->setSeed(seed);
 
-    for (std::vector<UniquePart *>::iterator up = uniqueParts.begin(); up != uniqueParts.end(); ++up)
-    {
-        (*up)->randomize(this);
-    }
+        for (int i = uniqueParts.size(); i < count-uniqueParts.size(); i++)
+        {
+            UniquePart *up=new UniquePart();
+            up->randomize(this);
+            uniqueParts.push_back(up);
+
+        }
 
 }
 int Song::getUniqueParts()
@@ -84,6 +85,13 @@ int Song::getUniqueParts()
 }
 UniquePart *Song::getUniquePart(int index)
 {
+
+    while(index > uniqueParts.size()-1) {
+        UniquePart *up=new UniquePart();
+        up->randomize(this);
+        uniqueParts.push_back(up);
+    }
+//    printf("Song::getUniquePart %d/%d\n", index,uniqueParts.size());
     return uniqueParts.at(index);
 }
 void Song::setParts(int count)

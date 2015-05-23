@@ -21,12 +21,12 @@ SongCreator::SongCreator()
     harmonies["Advanced Random Harmony"] = SongCreator::makeHarmony<AdvancedRandomHarmony>;
     harmonies["Chord Map Harmony"] = SongCreator::makeHarmony<ChordMapHarmony>;
     harmonies["Random Riff Harmony"] = SongCreator::makeHarmony<RandomRiffHarmony>;
-//    harmonies["Simple Fixed Harmony"] = SongCreator::makeHarmony<SimpleFixedHarmony>;
+    harmonies["Simple Fixed Harmony"] = SongCreator::makeHarmony<SimpleFixedHarmony>;
     harmonies["Simple Jazz Harmony"] = SongCreator::makeHarmony<SimpleJazzHarmony>;
     harmonies["Simple Random Harmony"] = SongCreator::makeHarmony<SimpleRandomHarmony>;
 
     melodies["Random Phrased Melody"] = SongCreator::makeMelodyCreator<RandomPhrasedMelody>;
-//    melodies["Simple Random Melody"] = SongCreator::makeMelodyCreator<SimpleRandomMelody>;
+    melodies["Simple Random Melody"] = SongCreator::makeMelodyCreator<SimpleRandomMelody>;
     melodies["Wide Random Melody"] = SongCreator::makeMelodyCreator<WideRandomMelody>;
     melodies["Markov Melody"] = SongCreator::makeMelodyCreator<MarkovMelody>;
 
@@ -144,7 +144,7 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
     #endif
     delete structureGenerator;
 
-    for (int i = 0; i < song->getUniqueParts(); ++i )
+    for (int i = 0; i < song->getUniqueParts(); i++)
     {
         UniquePart *up = song->getUniquePart(i);
         InnerStructureGenerator *innerStructureGenerator = innerStructures.at(up->getScriptStructure())();
@@ -152,7 +152,7 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
         innerStructureGenerator->setSeed(innerStructureSeed);
         innerStructureGenerator->generateInnerStructure(up);
     #ifdef RVERBOSE
-        printf("InnerStructure: script:%s seed:%d\n",up->getScriptStructure().c_str(), innerStructureSeed);
+        printf("InnerStructure: uniquePart:%d script:%s seed:%d\n",i,up->getScriptStructure().c_str(), innerStructureSeed);
     #endif
         delete innerStructureGenerator;
     }
@@ -192,7 +192,7 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
         currentBar += bars;
     }
 
-    for (int i = 0; i < song->getUniqueParts(); ++i )
+    for (int i = 0; i < song->getUniqueParts(); i++)
     {
         UniquePart *up = song->getUniquePart(i);
 
@@ -210,7 +210,7 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
     }
 
     // Generate rythms
-    for (int i = 0; i < song->getUniqueParts(); ++i )
+    for (int i = 0; i < song->getUniqueParts(); i++)
     {
         UniquePart *up = song->getUniquePart(i);
          string scriptRhythm = up->getScriptRhythm();
@@ -218,7 +218,7 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
 
         int rythmSeed = up->getScriptRhythmSeed();
             #ifdef RVERBOSE
-            printf("Rhythm part:%d script:%s seed:%d\n", i, scriptRhythm.c_str(), rythmSeed);
+            printf("Rhythm uniquePart:%d script:%s seed:%d\n", i, scriptRhythm.c_str(), rythmSeed);
             #endif
 
         for (int j = 0; j < up->getUniquePhrases(); ++j    )
@@ -236,19 +236,21 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
 
     // After the rythm is generated, we have events in the unique phrases
     // that must be copied to the unique part
-    for (int i = 0; i < song->getUniqueParts(); ++i )
+    for (int i = 0; i < song->getUniqueParts(); i++)
     {
         UniquePart *up = song->getUniquePart(i);
         int bars = 0;
-        for (int j = 0; j < up->getSentences(); ++j    )
+        for (int j = 0; j < up->getSentences(); j++)
         {
             Sentence *sentence = up->getSentence(j);
             int phrases = sentence->getPhrases();
-            for (int k = 0; k < phrases; ++k       )
+
+            for (int k = 0; k < phrases; k++)
             {
                 Phrase *phrase = sentence->getPhrase(k);
+
                 UniquePhrase *uniquePhrase = phrase->getUniquePhrase();
-                for (int l = 0; l < uniquePhrase->getEvents(); ++l)
+                for (int l = 0; l < uniquePhrase->getEvents(); l++)
                 {
                     Event *event = uniquePhrase->getEvent(l);
                     Event *copy_event = (Event *)event->copy();
@@ -262,7 +264,7 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
         }
     }
 
-    for (int i = 0; i < song->getUniqueParts(); ++i )
+    for (int i = 0; i < song->getUniqueParts(); i++)
     {
 
         UniquePart *up = song->getUniquePart(i);
@@ -274,7 +276,7 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
         HarmonyGenerator *harmony = harmonies.at(scriptHarmony)();
         harmony->setSeed(harmonySeed);
         #ifdef RVERBOSE
-          printf("Harmony part:%d script:%s seed:%d\n", i, scriptHarmony.c_str(), harmonySeed);
+          printf("Harmony uniquePart:%d script:%s seed:%d\n", i, scriptHarmony.c_str(), harmonySeed);
         #endif
         harmony->generateHarmony(up);
 
@@ -282,21 +284,21 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
     }
 
 
-    for (int i = 0; i < song->getUniqueParts(); ++i )
+    for (int i = 0; i < song->getUniqueParts(); i++)
     {
         UniquePart *up = song->getUniquePart(i);
         up->assignEventsToHarmony();
     }
 
-    for (int i = 0; i < song->getUniqueParts(); ++i )
+    for (int i = 0; i < song->getUniqueParts(); i++)
     {
         UniquePart *up = song->getUniquePart(i);
         string scriptMelody = up->getScriptMelody();
-//       string scriptMelody = "Markov Melody";
+//       string scriptMelody = "Simple Random Melody";
 
         int melodySeed = up->getScriptMelodySeed();
         #ifdef RVERBOSE
-            printf("Melody part:%d script:%s seed:%d\n", i, scriptMelody.c_str(), melodySeed);
+            printf("Melody uniquePart:%d script:%s seed:%d\n", i, scriptMelody.c_str(), melodySeed);
         #endif
         MelodyCreator *melody = melodies.at(scriptMelody)();
         melody->setSeed(melodySeed);
@@ -304,7 +306,7 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
         delete melody;
     }
 
-    for (int i = 0; i < song->getParts(); ++i )
+    for (int i = 0; i < song->getParts(); i++)
     {
         Part *part = song->getPart(i);
         int uniquePartIndex = part->getUniquePart();
@@ -314,7 +316,7 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
 
         int ornamentationSeed = uniquePart->getScriptOrnamentationSeed();
         #ifdef RVERBOSE
-            printf("Ornamentation part:%d script:%s seed:%d\n", i,scriptOrnamentation.c_str(), ornamentationSeed);
+            printf("Ornamentation uniquePart: %d part:%d script:%s seed:%d\n", uniquePartIndex,i,scriptOrnamentation.c_str(), ornamentationSeed);
         #endif
         Ornamentor *ornamentor = ornamentors.at(scriptOrnamentation)();
         ornamentor->setSeed(ornamentationSeed);
@@ -341,7 +343,7 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
 
     //    printf("Render events %d\n", song->renderEvents.size());
 
-    for (int j = 0; j < song->getParts(); ++j)
+    for (int j = 0; j < song->getParts(); j++)
     {
         Part *part = song->getPart(j);
 
@@ -380,7 +382,7 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
 //                   printf("continue for driver queue %d\n",midiDriver->getQueueSize());
 
                 }
-//                printf("RenderEvent script:%s initialStep:%d finalStep:%d seed:%d\n", scriptName.c_str(), initialStep, finalStep, renderSeed);
+                printf("RenderEvent script:%s initialStep:%d finalStep:%d seed:%d\n", scriptName.c_str(), initialStep, finalStep, renderSeed);
 
                 UniquePart *up = song->getUniquePart(part->getUniquePart());
                 int metrum = up->getMetrum();

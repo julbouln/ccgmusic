@@ -18,10 +18,10 @@ void ModernSongStructure::generateStructure(Song* s) {
   int verse = 0;
   int chorus = 1;
   if (intro_mode > 2) {
-    ++verse;
-    ++chorus;
-    ++bridge;
-    ++u_parts;
+    verse++;
+    chorus++;
+    bridge++;
+    u_parts++;
   }
   s->setUniqueParts(u_parts);
   int metrum = 4;
@@ -47,7 +47,7 @@ void ModernSongStructure::generateStructure(Song* s) {
 
 //    printf("METRUM %d\n",metrum);
   }
-  for (int i = 0; i < u_parts; ++i ) {
+  for (int i = 0; i < u_parts; i++) {
     s->getUniquePart(i)->setMetrum(metrum);
   }
   if (intro_mode == 3) {
@@ -87,7 +87,7 @@ void ModernSongStructure::generateStructure(Song* s) {
   int scale = this->getRandomScale();
   int trans = this->rndInt(0, 11);
   s->setParts(parts);
-  for (int i = 0; i < parts; ++i ) {
+  for (int i = 0; i < parts; i++) {
     s->getPart(i)->setTempoMod(1.0);
     s->getPart(i)->setScale(scale);
     s->getPart(i)->setTranspose(trans);
@@ -116,7 +116,7 @@ void ModernSongStructure::generateStructure(Song* s) {
   if (start_with > 0) {
     ++first_verse;
   }
-  for (int i = 0; i < 2; ++i ) {
+  for (int i = 0; i < 2; i++) {
     s->getPart(first_verse + (i * 2))->setUniquePart(verse);
     s->getPart(first_verse + (i * 2))->setArrHint(1);
   }
@@ -132,7 +132,7 @@ void ModernSongStructure::generateStructure(Song* s) {
     s->getPart(part)->setUniquePart(chorus);
     s->getPart(part)->setArrHint(3);
   }
-  for (int i = 0; i < 2; ++i ) {
+  for (int i = 0; i < 2; i++) {
     s->getPart(first_verse + (i * 2) + 1)->setUniquePart(chorus);
     s->getPart(first_verse + (i * 2) + 1)->setArrHint(3);
   }

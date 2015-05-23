@@ -108,7 +108,7 @@ void UniquePart::assignEventsToHarmony()
                 }
                 else
                 {
-//                    printf("ERROR: not assigned to harmony\n");
+                    printf("ERROR: not assigned to harmony\n");
                     //               cout  << (this + " event " + e + " not assigned to harmony") << endl;
                 }
             }
@@ -130,7 +130,7 @@ int UniquePart::getSentences()
 Sentence *UniquePart::getSentence(int index)
 {
     int toAdd = index - sentences.size() + 1;
-    for (int i = 0; i < toAdd; i++   )
+    for (int i = 0; i < toAdd; i++)
     {
         sentences.push_back(new Sentence());
     }
@@ -152,7 +152,7 @@ int UniquePart::getUniquePhrases()
 UniquePhrase *UniquePart::getUniquePhrase(int index)
 {
     int toAdd = index - uniquePhrases.size() + 1;
-    for (int i = 0; i < toAdd; i++   )
+    for (int i = 0; i < toAdd; i++)
     {
         uniquePhrases.push_back(new UniquePhrase());
     }
@@ -290,20 +290,24 @@ int UniquePart::getEventBasis(int index)
 }
 void UniquePart::addHarmonic(Time time, int baseNote, vector<int> chordData)
 {
-//    printf("addHarmonic %d\n",baseNote);
+//    printf("UniquePart::addHarmonic %d\n",baseNote);
     harmonics.push_back(new Harmonic(time, baseNote, chordData));
 }
 int UniquePart::alignPitchToHarm(int eventIndex, int scaleNote)
 {
+//    scaleNote=Utils::tone2half(scaleNote-1)+1;
     Event *event = events.at(eventIndex);
     Harmonic *harmonic = eventHarmony.at(event);
     vector<int> scaleDegrees = harmonic->getScaleDegrees();
-    int scaleDegree = Utils::positiveMod(scaleNote - 1, 7);
+    int scaleDegree = Utils::positiveMod(scaleNote-1, 7);
+//printf("UniquePart::alignPitchToHarm scale degree %d %d\n",scaleNote-1,scaleDegree);
 
     int closestNote = harmonic->getBaseNote();
 
     if (Utils::contains(scaleDegrees, scaleDegree))
     {
+//        printf("UniquePart::alignPitchToHarm contains %d (%d)\n",scaleNote-1,scaleDegree);
+
         closestNote = scaleNote;
     }
     else
@@ -311,9 +315,13 @@ int UniquePart::alignPitchToHarm(int eventIndex, int scaleNote)
         int closestDistance = INT_MAX;
         for (int i = scaleNote - 7; i < scaleNote + 7; i++ )
         {
-            scaleDegree = Utils::positiveMod(i - 1, 7);
+            scaleDegree = Utils::positiveMod(i-1, 7);
+//printf("UniquePart::alignPitchToHarm scale degree %d %d\n",i-1,scaleDegree);
+
             if (Utils::contains(scaleDegrees, scaleDegree))
             {
+  //                      printf("UniquePart::alignPitchToHarm contains %d (%d)\n",i-1,scaleDegree);
+
                 int distance = abs(i - scaleNote);
                 if (distance < closestDistance)
                 {
@@ -324,9 +332,8 @@ int UniquePart::alignPitchToHarm(int eventIndex, int scaleNote)
         }
     }
     
-//    printf("alignPitchToHarm %d %d : %d %d\n",eventIndex,scaleNote,scaleDegree,closestNote);
+//    printf("UniquePart::alignPitchToHarm %d %d : %d %d\n",eventIndex,scaleNote-1,scaleDegree,closestNote-1);
 
-//    delete scaleDegrees;
     return closestNote;
 }
 void UniquePart::addEvent(Event *event)

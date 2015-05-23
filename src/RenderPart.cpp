@@ -114,8 +114,7 @@ int RenderPart::getHarmonicEventPitch(int index, int chordNoteIndex)
 
     int pitch=12 * renderEvent->getOctave() + octaveOffset * 12 + part->computePitch(scaleIndex);
 
-//    pitch=12+part->computePitch(scaleIndex);
-//    printf("pitch: %%d\n",pitch);
+//    printf("RenderPart::getHarmonicEventPitch: %d %d -> %d(%s)\n",index,chordNoteIndex,pitch,Utils::midiToNote(pitch).c_str());
     return pitch;
 }
 Time RenderPart::getHarmonicEventStart(int index)
@@ -133,10 +132,10 @@ int RenderPart::alignPitch(int chromaticChordNote, int scaleOffset)
     int baseChrScaleNote = part->computePitch(1);
     int *partScaleOffsets = part->getScaleOffsets();
     int partScaleOffsetsLength = 7;
-    int *pitchClasses = new int[partScaleOffsetsLength];
+    vector<int> pitchClasses;// = new int[partScaleOffsetsLength];
     for (int i = 0; i < partScaleOffsetsLength; i++ )
     {
-        pitchClasses[i] = (baseChrScaleNote + partScaleOffsets[i]) % 12;
+        pitchClasses.push_back((baseChrScaleNote + partScaleOffsets[i]) % 12);
     }
     int inPitchClass = chromaticChordNote % 12;
     int theOriginalScaleIndex = 0;
@@ -162,21 +161,23 @@ int RenderPart::alignPitch(int chromaticChordNote, int scaleOffset)
     int currentNote = chromaticChordNote;
 
     if(scaleOffset==0) {
-        currentNote=0;
+        printf("ERROR 0 scaleOffset (%d)\n",currentNote);
+//        currentNote=0;
     } else {
 
     int newPitchClass = pitchClasses[Utils::positiveMod(theOriginalScaleIndex + scaleOffset, partScaleOffsetsLength)];
-    int increment = scaleOffset > 0 ? 1 : -1;
+    // FIXME does not seems right to have 0 scaleOffset
+    int increment = scaleOffset >= 0 ? 1 : -1;
 
     while ((currentNote % 12) != newPitchClass)
     {
-//            printf("alignPitch %d %d %d %d\n",scaleOffset,currentNote,newPitchClass,increment);
 
         currentNote += increment;
     }
     }
 
-    delete pitchClasses;
+// printf("RenderPart::alignPitch %d %d %d\n",chromaticChordNote,scaleOffset,currentNote);
+
     return currentNote;
 }
 int RenderPart::computePitch(int note)
@@ -185,11 +186,16 @@ int RenderPart::computePitch(int note)
 }
 void RenderPart::addNote(Time start, Time end, int pitch, int volume)
 {
+
     int initialStep = renderEvent->getInitialStep() - part->getStartBar();
     int finalStep = renderEvent->getFinalStep() - part->getStartBar();
 
     if (start.mBar >= initialStep && start.mBar <= finalStep)
     {
+//            printf("RenderPart::addNote %d %d %d/%s\n",pitch,pitch/12,Utils::midiToNoteFr(pitch).c_str());
+
+        if(pitch < 21)
+            printf("ERROR invalid note pitch %d\n",pitch);
         Note *note = new Note(start, end, pitch, (volume * renderEvent->getVolMult()), trackIndex, false);
         //        notes.push_back(note);
         song->getNotes()->push_back(note);

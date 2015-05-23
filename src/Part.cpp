@@ -64,6 +64,7 @@ void Part::setEndBar(int endBar) {
  this->endBar = endBar;
 }
 void Part::addEvent(Time start,Time end,int chromaticNote) {
+//	printf("Part::addEvent %x %d\n",this, chromaticNote);
  chromaticEvents.push_back(new ChromaticEvent(start,end,chromaticNote));
 }
 int Part::computePitch(int scaleNote) {
@@ -73,16 +74,15 @@ int Part::computePitch(int scaleNote) {
 
  while(scaleIndex < 0){
      scaleIndex += 7;
-     --octaveOffset;
+     octaveOffset--;
  }
  while(scaleIndex > 6){
      scaleIndex -= 7;
-     ++octaveOffset;
+     octaveOffset++;
  }
 
  pitch=Part::CHROMATIC_BASE + transpose + currentScale[scaleIndex] + 12 * octaveOffset;
-
-// printf("ComputePitch %d %d %d %d -> %d\n",scaleIndex, scale,currentScale[scaleIndex],scaleNote,pitch);
+//printf("Part::computePitch %d %d %d %d %d %d\n",transpose,scaleNote,scaleIndex, currentScale[scaleIndex],pitch, pitch%12);
 
  return pitch;
 }

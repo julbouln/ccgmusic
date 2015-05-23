@@ -16,44 +16,29 @@ class MusicScript : public Seedable {
 
 public:
 
-static enum TriadChordType {
+static enum ChordType {
 	MAJOR_TRIAD_CHORD=0,
-	MAJ7_TRIAD_CHORD,
-	SUS2_TRIAD_CHORD,
-	SUS4_TRIAD_CHORD, 
-	TRIAD_CHORDS_COUNT
-} TriadChordTypes;
-
-static enum QuadChordType {
-	MAJ7_QUAD_CHORD=0,
-	MAJ6_QUAD_CHORD,
-	QUAD_CHORDS_COUNT
-} QuadChordTypes;
-
-static enum FifthChordType {
-	MAJ7_FIFTH_CHORD=0,
-
-	FIFTH_CHORDS_COUNT
-} FifthChordTypes;
+	ADD_SIXTH_TRIAD_CHORD,
+	MAJOR_SEVENTH_CHORD,
+	CHORDS_COUNT
+} ChordTypes;
 
 static enum ScaleType {
  	MAJOR_SCALE=0,
- 	IONIAN_SCALE,
+/* 	IONIAN_SCALE,
  	DORIAN_SCALE,
- 	PHRYGIAN_SCALE,
+ 	PHRYGIAN_SCALE,*/
  	LYDIAN_SCALE,
- 	MIXOLYDIAN_SCALE,
+/* 	MIXOLYDIAN_SCALE,
  	AEOLIEN_SCALE,
  	LOCRIAN_SCALE,
+ 	*/
  	NATURAL_MINOR_SCALE,
  	HARMONIC_MINOR_SCALE,
  	MELODIC_MINOR_SCALE,
- 	ACCOUSTIC_SCALE,
- 	BLUES_SCALE,
- 	GYPSY_SCALE,
- 	DOUBLE_HARMONIC_SCALE,
- 	ENIGMATIC_SCALE,
- 	FLAMENCO_SCALE,
+/* 	ACCOUSTIC_SCALE, */
+
+/* 	BLUES_SCALE,
  	NEAPOLITAN_MINOR_SCALE,
  	NEAPOLITAN_MAJOR_SCALE,
  	NEAPOLITAN_DORIAN_SCALE,
@@ -63,22 +48,17 @@ static enum ScaleType {
  	EGYPTIAN_SCALE,
  	PERSIAN_SCALE,
  	HUNGARIAN_MINOR,
- 	HUNGARIAN_MAJOR,
+ 	HUNGARIAN_MAJOR,*/
 
  	SCALES_COUNT
  } ScaleTypes;
 
- static int triadChords[TRIAD_CHORDS_COUNT][3];
- static int quadChords[QUAD_CHORDS_COUNT][4];
- static int fifthChords[FIFTH_CHORDS_COUNT][5];
-
+ static int chords[CHORDS_COUNT][8];
  static int scales[SCALES_COUNT][7];
 
- static vector<int> triadChord(int);
- static vector<int> quadChord(int);
- static vector<int> fifthChord(int);
-
+ static vector<int> getChord(int);
  static int* getScaleOffsets(int);
+
  ~MusicScript();
  MusicScript();
  void setSeed(int);
@@ -94,12 +74,12 @@ static enum ScaleType {
  class Pattern {
  public:
     double Length;
-    int* Pitches;
+    vector<int> Pitches;
     int velfrom;
     int velto;
-    double* pattern;
+    vector<double> pattern;
 };
- Pattern* newPattern(double,int[],double[],int,int);
+ Pattern* newPattern(double,vector<int>,vector<double>,int,int);
  void realizePattern(RenderPart*,Pattern*);
  void setSong(Song*);
 };

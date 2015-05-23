@@ -13,6 +13,7 @@ private:
  string rndMelody();
  string rndBass();
  string rndChords();
+ int rndStep();
 
 };
 #endif // RANDOMELECTROROCK_H

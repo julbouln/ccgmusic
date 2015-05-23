@@ -8,29 +8,33 @@ double RandomPhrasedMelody::GetEventLength(UniquePart *up, int e)
 void RandomPhrasedMelody::createMelody(UniquePart *up)
 {
     int u_phrases = up->getUniquePhrases();
-    vector<int *> melody;
-    vector<int *> align;
-    for (int i = 0; i < u_phrases; ++i )
+    vector<vector <int> > melody;
+    vector<vector <int> > align;
+    for (int i = 0; i < u_phrases; i++)
     {
+        vector<int> tmpMelody;
+        vector<int> tmpAlign;
+
         UniquePhrase *p = up->getUniquePhrase(i);
-        melody.push_back(new int[p->getEvents()]);
-        align.push_back(new int[p->getEvents()]);
-        for (int m = 0; m < p->getEvents(); ++m    )
+
+        melody.push_back(tmpMelody);
+        align.push_back(tmpAlign);
+        for (int m = 0; m < p->getEvents(); m++)
         {
-            melody[i][m] = this->rndInt(-2, 2);
-            align[i][m] = this->rndInt(0, 1);
+            melody[i].push_back(this->rndInt(-2, 2));
+            align[i].push_back(this->rndInt(0, 1));
         }
         melody[i][0] = this->rndInt(2, 8);
     }
     int event = 0;
     int theNote = 0;
-    for (int s = 0; s < up->getSentences(); ++s )
+    for (int s = 0; s < up->getSentences(); s++)
     {
-        for (int p = 0; p < up->getSentence(s)->getPhrases(); ++p    )
+        for (int p = 0; p < up->getSentence(s)->getPhrases(); p++)
         {
             UniquePhrase *upp = up->getSentence(s)->getPhrase(p)->getUniquePhrase();
             int note = melody[up->getSentence(s)->getPhrase(p)->getUniquePhraseID()][0];
-            for (int e = 0; e < upp->getEvents(); ++e       )
+            for (int e = 0; e < upp->getEvents(); e++)
             {
                 if (event < up->getEvents() - 1)
                 {
@@ -42,7 +46,7 @@ void RandomPhrasedMelody::createMelody(UniquePart *up)
                     {
                         up->setEventPitch(event, note);
                     }
-                    ++event;
+                    event++;
                     if (e < upp->getEvents() - 1)
                     {
                         note += melody[up->getSentence(s)->getPhrase(p)->getUniquePhraseID()][e + 1];
@@ -51,8 +55,8 @@ void RandomPhrasedMelody::createMelody(UniquePart *up)
             }
         }
     }
-//    int last_note = 1;
-    int last_note = this->rndInt(0,4);
+    int last_note = 1;
+//    int last_note = this->rndInt(0,4);
     if(last_note % 2 == 0) {
         last_note+=1;
     }
@@ -86,7 +90,7 @@ void RandomPhrasedMelody::createMelody(UniquePart *up)
         last_note += 7;
     }
 
+//    last_note = up->alignPitchToHarm(up->getEvents() - 1, last_note);
+    
     up->setEventPitch(up->getEvents() - 1, last_note);
-    Utils::deleteVector(melody);
-    Utils::deleteVector(align);
 }

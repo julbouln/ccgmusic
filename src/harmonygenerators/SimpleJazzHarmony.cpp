@@ -28,80 +28,80 @@ void SimpleJazzHarmony::generateHarmony(UniquePart *up) {
  }
  if(mode == 1) {
      if(this->rndInt(0,1) == 0) {
-    up->addHarmonic(this->createTime(0,0),1,MusicScript::quadChord(MAJ7_QUAD_CHORD));
+    up->addHarmonic(this->createTime(0,0),1,MusicScript::getChord(MAJOR_SEVENTH_CHORD));
    }
    else {
-    up->addHarmonic(this->createTime(0,0),3,MusicScript::quadChord(MAJ7_QUAD_CHORD));
+    up->addHarmonic(this->createTime(0,0),3,MusicScript::getChord(MAJOR_SEVENTH_CHORD));
    }
      for(int i = 1;i < up->getBars() - 2;++i   ){
            int basis = this->rndInt(1,7);
            if(basis == 4) {
                if(this->rndInt(0,1) == 0) {
-         up->addHarmonic(this->createTime(i,0),basis,MusicScript::quadChord(MAJ7_QUAD_CHORD));
+         up->addHarmonic(this->createTime(i,0),basis,MusicScript::getChord(MAJOR_SEVENTH_CHORD));
         }
         else {
-         up->addHarmonic(this->createTime(i,0),basis,MusicScript::quadChord(MAJ6_QUAD_CHORD));
+         up->addHarmonic(this->createTime(i,0),basis,MusicScript::getChord(ADD_SIXTH_TRIAD_CHORD));
         }
       }
       else {
-       up->addHarmonic(this->createTime(i,0),basis,MusicScript::quadChord(MAJ7_QUAD_CHORD));
+       up->addHarmonic(this->createTime(i,0),basis,MusicScript::getChord(MAJOR_SEVENTH_CHORD));
       }
    }
      if(this->rndInt(0,1) == 0) {
-    up->addHarmonic(this->createTime(up->getBars() - 2,0),5,MusicScript::quadChord(MAJ7_QUAD_CHORD));
+    up->addHarmonic(this->createTime(up->getBars() - 2,0),5,MusicScript::getChord(MAJOR_SEVENTH_CHORD));
    }
    else {
-    up->addHarmonic(this->createTime(up->getBars() - 2,0),7,MusicScript::quadChord(MAJ7_QUAD_CHORD));
+    up->addHarmonic(this->createTime(up->getBars() - 2,0),7,MusicScript::getChord(MAJOR_SEVENTH_CHORD));
    }
      if(this->rndInt(0,1) == 0) {
-    up->addHarmonic(this->createTime(up->getBars() - 1,0),1,MusicScript::triadChord(MAJOR_TRIAD_CHORD));
+    up->addHarmonic(this->createTime(up->getBars() - 1,0),1,MusicScript::getChord(MAJOR_TRIAD_CHORD));
    }
    else {
-    up->addHarmonic(this->createTime(up->getBars() - 1,0),1,MusicScript::quadChord(MAJ6_QUAD_CHORD));
+    up->addHarmonic(this->createTime(up->getBars() - 1,0),1,MusicScript::getChord(ADD_SIXTH_TRIAD_CHORD));
    }
  }
  else {
      if(this->rndInt(0,1) == 0) {
-    up->addHarmonic(this->createTime(0,0),1,MusicScript::quadChord(MAJ7_QUAD_CHORD));
+    up->addHarmonic(this->createTime(0,0),1,MusicScript::getChord(MAJOR_SEVENTH_CHORD));
    }
    else {
-    up->addHarmonic(this->createTime(0,0),3,MusicScript::quadChord(MAJ7_QUAD_CHORD));
+    up->addHarmonic(this->createTime(0,0),3,MusicScript::getChord(MAJOR_SEVENTH_CHORD));
    }
      for(int i = 0;i < up->getBars() - 1;++i   ){
            if(i != 0) {
                int basis = this->rndInt(1,7);
                if(basis == 4) {
                    if(this->rndInt(0,1) == 0) {
-           up->addHarmonic(this->createTime(i,0),basis,MusicScript::quadChord(MAJ7_QUAD_CHORD));
+           up->addHarmonic(this->createTime(i,0),basis,MusicScript::getChord(MAJOR_SEVENTH_CHORD));
           }
           else {
-           up->addHarmonic(this->createTime(i,0),basis,MusicScript::quadChord(MAJ6_QUAD_CHORD));
+           up->addHarmonic(this->createTime(i,0),basis,MusicScript::getChord(ADD_SIXTH_TRIAD_CHORD));
           }
         }
         else {
-         up->addHarmonic(this->createTime(i,0),basis,MusicScript::quadChord(MAJ7_QUAD_CHORD));
+         up->addHarmonic(this->createTime(i,0),basis,MusicScript::getChord(MAJOR_SEVENTH_CHORD));
         }
       }
            if(i != up->getBars() - 2) {
                int basis = this->rndInt(1,7);
                if(basis == 4) {
                    if(this->rndInt(0,1) == 0) {
-           up->addHarmonic(this->createTime(i,sec_placement),basis,MusicScript::quadChord(MAJ7_QUAD_CHORD));
+           up->addHarmonic(this->createTime(i,sec_placement),basis,MusicScript::getChord(MAJOR_SEVENTH_CHORD));
           }
           else {
-           up->addHarmonic(this->createTime(i,sec_placement),basis,MusicScript::quadChord(MAJ6_QUAD_CHORD));
+           up->addHarmonic(this->createTime(i,sec_placement),basis,MusicScript::getChord(ADD_SIXTH_TRIAD_CHORD));
           }
         }
         else {
-         up->addHarmonic(this->createTime(i,sec_placement),basis,MusicScript::quadChord(MAJ6_QUAD_CHORD));
+         up->addHarmonic(this->createTime(i,sec_placement),basis,MusicScript::getChord(ADD_SIXTH_TRIAD_CHORD));
         }
       }
    }
      if(this->rndInt(0,1) == 0) {
-    up->addHarmonic(this->createTime(up->getBars() - 1,0),1,MusicScript::triadChord(MAJOR_TRIAD_CHORD));
+    up->addHarmonic(this->createTime(up->getBars() - 1,0),1,MusicScript::getChord(MAJOR_TRIAD_CHORD));
    }
    else {
-    up->addHarmonic(this->createTime(up->getBars() - 1,0),3,MusicScript::quadChord(MAJ7_QUAD_CHORD));
+    up->addHarmonic(this->createTime(up->getBars() - 1,0),3,MusicScript::getChord(MAJOR_SEVENTH_CHORD));
    }
  }
 }

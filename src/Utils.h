@@ -62,6 +62,14 @@ static int clampIntToInt(int,int,int);
   static string midiToNote(int);
   static string midiToNoteFr(int);
 
+
+static int tone2half(int);
+static int half2tone(int);
+
+template <typename T> static vector<T> arrayToVector(T *a, int aLength) {
+	vector<T> r(a,a+aLength);
+    return r;
+}
 /* static T sampleUniformObjectDistribution(int,Collection<T>);
  static T sampleUniformObjectDistribution(int,vector<T>);
  static T sampleUniformObjectDistribution(int,T[]);

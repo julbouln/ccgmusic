@@ -17,7 +17,7 @@ double Utils::getRandomBetween(double lower,double upper) {
 
 bool Utils::contains(int arr[],int value) {
  if(arr != NULL) {
-     for(int i = 0;i < ARRAY_LENGTH(arr);++i   ){
+     for(int i = 0;i < ARRAY_LENGTH(arr);i++){
            if(arr[i] == value) {
                return true;
       }
@@ -27,7 +27,7 @@ bool Utils::contains(int arr[],int value) {
 }
 
 bool Utils::contains(vector<int> arr,int value) {
-     for(int i = 0;i < arr.size();++i   ){
+     for(int i = 0;i < arr.size();i++){
            if(arr.at(i) == value) {
                return true;
       }
@@ -83,6 +83,9 @@ string Utils::midiToNote(int n) {
       return "A#";
     case 11:
       return "B";
+    default:
+      return "?";
+
   }
 }
 
@@ -111,6 +114,67 @@ string Utils::midiToNoteFr(int n) {
     case 10:
       return "la#";
     case 11:
-      return "si";
+      return "si";  
+    default:
+      return "?";
+
   }
+}
+
+int Utils::tone2half(int t)
+{
+  switch(t) {
+    case -6:
+      return -10;
+    case -5:
+      return -8;
+    case -4:
+      return -7;
+    case -3:
+      return -5;
+    case -2:
+      return -3;
+    case -1:
+      return -1;
+    case 0:
+      return 0;
+    case 1:
+      return 2;
+    case 2:
+      return 4;
+    case 3:
+      return 5;
+    case 4:
+      return 7;
+    case 5:
+      return 9;
+    case 6:
+      return 11;
+  }
+
+}
+
+int Utils::half2tone(int t)
+{
+  switch(t) {
+  case 0:
+      return 0;
+    case 2:
+      return 1;
+    case 4:
+      return 2;
+    case 5:
+      return 3;
+    case 7:
+      return 4;
+    case 9:
+      return 5;
+    case 11:
+      return 6; 
+//    case 14:
+//      return 6;
+    default:
+      return -1;
+    }
+
 }

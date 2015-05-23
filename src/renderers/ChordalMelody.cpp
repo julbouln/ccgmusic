@@ -17,7 +17,7 @@ double ChordalMelody::fabs(double v) {
   return v;
 }
 void ChordalMelody::render(RenderPart *p) {
-  for (int i = 0; i < p->getEvents(); ++i ) {
+  for (int i = 0; i < p->getEvents(); i++) {
     int note_pitch = p->getEventPitch(i);
     int poz = (int)p->getEventStart(i).mPos;
     bool strong = true;

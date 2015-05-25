@@ -29,3 +29,12 @@ Time Time::translateCopy(Time t) {
  copy.translate(t);
  return copy;
 }
+
+string Time::toString() {
+std::stringstream ss;
+ss.precision(2);
+ss << "[" << (int)mBar << ":";
+ss << fixed << mPos << "]";
+std::string s = ss.str();
+return s;
+}

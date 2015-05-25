@@ -9,12 +9,28 @@ void SimpleRandomMelody::createMelody(UniquePart *up)
     {
         note = up->alignPitchToHarm(i, note);
 
-//        printf("SimpleRandomMelody::createMelody set note %d %d\n",i,note);
+//        printf("SimpleRandomMelody::createMelody set note %d %d(%s)\n",i,note,Utils::midiToNote(60+note).c_str());
         note = up->setEventPitch(i, note);
 
         if (i < up->getEvents() - 2)
         {
-            note += this->rndInt(-2, 2);
+            int p= this->rndInt(-2,2);
+/*            switch(p) {
+                case -2:
+                    p=-3;
+                    break;
+                case -1:
+                    p=-1;
+                    break;
+                case 1:
+                    p=1;
+                    break;
+                case 2:
+                    p=3;
+                    break;
+
+            }*/
+            note += p;
         }
 
     }
@@ -41,7 +57,7 @@ void SimpleRandomMelody::createMelody(UniquePart *up)
         last_note += 7;
     }
 
-//    printf("SimpleRandomMelody::createMelodyset last note %d\n",last_note);
+//    printf("SimpleRandomMelody::createMelodyset last note %d(%s)\n",last_note,Utils::midiToNote(60+last_note).c_str());
 
 //    last_note = up->alignPitchToHarm(up->getEvents() - 1, last_note);
 

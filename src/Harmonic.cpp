@@ -1,4 +1,5 @@
 #include "Harmonic.h"
+#include "MusicScript.h"
 
 Harmonic::~Harmonic() {
 	offsets.clear();
@@ -41,23 +42,26 @@ void Harmonic::setEndTime(Time t) {
 Harmonic::Harmonic(Time time,int baseNote,vector<int> chordData) {
  this->startTime = time;
  this->baseNote = baseNote;
-// offsets=chordData;
- for(int i=0;i<chordData.size();i++) 
- 	offsets.push_back(chordData.at(i) - 1);
+ offsets=chordData;
+// for(int i=0;i<chordData.size();i++) 
+ //	offsets.push_back(chordData.at(i) - 1);
 
 }
 vector<int> Harmonic::getScaleDegrees() {
 	vector<int> result;
+	int *intervals=MusicScript::progressionIntervals;
 //	printf("Harmonic::getScaleDegrees %d\n",baseNote);
-	for(int i=0;i<offsets.size();i++) {
+	for(size_t i=0;i<offsets.size();i++) {
 		int t=offsets.at(i);
 //		int t=Utils::half2tone(offsets.at(i));
 //		if(t==-1)
 //			printf("ERROR invalid tone %d %d\n",i,offsets.at(i));
-//       int scale=(baseNote - 1 + offsets.at(i)) % 7;
-       int scale=(baseNote - 1 + t) % 7;
+//       int scale=(baseNote - 1 + t) % 7;
+       int scale=(intervals[baseNote-1] + t) % 12;
 
-  //     printf("Harmonic::getScaleDegrees scale %d(%s) %d %d\n",baseNote-1,Utils::midiToNote(baseNote-1).c_str(),offsets.at(i),scale);
+
+//       printf("SCALE %d %d %d\n",baseNote-1,scales[baseNote-1],Utils::tone2half(baseNote-1));
+ //      printf("Harmonic::getScaleDegrees scale %d->%d(%s) %d %d %d\n",baseNote-1,intervals[baseNote-1],Utils::midiToNote(Utils::tone2half(baseNote-1)).c_str(),t,offsets.at(i),scale);
 
        result.push_back(scale);
 	}

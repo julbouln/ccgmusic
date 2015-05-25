@@ -6,7 +6,7 @@
 #include "Part.h"
 #include "UniquePart.h"
 #include "RenderEvent.h"
-#include "Note.h"
+#include "RenderNote.h"
 #include "Song.h"
 #include "Time.h"
 #include "Interval2D.h"
@@ -15,16 +15,15 @@
 using namespace std;
 class RenderPart {
  int trackIndex;
- vector<ChromaticEvent*> chromaticEvents;
- vector<Harmonic*> harmonics;
+// vector<ChromaticEvent*> chromaticEvents;
+// vector<Harmonic*> harmonics;
  Part *part;
  UniquePart *uniquePart;
  RenderEvent *renderEvent;
-// vector<Note*> notes;
  Song *song;
 public:
  int getTrackIndex();
- vector<Note*> *getNotes();
+ vector<RenderNote*> *getNotes();
  void setData(Part*,UniquePart*,RenderEvent*,Song*);
  ~RenderPart();
  RenderPart(int);

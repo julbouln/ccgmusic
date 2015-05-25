@@ -1,9 +1,24 @@
  #include "MusicScript.h"
 
+int MusicScript::progressionIntervals[7]={ 0, 2, 4, 5, 7, 9, 11 };
+
 int MusicScript::chords[][8] = {
-{1, 3, 5,-1,-1,-1,-1, 3}, // MAJOR_TRIAD_CHORD "135"
-{1, 3, 5, 6,-1,-1,-1, 4}, // ADD_SIXTH_TRIAD_CHORD "1356"
-{1, 3, 5, 7,-1,-1,-1, 4}, // MAJOR_SEVENTH_CHORD "1357"
+/*
+{0, 2, 4,-1,-1,-1,-1, 3}, // MAJOR_TRIAD_CHORD "135" 047
+{0, 2, 4, 5,-1,-1,-1, 4}, // ADD_SIXTH_TRIAD_CHORD "1356" 0479
+{0, 2, 4, 6,-1,-1,-1, 4}, // MAJOR_SEVENTH_CHORD "1357" 04710
+*/
+
+{0, 4, 7,-1,-1,-1,-1, 3}, // MAJOR_TRIAD_CHORD "135" 047
+{0, 4, 7, 9,-1,-1,-1, 4}, // ADD_SIXTH_TRIAD_CHORD "1356" 0479
+{0, 4, 7, 10,-1,-1,-1, 4}, // MAJOR_SEVENTH_CHORD "1357" 04710
+{0, 3, 7,-1,-1,-1,-1, 3}, // MINOR_TRIAD_CHORD
+{0, 2, 7, -1,-1,-1,-1, 3}, // SUS2_SEVENTH_CHORD 
+{0, 5, 7, -1,-1,-1,-1, 3}, // SUS4_SEVENTH_CHORD 
+{0, 4, 7, 9, 14,-1,-1, 5}, // ADD_SIXTH_NINE_CHORD 
+{0, 2, 4, 7, -1,-1,-1, 4}, // ADD2_CHORD 
+{0, 4, 5, 7, -1,-1,-1, 4}, // ADD4_CHORD 
+{0, 4, 7, 14, -1,-1,-1, 4}, // ADD9_CHORD 
 
 };
 
@@ -55,7 +70,7 @@ int* MusicScript::getScaleOffsets(int scale)
         offsets = scales[MAJOR_SCALE];
     }
 
-    offsets = scales[MAJOR_SCALE];
+//    offsets = scales[MAJOR_SCALE];
 //    offsets = scales[AEOLIEN_SCALE];
     return offsets;
 }
@@ -63,7 +78,6 @@ int* MusicScript::getScaleOffsets(int scale)
 vector<int> MusicScript::getChord(int chord) {
     return Utils::arrayToVector(MusicScript::chords[chord],MusicScript::chords[chord][7]);
 }
-
 
 MusicScript::~MusicScript()
 {
@@ -130,15 +144,15 @@ MusicScript::Pattern *MusicScript::newPattern(double l,  vector<int> pit, vector
 }
 void MusicScript::realizePattern(RenderPart *p, Pattern *pat)
 {
-    for (int i = p->getStartBar(); i < p->getEndBar(); ++i )
+    for (int i = p->getStartBar(); i < p->getEndBar(); i++)
     {
         for (double m = 0; m < p->getUniquePart()->getMetrum(); m += pat->Length)
         {
-            for (int n = 0; n < pat->pattern.size(); ++n)
+            for (size_t n = 0; n < pat->pattern.size(); n++)
             {
                 if (pat->pattern[n] + m < p->getUniquePart()->getMetrum())
                 {
-                    for (int q = 0; q < pat->Pitches.size(); ++q)
+                    for (size_t q = 0; q < pat->Pitches.size(); q++)
                     {
                         p->addPercNote(this->createTime(i, m + pat->pattern[n]), this->createTime(i, m + pat->pattern[n] + 0.1), pat->Pitches[q], this->rndInt(pat->velfrom, pat->velto));
                     }

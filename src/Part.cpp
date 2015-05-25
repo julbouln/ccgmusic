@@ -82,7 +82,7 @@ int Part::computePitch(int scaleNote) {
  }
 
  pitch=Part::CHROMATIC_BASE + transpose + currentScale[scaleIndex] + 12 * octaveOffset;
-//printf("Part::computePitch %d %d %d %d %d %d\n",transpose,scaleNote,scaleIndex, currentScale[scaleIndex],pitch, pitch%12);
+//printf("Part::computePitch %d %d %d %d %d(%s)\n",transpose,scaleNote,scaleIndex, currentScale[scaleIndex],pitch,Utils::midiToNote(pitch).c_str());
 
  return pitch;
 }

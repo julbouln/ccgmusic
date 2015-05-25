@@ -198,6 +198,7 @@ void RandomElectroRock::arrange(Song *s) {
     s->setParam(RenderEvent::PITCH, snare);
 //    s->setParam(RenderEvent::PITCH, 65);
 
+
 	s->addRenderEvent("Drums Euclidean", this->rndInt(0,INT_MAX), 2, s->getPartStartBar(i),s->getPartEndBar(i), 0,this->createTime(0, 0), 1);
 	steps=rndStep();
 	s->setParam(RenderEvent::PULSES, this->rndInt(steps/3+1,steps));
@@ -205,6 +206,7 @@ void RandomElectroRock::arrange(Song *s) {
     s->setParam(RenderEvent::METRUM, metrum);
     s->setParam(RenderEvent::VOL, vol);
     s->setParam(RenderEvent::PITCH, kick);
+    
     
 /*
 	s->addRenderEvent("Drums Euclidean", this->rndInt(0,INT_MAX), 2, s->getPartStartBar(i),s->getPartEndBar(i), 0,this->createTime(0, 0), 1);

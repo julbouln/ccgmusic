@@ -19,6 +19,7 @@
 #include "FixedClassical.h"
 
 #include "RandomStaticRythm.h"
+#include "SimpleFixedRythm.h"
 #include "SimpleRandomRythm.h"
 #include "SimpleSwingRythm.h"
 
@@ -98,7 +99,7 @@
 #include "RenderEvent.h"
 #include "Time.h"
 #include "TempoMod.h"
-#include "Note.h"
+#include "RenderNote.h"
 
 #include "MidiDriver.h"
 

@@ -15,6 +15,7 @@ SongCreator::SongCreator()
     innerStructures["Fixed Classical"] = SongCreator::makeInnerStructure<FixedClassical>;
 
     rythms["Random Static Rythm"] = SongCreator::makeRythm<RandomStaticRythm>;
+    rythms["Simple Fixed Rythm"] = SongCreator::makeRythm<SimpleFixedRythm>;
     rythms["Simple Random Rythm"] = SongCreator::makeRythm<SimpleRandomRythm>;
     rythms["Simple Swing Rythm"] = SongCreator::makeRythm<SimpleSwingRythm>;
 
@@ -214,7 +215,7 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
     {
         UniquePart *up = song->getUniquePart(i);
          string scriptRhythm = up->getScriptRhythm();
-//        string scriptRhythm = "Simple Random Rythm";
+//        string scriptRhythm = "Simple Fixed Rythm";
 
         int rythmSeed = up->getScriptRhythmSeed();
             #ifdef RVERBOSE
@@ -269,7 +270,8 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
 
         UniquePart *up = song->getUniquePart(i);
         string scriptHarmony = up->getScriptHarmony();
-//        string scriptHarmony = "Simple Fixed Harmony";
+ //      string scriptHarmony = "Simple Fixed Harmony";
+//        string scriptHarmony = "Random Riff Harmony";
 
         int harmonySeed = up->getScriptHarmonySeed();
 
@@ -373,8 +375,6 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
 
                 currentStartBar = part->getStartBar();
 
-//                            printf("RenderParts %d-%d %d-%d/%d-%d\n", currentStep, previousStep, currentStartBar, currentEndBar, previousStartBar, previousEndBar);
-
                 if (currentStartBar > previousStartBar)
                 {
                    
@@ -382,18 +382,15 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
 //                   printf("continue for driver queue %d\n",midiDriver->getQueueSize());
 
                 }
-                printf("RenderEvent script:%s initialStep:%d finalStep:%d seed:%d\n", scriptName.c_str(), initialStep, finalStep, renderSeed);
+                #ifdef RVERBOSE
+                    printf("RenderEvent script:%s initialStep:%d finalStep:%d seed:%d\n", scriptName.c_str(), initialStep, finalStep, renderSeed);
+                #endif
 
                 UniquePart *up = song->getUniquePart(part->getUniquePart());
                 int metrum = up->getMetrum();
                 Time timeOffset = (*re)->getTimeOffset();
 
                 RenderPart *rp = new RenderPart(i);
-
-
-                //            printf("(%d) %x UniquePart %d events\n", song->getUniqueParts(), up, up->getEvents());
-
-                //                currentRenderParts.push_back(rp);
 
                 Renderer *renderer = renderers.at(scriptName)();
 
@@ -404,13 +401,9 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
 
                 timeOffset.mBar += part->getStartBar();
 
-                //                rp->translateNotes(part->getStartBar());
                 rp->translateNotes(timeOffset);
 
                 renderNotesToMidi(midiDriver,metrum);
-
-                //                            printf("RenderPart track:%d startBar:%d endPart:%d metrum:%d script:%s scale:%d seed:%d\n", i, (*p)->getStartBar(), (*p)->getEndBar(), metrum, scriptName.c_str(), (*p)->getScale(), renderSeed);
-
 
                 delete rp;
                 delete renderer;
@@ -432,7 +425,7 @@ void SongCreator::initMidi(MidiDriver *midiDriver)
 
     vector<Track *> *tracks = song->getTracks();
 
-    for (int i = 0; i < tracks->size(); ++i )
+    for (size_t i = 0; i < tracks->size(); ++i )
     {
         Track *track = tracks->at(i);
         int pan = track->getPan();
@@ -504,13 +497,15 @@ void SongCreator::initMidi(MidiDriver *midiDriver)
 void SongCreator::renderNotesToMidi(MidiDriver *midiDriver,int metrum) {
     int offset = 192;
 
-    vector<Note *> *currentNotes = song->getNotes();
+    vector<RenderNote *> *currentNotes = song->getNotes();
+
+
 
     song->sortNotes();
-//    printf("SongCreator::renderNotesToMidi render %d notes\n", currentNotes->size());
+    printf("SongCreator::renderNotesToMidi render notes %d * %d = %d bytes\n", currentNotes->size(),sizeof(RenderNote),currentNotes->size()*sizeof(RenderNote));
 
 
-    for (std::vector<Note *>::iterator n = currentNotes->begin(); n != currentNotes->end(); ++n)
+    for (std::vector<RenderNote *>::iterator n = currentNotes->begin(); n != currentNotes->end(); ++n)
     {
         int trackIndex = (*n)->getTrackIndex();
         int channel = trackIndex;

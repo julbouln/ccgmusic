@@ -24,7 +24,7 @@ Song::Song(SongCreator *creator)
     this->tempo = 120;
 }
 
-vector<Note *> *Song::getNotes()
+vector<RenderNote *> *Song::getNotes()
 {
     return &notes;
 }
@@ -37,9 +37,8 @@ void Song::clearNotes()
 
 void Song::sortNotes()
 {
-    std::sort(notes.begin(), notes.end(), Note::Comparator());
+    std::sort(notes.begin(), notes.end(), RenderNote::Comparator());
 }
-
 
 SongCreator *Song::getCreator()
 {
@@ -64,21 +63,18 @@ vector<Track *> *Song::getTracks()
     return &tracks;
 }
 
-
-
 void Song::setUniqueParts(int count)
 {
     this->setSeed(seed);
 
-        for (int i = uniqueParts.size(); i < count-uniqueParts.size(); i++)
-        {
-            UniquePart *up=new UniquePart();
-            up->randomize(this);
-            uniqueParts.push_back(up);
-
-        }
-
+    for (size_t i = uniqueParts.size(); i < count - uniqueParts.size(); i++)
+    {
+        UniquePart *up = new UniquePart();
+        up->randomize(this);
+        uniqueParts.push_back(up);
+    }
 }
+
 int Song::getUniqueParts()
 {
     return uniqueParts.size();
@@ -86,8 +82,8 @@ int Song::getUniqueParts()
 UniquePart *Song::getUniquePart(int index)
 {
 
-    while(index > uniqueParts.size()-1) {
-        UniquePart *up=new UniquePart();
+    while (index > uniqueParts.size() - 1) {
+        UniquePart *up = new UniquePart();
         up->randomize(this);
         uniqueParts.push_back(up);
     }
@@ -137,7 +133,7 @@ void Song::addTrack(string name, int patch, int vol, int pan, bool percussion)
 
 void Song::addRenderEvent(RenderEvent *event) {
     latestRenderEvent = event;
-    renderEvents.push_back(event);    
+    renderEvents.push_back(event);
 }
 
 void Song::addRenderEvent(string scriptName, int seed, int trackIndex, int initialBar, int finalBar, int8_t octave, Time timeOffset, float volMult)

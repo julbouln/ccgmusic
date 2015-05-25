@@ -15,5 +15,7 @@ public:
  void translate(Time);
  Time translateCopy(int);
  Time translateCopy(Time);
+
+ string toString();
 };
 #endif // TIME_H

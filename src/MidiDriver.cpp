@@ -37,9 +37,12 @@ void MidiDriver::process(bool finished) {
     long processTime = 0;
 
     int size=this->getQueueSize();
+
     if (size > 0) {
 
         QueueMessage m = queueMessages.top();
+        printf("MidiDriver::process %d * %d = %d bytes\n",size,sizeof(m),size*sizeof(m));
+
         float mTime = (float)this->ticksToTime(m.getTime());
  //       printf("MidiDriver::process desynchro %ld\n", (long)mTime - currentTime);
 

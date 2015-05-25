@@ -7,7 +7,7 @@
 #include "Part.h"
 #include "TempoMod.h"
 #include "RenderEvent.h"
-#include "Note.h"
+#include "RenderNote.h"
 
 //#include "SongCreator.h"
 #include "Time.h"
@@ -26,11 +26,11 @@ class Song : public Seedable
     RenderEvent *latestRenderEvent;
     SongCreator *creator;
 
-    vector<Note*> notes;
+    vector<RenderNote*> notes;
 
 public:
     vector<RenderEvent*> renderEvents;
-    vector<Note *> *getNotes();
+    vector<RenderNote *> *getNotes();
     void sortNotes();
     void clearNotes();
 

@@ -20,6 +20,14 @@ static enum ChordType {
 	MAJOR_TRIAD_CHORD=0,
 	ADD_SIXTH_TRIAD_CHORD,
 	MAJOR_SEVENTH_CHORD,
+	MINOR_TRIAD_CHORD,
+	SUS2_SEVENTH_CHORD,
+	SUS4_SEVENTH_CHORD,
+	ADD_SIXTH_NINE_CHORD,
+	ADD2_CHORD,
+	ADD4_CHORD,
+	ADD9_CHORD,
+	
 	CHORDS_COUNT
 } ChordTypes;
 
@@ -53,8 +61,21 @@ static enum ScaleType {
  	SCALES_COUNT
  } ScaleTypes;
 
+ static enum RomanType {
+ 	ZERO=0,
+ 	I,
+ 	II,
+ 	III,
+ 	IV,
+ 	V,
+ 	VI,
+ 	VII 	
+ } RomanTypes;
+
  static int chords[CHORDS_COUNT][8];
  static int scales[SCALES_COUNT][7];
+
+ static int progressionIntervals[7];
 
  static vector<int> getChord(int);
  static int* getScaleOffsets(int);

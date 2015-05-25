@@ -29,6 +29,7 @@ double Interval2D::distanceBetween(Interval2D interval) {
          return lower - interval.upper;
    }
    else {
+      printf("ERROR found a distanceBetween() case that is impossible");
 //         cout  << (this->toString() + " found a distanceBetween() case that is impossible :) " + this->toString() + " " + interval) << endl;
          return 0.0;
    }

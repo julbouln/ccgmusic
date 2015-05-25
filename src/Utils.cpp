@@ -27,7 +27,7 @@ bool Utils::contains(int arr[],int value) {
 }
 
 bool Utils::contains(vector<int> arr,int value) {
-     for(int i = 0;i < arr.size();i++){
+     for(size_t i = 0;i < arr.size();i++){
            if(arr.at(i) == value) {
                return true;
       }
@@ -124,18 +124,6 @@ string Utils::midiToNoteFr(int n) {
 int Utils::tone2half(int t)
 {
   switch(t) {
-    case -6:
-      return -10;
-    case -5:
-      return -8;
-    case -4:
-      return -7;
-    case -3:
-      return -5;
-    case -2:
-      return -3;
-    case -1:
-      return -1;
     case 0:
       return 0;
     case 1:
@@ -150,6 +138,8 @@ int Utils::tone2half(int t)
       return 9;
     case 6:
       return 11;
+    default: 
+      return -1;
   }
 
 }

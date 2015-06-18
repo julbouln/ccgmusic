@@ -112,6 +112,16 @@ class SongCreator
 
 public:
 
+/*
+enum structuresEnum {
+    ClassicalStructureBig, 
+    ClassicalStructureSmall, 
+    ModernSongStructure, 
+    OnePartSimpleStructure, 
+    RandomStructure
+};
+*/
+
     typedef StructureGenerator *(*StructureGeneratorCreator)();
     typedef InnerStructureGenerator *(*InnerStructureGeneratorCreator)();
     typedef RythmGenerator *(*RythmGeneratorCreator)();

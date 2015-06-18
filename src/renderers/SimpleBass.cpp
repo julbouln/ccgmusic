@@ -7,6 +7,6 @@ void SimpleBass::render(RenderPart *p) {
 	    }
        Time end = p->getHarmonicEventEnd(i);
        int pitch = p->getHarmonicEventPitch(i,0);
-       p->addNote(start,end,p->getHarmonicEventPitch(i,0),127);
+       p->addNote(start,end,pitch,127);
  }
 }

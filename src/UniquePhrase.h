@@ -8,7 +8,7 @@ using namespace std;
 class UniquePhrase {
  int metrum;
  int bars;
- vector<Event*> events;
+ vector<Event> events;
  bool _startsPart;
  bool _endsPart;
  bool _startsSentence;
@@ -33,6 +33,8 @@ public:
  bool endsSentence();
  void addEvent(Time,Time);
  int getEvents();
- Event* getEvent(int);
+ void clearEvents();
+
+ Event getEvent(int);
 };
 #endif // UNIQUEPHRASE_H

@@ -1,7 +1,7 @@
 #include "PunkGuitarChords.h"
 
 
-bool *PunkGuitarChords::GenerateAccents(int count, double speed, bool first)
+bool *PunkGuitarChords::GenerateAccents(int count, float speed, bool first)
 {
 //    printf("PunkGuitarChords::GenerateAccents: %f %d\n",speed,count);
 
@@ -110,7 +110,7 @@ void PunkGuitarChords::PlacePunkChord(RenderPart *p, Time t, Time t2, int vel, i
 void PunkGuitarChords::DoMode1(RenderPart *p)
 {
     Time tOuter = this->createTime(p->getStartBar(), 0);
-    double speed = 0.5;
+    float speed = 0.5;
     if (p->getTempo() < 110)
     {
         speed /= 2.0;
@@ -179,7 +179,7 @@ void PunkGuitarChords::DoMode1(RenderPart *p)
 }
 void PunkGuitarChords::DoMode2(RenderPart *p)
 {
-    double step = 2;
+    float step = 2;
     if (p->getUniquePart()->getMetrum() == 3)
     {
         step = 2;
@@ -198,7 +198,7 @@ void PunkGuitarChords::DoMode2(RenderPart *p)
     int swap_down = this->rndInt(0, 1);
     for (int i = p->getStartBar(); i < p->getEndBar(); i++)
     {
-        for (double m = 0; m + step * 0.9 < p->getUniquePart()->getMetrum(); m += step)
+        for (float m = 0; m + step * 0.9 < p->getUniquePart()->getMetrum(); m += step)
         {
             Time t = this->createTime(i, m);
             int harm = p->getHarmonic(t);
@@ -249,7 +249,7 @@ void PunkGuitarChords::DoMode2(RenderPart *p)
 }
 void PunkGuitarChords::DoMode3(RenderPart *p)
 {
-    double step = 1.0;
+    float step = 1.0;
 
 
     if (p->getTempo() < 140)
@@ -280,7 +280,7 @@ void PunkGuitarChords::DoMode3(RenderPart *p)
     }
     for (int i = p->getStartBar(); i < p->getEndBar(); i++)
     {
-        for (double m = 0; m < p->getUniquePart()->getMetrum(); m += step    )
+        for (float m = 0; m < p->getUniquePart()->getMetrum(); m += step    )
         {
 //            printf("PunkGuitarChords::DoMode3 double loop %f\n",m);
 

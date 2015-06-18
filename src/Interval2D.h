@@ -10,10 +10,8 @@ public:
  Interval2D();
  Interval2D(double,double);
  bool within(Interval2D);
- Interval2D copy();
  double distanceBetween(Interval2D);
  Interval2D intersect(Interval2D);
- Interval2D intersectCopy(Interval2D);
  bool intersects(Interval2D);
  Interval2D merge(Interval2D);
  bool contains(double);

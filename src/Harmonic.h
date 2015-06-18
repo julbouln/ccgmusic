@@ -17,7 +17,6 @@ public:
  ~Harmonic();
  Harmonic();
  Interval2D toInterval2D(int);
- Harmonic* copy();
  vector<int> getOffsets();
  Time getStartTime();
  Time getEndTime();

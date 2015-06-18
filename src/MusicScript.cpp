@@ -1,14 +1,14 @@
  #include "MusicScript.h"
 
 int MusicScript::progressionIntervals[7]={ 0, 2, 4, 5, 7, 9, 11 };
+int MusicScript::fifths[7] = { 5, 0, 7, 2, 9, 4, 11};
 
 int MusicScript::chords[][8] = {
-/*
 {0, 2, 4,-1,-1,-1,-1, 3}, // MAJOR_TRIAD_CHORD "135" 047
 {0, 2, 4, 5,-1,-1,-1, 4}, // ADD_SIXTH_TRIAD_CHORD "1356" 0479
 {0, 2, 4, 6,-1,-1,-1, 4}, // MAJOR_SEVENTH_CHORD "1357" 04710
-*/
 
+/*
 {0, 4, 7,-1,-1,-1,-1, 3}, // MAJOR_TRIAD_CHORD "135" 047
 {0, 4, 7, 9,-1,-1,-1, 4}, // ADD_SIXTH_TRIAD_CHORD "1356" 0479
 {0, 4, 7, 10,-1,-1,-1, 4}, // MAJOR_SEVENTH_CHORD "1357" 04710
@@ -19,7 +19,7 @@ int MusicScript::chords[][8] = {
 {0, 2, 4, 7, -1,-1,-1, 4}, // ADD2_CHORD 
 {0, 4, 5, 7, -1,-1,-1, 4}, // ADD4_CHORD 
 {0, 4, 7, 14, -1,-1,-1, 4}, // ADD9_CHORD 
-
+*/
 };
 
 int MusicScript::scales[][7] = {
@@ -64,14 +64,8 @@ int* MusicScript::getScaleOffsets(int scale)
 {
     int *offsets = scales[scale];
 
-    if (offsets == NULL)
-    {
-        //    printf("ERROR could not find scale with name %s\n",scaleName.c_str());
-        offsets = scales[MAJOR_SCALE];
-    }
-
 //    offsets = scales[MAJOR_SCALE];
-//    offsets = scales[AEOLIEN_SCALE];
+//    offsets = scales[NATURAL_MINOR_SCALE];
     return offsets;
 }
 
@@ -132,7 +126,7 @@ int MusicScript::getRandom(int patches[])
     return patches[this->rndInt(0, ARRAY_LENGTH(patches) - 1)];
 }
 
-MusicScript::Pattern *MusicScript::newPattern(double l,  vector<int> pit, vector<double> pat, int v1, int v2)
+MusicScript::Pattern *MusicScript::newPattern(float l,  vector<int> pit, vector<float> pat, int v1, int v2)
 {
     Pattern *p = new Pattern();
     p->Length = l;
@@ -146,7 +140,7 @@ void MusicScript::realizePattern(RenderPart *p, Pattern *pat)
 {
     for (int i = p->getStartBar(); i < p->getEndBar(); i++)
     {
-        for (double m = 0; m < p->getUniquePart()->getMetrum(); m += pat->Length)
+        for (float m = 0; m < p->getUniquePart()->getMetrum(); m += pat->Length)
         {
             for (size_t n = 0; n < pat->pattern.size(); n++)
             {

@@ -49,7 +49,7 @@ RenderPart::RenderPart(int trackIndex)
 }
 int RenderPart::getEvents()
 {
-    return part->getChromaticEventList()->size();
+    return part->getChromaticEvents();
  //   return chromaticEvents.size();
 }
 int RenderPart::getHarmonic(Time t)
@@ -80,19 +80,19 @@ int RenderPart::getHarmonic(Time t)
 }
 Time RenderPart::getEventStart(int index)
 {
-    return part->getChromaticEventList()->at(index)->getStart();
+    return part->getEventStart(index);
 
 //    return chromaticEvents.at(index)->getStart();
 }
 Time RenderPart::getEventEnd(int index)
 {
-    return part->getChromaticEventList()->at(index)->getEnd();
+    return part->getEventEnd(index);
 
 //    return chromaticEvents.at(index)->getEnd();
 }
 int RenderPart::getEventPitch(int index)
 {
-    return 12 * renderEvent->getOctave() + part->getChromaticEventList()->at(index)->getChromaticNote();
+    return 12 * renderEvent->getOctave() + part->getNote(index);
 
 //    return 12 * renderEvent->getOctave() + chromaticEvents.at(index)->getChromaticNote();
 }
@@ -108,8 +108,11 @@ int RenderPart::getHarmonicComponents(int index)
 //    Harmonic *harmonic = harmonics.at(index);
     return harmonic->getOffsets().size();
 }
+
+// input chord note index / output chromatic note
 int RenderPart::getHarmonicEventPitch(int index, int chordNoteIndex)
 {
+    int originalChordNoteIndex=chordNoteIndex;
     Harmonic *harmonic = uniquePart->getHarmonicList()->at(index);
 //    Harmonic *harmonic = harmonics.at(index);
     vector<int> offsets = harmonic->getOffsets();
@@ -130,7 +133,7 @@ int RenderPart::getHarmonicEventPitch(int index, int chordNoteIndex)
 
     int pitch=12 * renderEvent->getOctave() + octaveOffset * 12 + part->computePitch(scaleIndex);
 
-//    printf("RenderPart::getHarmonicEventPitch: %d %d -> %d %d(%s)\n",index,chordNoteIndex,scaleIndex,pitch,Utils::midiToNote(pitch).c_str());
+//    printf("RenderPart::getHarmonicEventPitch: index:%d chordNoteIndex:%d (%d) baseNote:%d -> scaleIndex:%d computePitch:%d pitch:%d(%s)\n",index,chordNoteIndex,originalChordNoteIndex,baseNote,scaleIndex,part->computePitch(scaleIndex),pitch,Utils::midiToNote(pitch).c_str());
     return pitch;
 }
 Time RenderPart::getHarmonicEventStart(int index)
@@ -147,6 +150,8 @@ Time RenderPart::getHarmonicEventEnd(int index)
 //    Harmonic *harmonic = harmonics.at(index);
     return harmonic->getEndTime();
 }
+
+// input scale degree / output chromatic note
 int RenderPart::alignPitch(int chromaticChordNote, int scaleOffset)
 {
     int baseChrScaleNote = part->computePitch(1);

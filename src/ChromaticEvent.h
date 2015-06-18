@@ -5,12 +5,11 @@
 #include "Time.h"
 using namespace std;
 class ChromaticEvent : public AbstractEvent {
- int8_t chromaticNote;
+ uint8_t chromaticNote;
 public:
- ChromaticEvent(Time,Time,int);
+ ChromaticEvent(Time,Time,uint8_t);
  ChromaticEvent(Time,Time);
- ChromaticEvent* copy();
  int getChromaticNote();
- void setChromaticNote(int);
+ void setChromaticNote(uint8_t);
 };
 #endif // CHROMATICEVENT_H

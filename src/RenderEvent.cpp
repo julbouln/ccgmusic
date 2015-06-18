@@ -11,12 +11,13 @@ RenderEvent::~RenderEvent() {
 RenderEvent::RenderEvent(string scriptName,int seed,int initialBar,int finalBar,int8_t octave,Time timeOffset,float volMult, int trackId) {
  this->scriptName = scriptName;
  this->seed = seed;
- this->initialStep = initialBar;
- this->finalStep = finalBar;
+ this->initialStep = (uint8_t)initialBar;
+ this->finalStep = (uint8_t)finalBar;
  this->octave = octave;
  this->timeOffset = timeOffset;
  this->volMult = volMult;
  this->trackId = trackId;
+// printf("RenderEvent::RenderEvent initialStep:%d finalStep:%d octave:%d \n",initialStep,finalStep,octave);
 }
 int RenderEvent::getParam(int param) {
 

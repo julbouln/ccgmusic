@@ -13,12 +13,30 @@ Part::Part() {
 
 Part::~Part() {
 //	printf("delete Part %x\n",this);
-	Utils::deleteVector(chromaticEvents);
+//	Utils::deleteVector(chromaticEvents);
 }
 
-vector<ChromaticEvent*> *Part::getChromaticEventList() {
- return &chromaticEvents;
+int Part::getChromaticEvents() {
+	return chromaticEvents.size();
 }
+
+ChromaticEvent Part::getChromaticEvent(int index) {
+	return chromaticEvents.at(index);
+}
+
+Time Part::getEventStart(int index) {
+	return chromaticEvents.at(index).getStart();
+}
+
+Time Part::getEventEnd(int index) {
+	return chromaticEvents.at(index).getEnd();
+}
+
+int Part::getNote(int index) {
+	return chromaticEvents.at(index).getChromaticNote();
+}
+
+
 int Part::getStartBar() {
  return startBar;
 }
@@ -47,7 +65,7 @@ int Part::getScale() {
  return scale;
 }
 void Part::setScale(int scale) {
-//	printf("setScale %d\n", scale);
+//	printf("Part::setScale %d\n", scale);
  this->scale = scale;
  currentScale = MusicScript::getScaleOffsets(scale);
 }
@@ -64,9 +82,11 @@ void Part::setEndBar(int endBar) {
  this->endBar = endBar;
 }
 void Part::addEvent(Time start,Time end,int chromaticNote) {
-//	printf("Part::addEvent %x %d\n",this, chromaticNote);
- chromaticEvents.push_back(new ChromaticEvent(start,end,chromaticNote));
+//	printf("Part::addEvent %s/%s %d\n",start.toString().c_str(),end.toString().c_str(), chromaticNote);
+	 chromaticEvents.push_back(ChromaticEvent(start,end,chromaticNote));
 }
+
+// input scale degree / output chromatic pitch
 int Part::computePitch(int scaleNote) {
  int scaleIndex = scaleNote - 1;
  int octaveOffset = 0;
@@ -82,7 +102,7 @@ int Part::computePitch(int scaleNote) {
  }
 
  pitch=Part::CHROMATIC_BASE + transpose + currentScale[scaleIndex] + 12 * octaveOffset;
-//printf("Part::computePitch %d %d %d %d %d(%s)\n",transpose,scaleNote,scaleIndex, currentScale[scaleIndex],pitch,Utils::midiToNote(pitch).c_str());
+ //printf("Part::computePitch transpose:%d scaleNote:%d scaleIndex:%d scaleChromatic:%d octaveOffset:%d pitch:%d(%s)\n",transpose,scaleNote,scaleIndex, currentScale[scaleIndex],octaveOffset,pitch,Utils::midiToNote(pitch).c_str());
 
  return pitch;
 }

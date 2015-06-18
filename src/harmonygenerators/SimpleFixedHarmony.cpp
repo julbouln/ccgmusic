@@ -5,38 +5,34 @@ vector<int> SimpleFixedHarmony::rndChord() {
 	return chord;
 }
 
+int SimpleFixedHarmony::progressions[][8]={
+	{1,4,1,4,1,4,1,4},
+	{4,1,4,5,4,1,4,5},
+	{1,5,4,5,1,5,4,5},
+	{1,5,6,4,1,5,6,4},
+	{1,5,6,3,1,5,6,3},
+	{6,5,4,5,6,5,4,5},
+	{1,4,6,5,1,4,6,5}
+};
 
 void SimpleFixedHarmony::generateHarmony(UniquePart *up) {
 //	vector<int> chord = this->rndChord();
+//	vector<int> chord =  MusicScript::getChord(MAJOR_TRIAD_CHORD);
 	vector<int> chord =  MusicScript::getChord(MAJOR_TRIAD_CHORD);
-//	vector<int> chord =  MusicScript::getChord(ADD9_CHORD);
 
-/*
-	up->addHarmonic(this->createTime(0, 0), 1, chord);
-	up->addHarmonic(this->createTime(1, 0), 5, chord);
-	up->addHarmonic(this->createTime(2, 0), 6, MusicScript::getChord(MINOR_TRIAD_CHORD));
-	up->addHarmonic(this->createTime(3, 0), 4, chord);
 
-	up->addHarmonic(this->createTime(4, 0), 1, chord);
-	up->addHarmonic(this->createTime(5, 0), 5, chord);
-	up->addHarmonic(this->createTime(6, 0), 6, MusicScript::getChord(MINOR_TRIAD_CHORD));
-	up->addHarmonic(this->createTime(7, 0), 4, chord);
-*/
 
-/*
-	up->addHarmonic(this->createTime(0, 0), 2, MusicScript::getChord(MINOR_TRIAD_CHORD));
-	up->addHarmonic(this->createTime(1, 0), 4, chord);
-	up->addHarmonic(this->createTime(2, 0), 5, chord);
+if(up->getBars()==8) {
+	int rndProgression=this->rndInt(0,6);
+	printf("rndProgression %d\n",rndProgression);
+	for(int i=0;i<8;i++) {
+		up->addHarmonic(this->createTime(i, 0), progressions[rndProgression][i], chord);
+	}
 
-	up->addHarmonic(this->createTime(3, 0), 2, MusicScript::getChord(MINOR_TRIAD_CHORD));
+} 
+else
+{
 
-	up->addHarmonic(this->createTime(4, 0), 4, chord);
-	up->addHarmonic(this->createTime(5, 0), 5, chord);
-	up->addHarmonic(this->createTime(6, 0), 2, MusicScript::getChord(MINOR_TRIAD_CHORD));
-	up->addHarmonic(this->createTime(7, 0), 4, chord);
-*/
-
-//printf("%d\n",up->getBars());
 
 	up->addHarmonic(this->createTime(0, 0), MusicScript::I, chord);
 
@@ -53,5 +49,6 @@ void SimpleFixedHarmony::generateHarmony(UniquePart *up) {
 
 	up->addHarmonic(this->createTime(up->getBars() - 2, 0), MusicScript::V, chord);
 	up->addHarmonic(this->createTime(up->getBars() - 1, 0), MusicScript::I, chord);
+}
 
 }

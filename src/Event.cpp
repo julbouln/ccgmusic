@@ -1,5 +1,5 @@
 #include "Event.h"
-Event::Event(Time begin,Time end,int pitch) : AbstractEvent(begin,end) {
+Event::Event(Time begin,Time end,int8_t pitch) : AbstractEvent(begin,end) {
  this->pitch = pitch;
 }
 Event::Event(Time begin,Time end) : AbstractEvent(begin,end) {
@@ -11,6 +11,6 @@ Event* Event::copy() {
 int Event::getPitch() {
  return pitch;
 }
-void Event::setPitch(int pitch) {
+void Event::setPitch(int8_t pitch) {
  this->pitch = pitch;
 }

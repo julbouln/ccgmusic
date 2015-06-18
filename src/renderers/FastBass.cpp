@@ -18,14 +18,14 @@ int FastBass::GetNextPitch(int p) {
 }
 void FastBass::render(RenderPart *p) {
  this->SetFirstPitch(p->getHarmonicEventPitch(0,0));
- double speed = 0.5;
+ float speed = 0.5;
  if(p->getTempo() < 90) {
   speed /= 2.0;
  }
  if(p->getTempo() > 180) {
   speed *= 2.0;
  }
- double len = this->rndFloat(0.5,1.0);
+ float len = this->rndFloat(0.5,1.0);
  Time t = this->createTime(p->getStartBar(),0);
  int co = 4;
  if(this->rndInt(0,1) == 0) {

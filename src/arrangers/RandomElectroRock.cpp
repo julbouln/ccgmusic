@@ -191,7 +191,7 @@ void RandomElectroRock::arrange(Song *s) {
 
 	s->addRenderEvent("Drums Euclidean", this->rndInt(0,INT_MAX), 2, s->getPartStartBar(i),s->getPartEndBar(i), 0,this->createTime(0, 0), 1);
 	steps=rndStep();
-	s->setParam(RenderEvent::PULSES, this->rndInt(steps/3+1,steps));
+	s->setParam(RenderEvent::PULSES, this->rndInt(steps/4+1,steps/2));
     s->setParam(RenderEvent::STEPS, steps);
     s->setParam(RenderEvent::METRUM, metrum);
     s->setParam(RenderEvent::VOL, vol);
@@ -201,7 +201,7 @@ void RandomElectroRock::arrange(Song *s) {
 
 	s->addRenderEvent("Drums Euclidean", this->rndInt(0,INT_MAX), 2, s->getPartStartBar(i),s->getPartEndBar(i), 0,this->createTime(0, 0), 1);
 	steps=rndStep();
-	s->setParam(RenderEvent::PULSES, this->rndInt(steps/3+1,steps));
+	s->setParam(RenderEvent::PULSES, this->rndInt(steps/4+1,steps/2));
     s->setParam(RenderEvent::STEPS, steps);
     s->setParam(RenderEvent::METRUM, metrum);
     s->setParam(RenderEvent::VOL, vol);
@@ -220,13 +220,31 @@ void RandomElectroRock::arrange(Song *s) {
 
 	s->addRenderEvent("Drums Euclidean", this->rndInt(0,INT_MAX), 2, s->getPartStartBar(i),s->getPartEndBar(i), 0,this->createTime(0, 0), 1);
 	steps=rndStep();
-	s->setParam(RenderEvent::PULSES, this->rndInt(steps/3+1,steps));
+	s->setParam(RenderEvent::PULSES, this->rndInt(steps/4+1,steps/2));
     s->setParam(RenderEvent::STEPS, steps);
     s->setParam(RenderEvent::METRUM, metrum);
     s->setParam(RenderEvent::VOL, vol);
 
     s->setParam(RenderEvent::PITCH, 48);
 
+
+    s->addRenderEvent("Drums Euclidean", this->rndInt(0,INT_MAX), 2, s->getPartStartBar(i),s->getPartEndBar(i), 0,this->createTime(0, 0), 1);
+	steps=rndStep();
+	s->setParam(RenderEvent::PULSES, this->rndInt(steps/4+1,steps/2));
+    s->setParam(RenderEvent::STEPS, steps);
+    s->setParam(RenderEvent::METRUM, metrum);
+    s->setParam(RenderEvent::VOL, vol);
+
+    s->setParam(RenderEvent::PITCH, 42);
+
+    s->addRenderEvent("Drums Euclidean", this->rndInt(0,INT_MAX), 2, s->getPartStartBar(i),s->getPartEndBar(i), 0,this->createTime(0, 0), 1);
+	steps=rndStep();
+	s->setParam(RenderEvent::PULSES, this->rndInt(steps/4+1,steps/2));
+    s->setParam(RenderEvent::STEPS, steps);
+    s->setParam(RenderEvent::METRUM, metrum);
+    s->setParam(RenderEvent::VOL, vol);
+
+    s->setParam(RenderEvent::PITCH, 44);
 
 /*
     if(this->rndInt(0,4)>0) {

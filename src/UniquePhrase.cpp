@@ -1,6 +1,6 @@
 #include "UniquePhrase.h"
 UniquePhrase::~UniquePhrase(){
-	Utils::deleteVector(events);
+//	Utils::deleteVector(events);
 }
 
 UniquePhrase::UniquePhrase() {
@@ -51,12 +51,18 @@ bool UniquePhrase::endsSentence() {
  return _endsSentence;
 }
 void UniquePhrase::addEvent(Time begin,Time end) {
- Event *event = new Event(begin,end);
- events.push_back(event);
+// Event *event = new Event(begin,end);
+// events.push_back(event);
+ events.push_back(Event(begin,end));
 }
 int UniquePhrase::getEvents() {
  return events.size();
 }
-Event* UniquePhrase::getEvent(int index) {
+Event UniquePhrase::getEvent(int index) {
  return events.at(index);
+}
+
+void UniquePhrase::clearEvents() {
+	events.clear();
+//		Utils::deleteVector(events);
 }

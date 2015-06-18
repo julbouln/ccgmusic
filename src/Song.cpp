@@ -33,7 +33,9 @@ void Song::clearNotes()
 {
     Utils::deleteVector(notes);
     notes.clear();
+    vector<RenderNote*>(notes).swap(notes);
 }
+
 
 void Song::sortNotes()
 {

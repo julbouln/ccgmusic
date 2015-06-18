@@ -7,9 +7,10 @@ void SimpleRandomMelody::createMelody(UniquePart *up)
 
     for (int i = 0; i < up->getEvents() - 1; i++ )
     {
+        int onote=note;
         note = up->alignPitchToHarm(i, note);
 
-//        printf("SimpleRandomMelody::createMelody set note %d %d(%s)\n",i,note,Utils::midiToNote(60+note).c_str());
+//        printf("SimpleRandomMelody::createMelody set note %d (was %d) %d(%s)\n",i,onote-1,note-1,Utils::midiToNote(60+note-1).c_str());
         note = up->setEventPitch(i, note);
 
         if (i < up->getEvents() - 2)

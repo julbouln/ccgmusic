@@ -16,10 +16,12 @@ using namespace std;
 class MidiDriver {
 	long currentTime;
 	int tempo;
+	int ticksPerQuarterNote;
 	float ticksToTime(long t);
 
 public:
-	bool stopAsap;
+	bool stop;
+	bool pause;
 
 	MidiDriver();
 	virtual ~MidiDriver() {};
@@ -28,13 +30,15 @@ public:
 
 	virtual void msleep(int ms) {};
 
+	virtual void setTicksPerQuarterNote(int t) {ticksPerQuarterNote=t;};
+	virtual int getTicksPerQuarterNote() {return ticksPerQuarterNote;};
+
 	virtual void setTrackName(int track, string name) {};
 	virtual void sendTempo(long time, int track, int tempo);
 	virtual void sendControlChange(long time, int track, int chan, int ctrl, int val);
 	virtual void sendNoteOn(long time, int track, int chan, int note, int velocity);
 	virtual void sendNoteOff(long time, int track, int chan, int note, int velocity);
 	virtual void sendProgramChange(long time, int track, int chan, int val);
-
 class QueueMessage {
 //		vector<uint8_t> message;
 		uint8_t message[3];
@@ -74,6 +78,8 @@ class QueueMessage {
 
 
 	priority_queue<QueueMessage, vector<QueueMessage>, QueueMessage::Comparator> queueMessages;
+
+	virtual void queueMessage(QueueMessage qm);
 	virtual void sendMessage(QueueMessage *) {};
 	virtual int getQueueSize() { 
 		int size;
@@ -87,10 +93,10 @@ class QueueMessage {
 		while(1)
         {
             int size=this->getQueueSize();
-            if(size > max_queue_size) {
+            if(size >= max_queue_size) {
                 this->msleep(100);
             } else {
-                break;
+                return;
             }
 
         }
@@ -100,10 +106,13 @@ class QueueMessage {
 	void launch() {
 		while(this->getQueueSize() <= min_queue_size)
     	{
-      		this->msleep(10);
+      		this->msleep(100);
 	    }
         this->process(true);
 	    this->mute();
+		this->tempo = 500000;
+		this->ticksPerQuarterNote = 48;
+
 	}
 
 	virtual void mutexLock() {};
@@ -111,10 +120,40 @@ class QueueMessage {
 
 
 	virtual void clear() {
+		mutexLock();
 		while (!queueMessages.empty()) {
     	    queueMessages.pop();
 	    }
+	    mutexUnlock();
 	};
+
+	virtual void setStop(bool s) {
+		mutexLock();
+		stop=s;
+		mutexUnlock();
+	}
+
+	virtual void setPause(bool p) {
+		mutexLock();
+		pause=p;
+		mutexUnlock();
+	}
+
+	virtual bool getStop() {
+		bool s;
+		mutexLock();
+		s=stop;
+		mutexUnlock();
+		return s;
+	}
+
+	virtual bool getPause() {
+		bool p;
+		mutexLock();
+		p=pause;
+		mutexUnlock();
+		return p;
+	}
 
 	int min_queue_size;
 	int max_queue_size;

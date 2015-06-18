@@ -9,6 +9,7 @@ class SimpleFixedHarmony : public HarmonyGenerator {
 public:
  void generateHarmony(UniquePart*);
 private:
+	static int progressions[][8];
 	vector<int> rndChord();
 };
 #endif // SIMPLEFIXEDHARMONY_H

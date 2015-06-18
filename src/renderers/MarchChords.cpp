@@ -1,7 +1,7 @@
 #include "MarchChords.h"
 void MarchChords::PlaceNextChord(RenderPart *p,Time t1) {
  int harm = p->getHarmonic(t1);
- for(int f = 0;f < p->getHarmonicComponents(harm);++f ){
+ for(int f = 0;f < p->getHarmonicComponents(harm);f++){
        int pit = p->computePitch(p->getHarmonicEventPitch(harm,f));
        while(pit > 70){
      pit -= 12;
@@ -21,7 +21,7 @@ void MarchChords::render(RenderPart *p) {
  }
  for(int i = p->getStartBar();i < p->getEndBar();++i ){
        if(i % 2 == 1 && this->rndInt(0,1) == 0) {
-           for(double m = 0;m < p->getUniquePart()->getMetrum();m += step      ){
+           for(double m = 0;m < p->getUniquePart()->getMetrum();m += step){
                  if(m > 0) {
           this->PlaceNextChord(p,this->createTime(i,m));
          }
@@ -32,7 +32,7 @@ void MarchChords::render(RenderPart *p) {
       }
     }
     else {
-           for(double m = 0;m < p->getUniquePart()->getMetrum();m += step      ){
+           for(double m = 0;m < p->getUniquePart()->getMetrum();m += step){
                  this->PlaceNextChord(p,this->createTime(i,m + step * 4.0 / 6.0));
       }
     }

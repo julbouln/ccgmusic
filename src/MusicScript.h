@@ -20,13 +20,14 @@ static enum ChordType {
 	MAJOR_TRIAD_CHORD=0,
 	ADD_SIXTH_TRIAD_CHORD,
 	MAJOR_SEVENTH_CHORD,
-	MINOR_TRIAD_CHORD,
+/*	MINOR_TRIAD_CHORD,
 	SUS2_SEVENTH_CHORD,
 	SUS4_SEVENTH_CHORD,
 	ADD_SIXTH_NINE_CHORD,
 	ADD2_CHORD,
 	ADD4_CHORD,
 	ADD9_CHORD,
+	*/
 	
 	CHORDS_COUNT
 } ChordTypes;
@@ -75,6 +76,7 @@ static enum ScaleType {
  static int chords[CHORDS_COUNT][8];
  static int scales[SCALES_COUNT][7];
 
+ static int fifths[7];
  static int progressionIntervals[7];
 
  static vector<int> getChord(int);
@@ -94,13 +96,13 @@ static enum ScaleType {
  int getRandom(int[]);
  class Pattern {
  public:
-    double Length;
+    float Length;
     vector<int> Pitches;
     int velfrom;
     int velto;
-    vector<double> pattern;
+    vector<float> pattern;
 };
- Pattern* newPattern(double,vector<int>,vector<double>,int,int);
+ Pattern* newPattern(float,vector<int>,vector<float>,int,int);
  void realizePattern(RenderPart*,Pattern*);
  void setSong(Song*);
 };

@@ -16,7 +16,6 @@ public:
  bool contains(Time,Time,Time,int);
  bool intersects(Time,Time,int);
  Interval2D intersect(Time,Time,int);
- bool intersects(ChromaticEvent*,int);
  AbstractEvent* translate(int);
  Time getStart();
  Time getEnd();

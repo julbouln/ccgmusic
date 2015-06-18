@@ -1,10 +1,10 @@
 #include "DrumsDanceSnareAttack.h"
 void DrumsDanceSnareAttack::render(RenderPart *p) {
- double speed = 0.25;
- double vel_from = 30 + this->rndInt(0,20);
- double vel_off = 90 - vel_from;
- double delta = (p->getEndBar() - p->getStartBar()) * p->getUniquePart()->getMetrum();
- double alpha = 0;
+ float speed = 0.25;
+ float vel_from = 30 + this->rndInt(0,20);
+ float vel_off = 90 - vel_from;
+ float delta = (p->getEndBar() - p->getStartBar()) * p->getUniquePart()->getMetrum();
+ float alpha = 0;
  int speed_up = this->rndInt(0,2);
  int mode = this->rndInt(0,1);
  if(p->getTempo() < 90) {

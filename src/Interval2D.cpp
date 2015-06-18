@@ -13,9 +13,7 @@ Interval2D::Interval2D(double lower,double upper) {
 bool Interval2D::within(Interval2D interval) {
  return interval.lower >= lower && interval.upper <= upper;
 }
-Interval2D Interval2D::copy() {
- return Interval2D(lower,upper);
-}
+
 double Interval2D::distanceBetween(Interval2D interval) {
  if(this->intersects(interval)) {
      return 0.0;
@@ -29,7 +27,7 @@ double Interval2D::distanceBetween(Interval2D interval) {
          return lower - interval.upper;
    }
    else {
-      printf("ERROR found a distanceBetween() case that is impossible");
+      printf("ERROR found a distanceBetween() case that is impossible\n");
 //         cout  << (this->toString() + " found a distanceBetween() case that is impossible :) " + this->toString() + " " + interval) << endl;
          return 0.0;
    }
@@ -47,9 +45,7 @@ Interval2D Interval2D::intersect(Interval2D interval) {
  }
  return r;
 }
-Interval2D Interval2D::intersectCopy(Interval2D interval) {
- return this->intersect(interval);
-}
+
 bool Interval2D::intersects(Interval2D interval) {
  if(interval.upper < lower || upper < interval.lower) {
      return false;

@@ -5,23 +5,23 @@ void DrumsDanceHiHat::render(RenderPart *p) {
   bool b42 = false;
   if (this->rndInt(0, 1) == 0) {
     int pit2[] = {42};
-    double pat2[] = {0, 0.25, 0.5};
+    float pat2[] = {0, 0.25, 0.5};
     patterns.push_back(this->newPattern(1, Utils::arrayToVector(pit2,1), Utils::arrayToVector(pat2,3), 115, 120));
     b42 = true;
   }
   else {
     int pit2[] = {44};
-    double pat2[] = {0};
+    float pat2[] = {0};
     patterns.push_back(this->newPattern(1, Utils::arrayToVector(pit2,1), Utils::arrayToVector(pat2,1), 115, 120));
     int pit3[] = {82};
-    double pat3[] = {0.5};
+    float pat3[] = {0.5};
     patterns.push_back(this->newPattern(1, Utils::arrayToVector(pit3,1), Utils::arrayToVector(pat3,1), 115, 120));
   }
   int pit4[] = {44};
-  double pat4[] = {0.5 + 0.25 * this->rndInt(0, 1)};
+  float pat4[] = {0.5 + 0.25 * this->rndInt(0, 1)};
   patterns.push_back(this->newPattern(1, Utils::arrayToVector(pit4,1), Utils::arrayToVector(pat4,1), 115, 120));
   int pit5[] = {46};
-  double pat5[] = {0.51 + 0.25 * this->rndInt(0, 1)};
+  float pat5[] = {0.51 + 0.25 * this->rndInt(0, 1)};
   patterns.push_back(this->newPattern(1, Utils::arrayToVector(pit5,1), Utils::arrayToVector(pat5,1), 115, 120));
   if (this->rndInt(0, 1) == 0 && !b42) {
     //     pit5 = new int[1]{42};
@@ -29,7 +29,7 @@ void DrumsDanceHiHat::render(RenderPart *p) {
     if (b42) {
       pit5[0] = 37;
     }
-    double pat5b[] = {0, 0.5, 0.75};
+    float pat5b[] = {0, 0.5, 0.75};
     patterns.push_back(this->newPattern(1.0, Utils::arrayToVector(pit5,1), Utils::arrayToVector(pat5b,3), 80, 90));
   }
   if (p->getTempo() < 90) {

@@ -13,12 +13,19 @@ class Part {
  int scale;
  int arrHint;
  int *currentScale;
- vector<ChromaticEvent*> chromaticEvents;
+ vector<ChromaticEvent> chromaticEvents;
 public:
  static int CHROMATIC_BASE;
  ~Part();
  Part();
- vector<ChromaticEvent*> *getChromaticEventList();
+// vector<ChromaticEvent*> *getChromaticEventList();
+ ChromaticEvent getChromaticEvent(int);
+ int getChromaticEvents();
+
+ Time getEventStart(int);
+ Time getEventEnd(int);
+ int getNote(int);
+
  int getStartBar();
  int getEndBar();
  int getUniquePart();

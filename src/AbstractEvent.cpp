@@ -35,10 +35,7 @@ Interval2D AbstractEvent::intersect(Time otherBegin,Time otherEnd,int metrum) {
  double otherEndPos = end.getPosition(metrum);
  Interval2D interval = Interval2D(beginPos,endPos);
  Interval2D otherInterval = Interval2D(otherBeginPos,otherEndPos);
- return interval.intersectCopy(otherInterval);
-}
-bool AbstractEvent::intersects(ChromaticEvent* e,int metrum) {
- return this->intersects(e->getStart(),e->getEnd(),metrum);
+ return interval.intersect(otherInterval);
 }
 AbstractEvent* AbstractEvent::translate(int bars) {
  begin.translate(bars);

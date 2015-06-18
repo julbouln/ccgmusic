@@ -27,13 +27,16 @@ class UniquePart {
  vector<UniquePhrase*> uniquePhrases;
  vector<Sentence*> sentences;
  vector<Harmonic*> harmonics;
- vector<Event*> events;
- map<Event*,Harmonic*> eventHarmony;
+ vector<Event> events;
+ // map<Event*,Harmonic*> eventHarmony;
+ vector<int> eventHarmony;
+
 public:
  ~UniquePart();
  UniquePart();
+ void clearUniquePhrases();
  void randomize(Song*);
- vector<Event*> *getEventList();
+// vector<Event*> *getEventList();
  vector<Harmonic*> *getHarmonicList();
  void assignEventsToHarmony();
  void setSentences(int);
@@ -74,7 +77,6 @@ public:
  int getEventBasis(int);
  void addHarmonic(Time,int,vector<int>);
  int alignPitchToHarm(int,int);
- void addEvent(Event*);
- Harmonic* getEventHarmonic(Event*);
+ void addEvent(Event);
 };
 #endif // UNIQUEPART_H

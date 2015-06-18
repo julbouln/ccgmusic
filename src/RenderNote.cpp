@@ -1,6 +1,6 @@
 #include "RenderNote.h"
 
-RenderNote::RenderNote(Time start,Time end,int8_t pitch,int8_t volume,int8_t trackIndex,bool percussion) {
+RenderNote::RenderNote(Time start,Time end,uint8_t pitch,uint8_t volume,uint8_t trackIndex,bool percussion) {
  this->start = start;
  this->end = end;
  this->pitch = pitch;

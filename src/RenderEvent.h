@@ -6,8 +6,8 @@ using namespace std;
 class RenderEvent {
 	string scriptName;
 	int seed;
-	int initialStep;
-	int finalStep;
+	uint8_t initialStep;
+	uint8_t finalStep;
 	int8_t octave;
 	Time timeOffset;
 	float volMult;

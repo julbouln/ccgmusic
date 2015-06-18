@@ -40,13 +40,17 @@ void SineVelocitySimpleMelody::render(RenderPart *p)
     }
     Time t = this->createTime(p->getStartBar(), 0);
     int patternLength=this->rndInt(3, 8);
-    int *pattern = new int[patternLength];
+    vector<int8_t> pattern;
+
     for (int i = 0; i < patternLength; ++i )
     {
-        pattern[i] = this->rndInt(-1, 1);
         if (this->rndInt(0, 4) == 0)
         {
-            pattern[i] = -2;
+            pattern.push_back(-2);
+        }
+        else
+        {
+            pattern.push_back(this->rndInt(-1, 1));            
         }
     }
     int n = 0;
@@ -73,9 +77,9 @@ void SineVelocitySimpleMelody::render(RenderPart *p)
         if (t.mPos >= p->getUniquePart()->getMetrum())
         {
             t.mPos = 0;
-            ++t.mBar;
+            t.mBar++;
         }
-        ++n;
+        n++;
     }
-    delete pattern;
+//    delete pattern;
 }

@@ -1,17 +1,17 @@
-#ifndef RENDERNOTE_H
-#define RENDERNOTE_H
+#ifndef NOTE_H
+#define NOTE_H
 #include "Common.h"
 #include "Time.h"
 using namespace std;
-class RenderNote {
+class Note {
 	Time start;
 	Time end;
-	uint8_t pitch;
-	uint8_t volume;
-	uint8_t trackIndex;
+	int8_t pitch;
+	int8_t volume;
+	int8_t trackIndex;
 	bool percussion;
 public:
-	RenderNote(Time, Time, uint8_t, uint8_t, uint8_t, bool);
+	Note(Time, Time, int8_t, int8_t, int8_t, bool);
 	void translate(int);
 	void translate(Time);
 	Time getStart();
@@ -23,7 +23,7 @@ public:
 
 	class Comparator {
 	public:
-		bool operator()( const RenderNote *lhs, const RenderNote *rhs ) {
+		bool operator()( const Note *lhs, const Note *rhs ) {
 			Time lstart = (*lhs).start;
 			Time rstart = (*rhs).start;
 			long offl = (long)(192 * (lstart.mBar + lstart.mPos / 4)) + 192;
@@ -33,4 +33,4 @@ public:
 	};
 
 };
-#endif // RENDERNOTE_H
+#endif // NOTE_H

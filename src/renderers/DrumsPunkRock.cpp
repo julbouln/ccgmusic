@@ -1,12 +1,12 @@
 #include "DrumsPunkRock.h"
 void DrumsPunkRock::DoFootAndSnare(RenderPart *p) {
-  double step = 1.0;
+  float step = 1.0;
   if (p->getTempo() < 120) {
     step /= 2.0;
   }
   bool type = true;
   for (int i = p->getStartBar(); i < p->getEndBar(); ++i ) {
-    for (double m = 0; m < p->getUniquePart()->getMetrum(); m += step) {
+    for (float m = 0; m < p->getUniquePart()->getMetrum(); m += step) {
       if (type) {
         if (this->rndInt(0, 2) != 0 || (m < step)) {
           p->addPercNote(this->createTime(i, m), this->createTime(i, m + 0.1), 36, 127);
@@ -34,12 +34,12 @@ void DrumsPunkRock::DoFootAndSnare(RenderPart *p) {
   }
 }
 void DrumsPunkRock::DoChorusHiHat(RenderPart *p, int pit) {
-  double step = 0.5;
+  float step = 0.5;
   if (p->getTempo() < 120) {
     step /= 2.0;
   }
   for (int i = p->getStartBar(); i < p->getEndBar(); ++i ) {
-    for (double m = 0; m < p->getUniquePart()->getMetrum(); m += step) {
+    for (float m = 0; m < p->getUniquePart()->getMetrum(); m += step) {
       if (i % 2 == 0) {
         if (m < step) {
           if (this->rndInt(0, 1) == 0) {
@@ -70,7 +70,7 @@ void DrumsPunkRock::DoChorusHiHat(RenderPart *p, int pit) {
   }
 }
 void DrumsPunkRock::DoIntroHiHat(RenderPart *p) {
-  double step = 1.0;
+  float step = 1.0;
   if (p->getTempo() < 120) {
     step /= 2.0;
   }
@@ -85,18 +85,18 @@ void DrumsPunkRock::DoIntroHiHat(RenderPart *p) {
     if (i % bars == 0) {
       p->addPercNote(this->createTime(i, -step / 2.0), this->createTime(i, -(step / 2.0) + 0.1), 46, 111);
     }
-    for (double m = 0; m < p->getUniquePart()->getMetrum(); m += step    ) {
+    for (float m = 0; m < p->getUniquePart()->getMetrum(); m += step    ) {
       p->addPercNote(this->createTime(i, m), this->createTime(i, m + 0.1), 42, this->rndInt(109, 113));
     }
   }
 }
 void DrumsPunkRock::DoTransition(RenderPart *p) {
-  double step = 0.25;
+  float step = 0.25;
   if (p->getTempo() < 100) {
     step /= 2.0;
   }
   for (int i = p->getStartBar(); i < p->getEndBar(); ++i ) {
-    double start = this->rndInt(0, 1) * step * 2;
+    float start = this->rndInt(0, 1) * step * 2;
     p->addPercNote(this->createTime(i, start), this->createTime(i, start + 0.1), 36, 127);
     p->addPercNote(this->createTime(i, p->getUniquePart()->getMetrum() / 2), this->createTime(i, p->getUniquePart()->getMetrum() / 2 + 0.1), 36, 127);
     p->addPercNote(this->createTime(i, p->getUniquePart()->getMetrum() - step * 2), this->createTime(i, p->getUniquePart()->getMetrum() - step * 2 + 0.1), 36, 127);
@@ -109,12 +109,12 @@ void DrumsPunkRock::DoTransition(RenderPart *p) {
     if (this->rndInt(0, 4) != 0) {
       p->addPercNote(this->createTime(i, p->getUniquePart()->getMetrum() - step * 2), this->createTime(i, p->getUniquePart()->getMetrum() - step * 2 + 0.1), 58, 117);
     }
-    for (double m = start + this->rndInt(1, 2) * step; m < p->getUniquePart()->getMetrum() / 2; m += step    ) {
+    for (float m = start + this->rndInt(1, 2) * step; m < p->getUniquePart()->getMetrum() / 2; m += step    ) {
       p->addPercNote(this->createTime(i, m), this->createTime(i, m + 0.1), 38, this->rndInt(108, 115));
     }
     if (i == p->getEndBar() - 1) {
       int n = 0;
-      for (double m = p->getUniquePart()->getMetrum() / 2 + step * this->rndInt(0, 2); m < p->getUniquePart()->getMetrum() - step * this->rndInt(0, 1); m += step      ) {
+      for (float m = p->getUniquePart()->getMetrum() / 2 + step * this->rndInt(0, 2); m < p->getUniquePart()->getMetrum() - step * this->rndInt(0, 1); m += step      ) {
         if (this->rndInt(0, 5) != 0) {
           p->addPercNote(this->createTime(i, m), this->createTime(i, m + 0.1), 47 - n * 2, this->rndInt(108, 115));
           if (n < 3 && this->rndInt(0, 1) == 0) {
@@ -125,7 +125,7 @@ void DrumsPunkRock::DoTransition(RenderPart *p) {
     }
     else {
       if (this->rndInt(0, 1) == 0) {
-        for (double m = p->getUniquePart()->getMetrum() / 2 + step * 2; m < p->getUniquePart()->getMetrum() - step * this->rndInt(0, 2); m += step        ) {
+        for (float m = p->getUniquePart()->getMetrum() / 2 + step * 2; m < p->getUniquePart()->getMetrum() - step * this->rndInt(0, 2); m += step        ) {
           p->addPercNote(this->createTime(i, m), this->createTime(i, m + 0.1), 38, this->rndInt(108, 115));
         }
       }
@@ -134,7 +134,7 @@ void DrumsPunkRock::DoTransition(RenderPart *p) {
         if (this->rndInt(0, 1) == 0) {
           type = true;
         }
-        for (double m = p->getUniquePart()->getMetrum() / 2 + step * 2; m < p->getUniquePart()->getMetrum() - step * this->rndInt(0, 2); m += step * 2        ) {
+        for (float m = p->getUniquePart()->getMetrum() / 2 + step * 2; m < p->getUniquePart()->getMetrum() - step * this->rndInt(0, 2); m += step * 2        ) {
           if (type) {
             p->addPercNote(this->createTime(i, m), this->createTime(i, m + 0.1), 38, this->rndInt(108, 115));
             p->addPercNote(this->createTime(i, m + step), this->createTime(i, m + step + 0.1), 38, this->rndInt(108, 115));

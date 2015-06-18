@@ -20,7 +20,6 @@ class Song : public Seedable
     int seed;
     vector<Track *> tracks;
     vector<UniquePart *> uniqueParts;
-    vector<Part *> parts;
     vector<TempoMod *> tempoMods;
     int tempo;
     RenderEvent *latestRenderEvent;
@@ -29,6 +28,8 @@ class Song : public Seedable
     vector<RenderNote*> notes;
 
 public:
+    vector<Part *> parts;
+
     vector<RenderEvent*> renderEvents;
     vector<RenderNote *> *getNotes();
     void sortNotes();

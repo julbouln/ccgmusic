@@ -12,16 +12,7 @@ Harmonic::Harmonic() {
 Interval2D Harmonic::toInterval2D(int metrum) {
  return Interval2D(startTime.getPosition(metrum),endTime.getPosition(metrum));
 }
-Harmonic* Harmonic::copy() {
- Harmonic *result = new Harmonic();
 
- result->offsets=offsets;
- result->startTime = startTime;
- result->endTime = endTime;
- result->baseNote = baseNote;
-
- return result;
-}
 vector<int> Harmonic::getOffsets() {
  return offsets;
 }
@@ -39,6 +30,8 @@ int Harmonic::getBaseNote() {
 void Harmonic::setEndTime(Time t) {
  endTime = t;
 }
+
+// baseNote == scale degree
 Harmonic::Harmonic(Time time,int baseNote,vector<int> chordData) {
  this->startTime = time;
  this->baseNote = baseNote;
@@ -56,8 +49,8 @@ vector<int> Harmonic::getScaleDegrees() {
 //		int t=Utils::half2tone(offsets.at(i));
 //		if(t==-1)
 //			printf("ERROR invalid tone %d %d\n",i,offsets.at(i));
-//       int scale=(baseNote - 1 + t) % 7;
-       int scale=(intervals[baseNote-1] + t) % 12;
+       int scale=(baseNote - 1 + t) % 7;
+//       int scale=(intervals[baseNote-1] + t) % 12;
 
 
 //       printf("SCALE %d %d %d\n",baseNote-1,scales[baseNote-1],Utils::tone2half(baseNote-1));

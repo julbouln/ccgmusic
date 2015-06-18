@@ -12,7 +12,7 @@ class PunkGuitarChords : public Renderer {
 public:
  void render(RenderPart*);
 private:
- bool* GenerateAccents(int,double,bool);
+ bool* GenerateAccents(int,float,bool);
  void PlacePunkChord(RenderPart*,Time,Time,int,int,bool,int);
  void DoMode1(RenderPart*);
  void DoMode2(RenderPart*);

@@ -24,7 +24,6 @@ void SimpleFixedHarmony::generateHarmony(UniquePart *up) {
 
 if(up->getBars()==8) {
 	int rndProgression=this->rndInt(0,6);
-	printf("rndProgression %d\n",rndProgression);
 	for(int i=0;i<8;i++) {
 		up->addHarmonic(this->createTime(i, 0), progressions[rndProgression][i], chord);
 	}

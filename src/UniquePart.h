@@ -28,7 +28,7 @@ class UniquePart {
  vector<Sentence*> sentences;
  vector<Harmonic*> harmonics;
  vector<Event> events;
- // map<Event*,Harmonic*> eventHarmony;
+// map<int,int> eventHarmony;
  vector<int> eventHarmony;
 
 public:

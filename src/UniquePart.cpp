@@ -61,6 +61,87 @@ vector<Harmonic *> *UniquePart::getHarmonicList()
     return &harmonics;
 }
 
+/*
+void UniquePart::assignEventsToHarmony()
+{
+    int bars = this->getBars();
+    int metrum = this->getMetrum();
+    Time endOfTime = Time(bars - 1, metrum);
+    for (size_t i = 0; i < harmonics.size(); i++ )
+    {
+//        Harmonic *h1 = harmonics.at(i);
+        int h1=i;
+        Time t1 = harmonics.at(i)->getStartTime();
+        Time t2 = endOfTime;
+        if (i + 1 < harmonics.size())
+        {
+//            Harmonic *h2 = harmonics.at(i + 1);
+            t2 = harmonics.at(i+1)->getStartTime();
+        }
+  //      printf("before %s\n",harmonics.at(h1).getEndTime().toString().c_str());
+        harmonics.at(h1)->setEndTime(t2);
+//        printf("after %s\n",harmonics.at(h1).getEndTime().toString().c_str());
+
+//        for (std::vector<Event *>::iterator e = events.begin(); e != events.end(); ++e)
+        for(size_t j=0;j<events.size();j++)
+        {
+            Event e=events.at(j);
+            if (e.intersects(t1, t2, metrum))
+            {
+                bool hasEvent = eventHarmony.count(j) > 0;
+                if (!hasEvent)
+                {
+                    eventHarmony[j] = h1;
+                }
+                else
+                {
+//                    Harmonic *harmonic = eventHarmony.at(j);
+                    int harmonic=eventHarmony.at(j);
+                    double oldOverlap = harmonics.at(harmonic)->toInterval2D(metrum).intersect(e.toInterval2D(metrum)).getLength();
+                    double newOverlap = harmonics.at(h1)->toInterval2D(metrum).intersect(e.toInterval2D(metrum)).getLength();
+                    if (newOverlap > oldOverlap)
+                    {
+                        eventHarmony[j] = h1;
+                    }
+                }
+            }
+        }
+    }
+
+    for(size_t k=0;k<events.size();k++)
+    {
+        if (eventHarmony.count(k) == 0)
+        {
+            Event e=events.at(k);
+
+            Time start = e.getStart();
+            Time end = e.getEnd();
+            if (start.getPosition(metrum) >= endOfTime.getPosition(metrum))
+            {
+//                eventHarmony[k] = harmonics.at(harmonics.size() - 1);
+                  eventHarmony[k] = harmonics.size() - 1;
+  
+            }
+            else
+            {
+                if (end.getPosition(metrum) <= 0)
+                {
+//                    eventHarmony[k] = harmonics.at(0);
+                    eventHarmony[k] = 0;
+                }
+                else
+                {
+                    printf("ERROR: not assigned to harmony\n");
+                    //               cout  << (this + " event " + e + " not assigned to harmony") << endl;
+                }
+            }
+        }
+    }
+
+//    printf("eventHarmony map size %d\n",eventHarmony.size());
+}
+*/
+
 void UniquePart::assignEventsToHarmony()
 {
     int bars = this->getBars();
@@ -381,7 +462,8 @@ int UniquePart::alignPitchToHarm(int eventIndex, int scaleNote)
     
 //    printf("UniquePart::alignPitchToHarm scale result %d %d : %d %d\n",eventIndex,scaleNote-1,scaleDegree,closestNote-1);
 
-    return closestNote%7;
+//    return closestNote%7;
+    return closestNote;
 }
 void UniquePart::addEvent(Event event)
 {

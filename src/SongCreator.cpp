@@ -363,7 +363,7 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
     }
 */
     
-        for (int i = 0; i < song->getUniqueParts(); i++)
+    for (int i = 0; i < song->getUniqueParts(); i++)
     {
                 UniquePart *up = song->getUniquePart(i);
 
@@ -456,8 +456,8 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
                 re=song->renderEvents.erase(re);
                 delete rePtr;
 
-                previousStartBar = currentStartBar;
-
+              previousStartBar = currentStartBar;
+//                ++re;
             } else {
                 ++re;
 
@@ -470,6 +470,8 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
         Part *pPtr=(*p);
         p=song->parts.erase(p);
         delete pPtr;
+        
+//        ++p;
         
     }
 
@@ -567,7 +569,7 @@ void SongCreator::renderNotesToMidi(MidiDriver *midiDriver,int metrum) {
     vector<RenderNote *> *currentNotes = song->getNotes();
 
     song->sortNotes();
-    printf("SongCreator::renderNotesToMidi render notes %d * %d = %d bytes\n", currentNotes->size(),sizeof(RenderNote),currentNotes->size()*sizeof(RenderNote));
+//    printf("SongCreator::renderNotesToMidi render notes %d * %d = %d bytes\n", currentNotes->size(),sizeof(RenderNote),currentNotes->size()*sizeof(RenderNote));
 
 
     for (std::vector<RenderNote *>::iterator n = currentNotes->begin(); n != currentNotes->end(); )

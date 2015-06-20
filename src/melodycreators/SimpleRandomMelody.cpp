@@ -16,21 +16,6 @@ void SimpleRandomMelody::createMelody(UniquePart *up)
         if (i < up->getEvents() - 2)
         {
             int p= this->rndInt(-2,2);
-/*            switch(p) {
-                case -2:
-                    p=-3;
-                    break;
-                case -1:
-                    p=-1;
-                    break;
-                case 1:
-                    p=1;
-                    break;
-                case 2:
-                    p=3;
-                    break;
-
-            }*/
             note += p;
         }
 
@@ -60,7 +45,7 @@ void SimpleRandomMelody::createMelody(UniquePart *up)
 
 //    printf("SimpleRandomMelody::createMelodyset last note %d(%s)\n",last_note,Utils::midiToNote(60+last_note).c_str());
 
-//    last_note = up->alignPitchToHarm(up->getEvents() - 1, last_note);
+    last_note = up->alignPitchToHarm(up->getEvents() - 1, last_note);
 
     up->setEventPitch(up->getEvents() - 1, last_note);
 }

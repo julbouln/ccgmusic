@@ -41,6 +41,6 @@ void WideRandomMelody::createMelody(UniquePart *up)
         last_note += 7;
     }
     
-//    last_note = up->alignPitchToHarm(up->getEvents() - 1, last_note);
+    last_note = up->alignPitchToHarm(up->getEvents() - 1, last_note);
     up->setEventPitch(up->getEvents() - 1, last_note);
 }

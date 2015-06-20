@@ -64,7 +64,7 @@ int* MusicScript::getScaleOffsets(int scale)
 {
     int *offsets = scales[scale];
 
-//    offsets = scales[MAJOR_SCALE];
+    offsets = scales[MAJOR_SCALE];
 //    offsets = scales[NATURAL_MINOR_SCALE];
     return offsets;
 }

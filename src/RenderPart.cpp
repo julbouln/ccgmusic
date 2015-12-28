@@ -73,9 +73,7 @@ int RenderPart::getHarmonic(Time t)
     }
     else
     {
-//        return harmonics.size() - 1;
-            return uniquePart->getHarmonicList()->size() - 1;
-
+        return uniquePart->getHarmonicList()->size() - 1;
     }
 }
 Time RenderPart::getEventStart(int index)
@@ -167,13 +165,15 @@ int RenderPart::alignPitch(int chromaticChordNote, int scaleOffset)
     /*
     if (!Utils::contains(pitchClasses, inPitchClass))
     {
-//        printf("HAPPEN?\n");
+        printf("HAPPEN?\n");
         // Find the closest scale note
         for (int i = chromaticChordNote - 7; i < chromaticChordNote + 8; i++   )
         {
+            printf("%d\n",i);
         }
     }
     */
+
     for (int i = 0; i < partScaleOffsetsLength; i++ )
     {
         if (inPitchClass == pitchClasses[i])
@@ -185,27 +185,18 @@ int RenderPart::alignPitch(int chromaticChordNote, int scaleOffset)
 
     int currentNote = chromaticChordNote;
 
-/*    if(scaleOffset==0) {
-        printf("ERROR 0 scaleOffset (%d)\n",currentNote);
-    } else {
-*/
     int newPitchClass = pitchClasses[Utils::positiveMod(theOriginalScaleIndex + scaleOffset, partScaleOffsetsLength)];
-    // FIXME does not seems right to have 0 scaleOffset ?
-    int increment = scaleOffset >= 0 ? 1 : -1;
+    int increment = scaleOffset > 0 ? 1 : -1;
 
 
     while ((currentNote % 12) != newPitchClass)
     {
         currentNote += increment;
-//        printf("RenderPart::alignPitch %d %d %d %d\n",i,currentNote,currentNote % 12,newPitchClass);
+//        printf("RenderPart::alignPitch increment %d %d %d %d\n",theOriginalScaleIndex,currentNote,currentNote % 12,newPitchClass);
 
     }
-    
 
-
-//    }
-
-// printf("RenderPart::alignPitch result %d %d %d\n",chromaticChordNote,scaleOffset,currentNote);
+// printf("RenderPart::alignPitch result %d %d %d %d\n",chromaticChordNote,newPitchClass,scaleOffset,currentNote);
 
     return currentNote;
 }

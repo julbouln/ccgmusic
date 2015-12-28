@@ -42,7 +42,6 @@ Harmonic::Harmonic(Time time,int baseNote,vector<int> chordData) {
 }
 vector<int> Harmonic::getScaleDegrees() {
 	vector<int> result;
-	int *intervals=MusicScript::progressionIntervals;
 //	printf("Harmonic::getScaleDegrees %d\n",baseNote);
 	for(size_t i=0;i<offsets.size();i++) {
 		int t=offsets.at(i);
@@ -50,6 +49,7 @@ vector<int> Harmonic::getScaleDegrees() {
 //		if(t==-1)
 //			printf("ERROR invalid tone %d %d\n",i,offsets.at(i));
        int scale=(baseNote - 1 + t) % 7;
+
 //       int scale=(intervals[baseNote-1] + t) % 12;
 
 

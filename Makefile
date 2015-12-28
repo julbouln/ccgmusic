@@ -3,8 +3,8 @@ OBJS=$(SRCS:.cpp=.o)
 
 DRIVERS_OBJS=drivers/MidiFileWriter.o drivers/MidiRt.cpp
 
-CFLAGS_OPT=-O2 -ffast-math -fsingle-precision-constant -DPTHREAD=1
-#CFLAGS_OPT=-g -Wall
+#CFLAGS_OPT=-O2 -ffast-math -fsingle-precision-constant -DPTHREAD=1
+CFLAGS_OPT=-g -Wall
 CFLAGS=$(CFLAGS_OPT) -I src/ -I src/structuregenerators/ -I src/rythmgenerators/ -I src/renderers/ -I src/melodycreators/ -I src/ornamentors/ -I src/innerstructuregenerators/ -I src/arrangers/ -I src/harmonygenerators/
 
 all: $(OBJS) $(DRIVERS_OBJS)

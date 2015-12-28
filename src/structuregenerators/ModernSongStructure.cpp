@@ -1,5 +1,6 @@
 #include "ModernSongStructure.h"
 void ModernSongStructure::generateStructure(Song* s) {
+  int scale = this->getRandomScale();
   int intro_mode = this->rndInt(0, 4);
   int start_with = this->rndInt(-2, 1);
   if (start_with < 0) {
@@ -49,6 +50,7 @@ void ModernSongStructure::generateStructure(Song* s) {
   }
   for (int i = 0; i < u_parts; i++) {
     s->getUniquePart(i)->setMetrum(metrum);
+    s->getUniquePart(i)->setScale(scale);
   }
   if (intro_mode == 3) {
     s->getUniquePart(0)->setScriptStructure(s->getUniquePart(1)->getScriptStructure());
@@ -84,7 +86,6 @@ void ModernSongStructure::generateStructure(Song* s) {
   if (mangle_ending > 0) {
     ++parts;
   }
-  int scale = this->getRandomScale();
   int trans = this->rndInt(0, 11);
   s->setParts(parts);
   for (int i = 0; i < parts; i++) {

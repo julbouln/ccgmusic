@@ -7,15 +7,28 @@ void SimplePunkRockStyleArrangement::arrange(Song *s)
 {
 //  printf("SimplePunkRockStyleArrangement::arrange seed:%d\n",this->getSeed());
     int bars = s->getBars();
-    s->addTrack("Melody", 86, 127, 64,false);
+/*    s->addTrack("Melody", 86, 127, 64,false);
     s->addTrack("Alt Voice", 63, 127, 64,false);
     s->addTrack("Guitar Left", this->rndInt(30, 31), 127, 20,false);
     s->addTrack("Guitar Right", this->rndInt(30, 31), 127, 100,false);
     s->addTrack("Guitar Center", this->rndInt(30, 31), 127, 64,false);
     s->addTrack("Bass", 35, 127, 64,false);
-    s->addTrack("Drums", 16, 127, 64,true);
-    s->addTrack("Brass", 62, 127, 64,false);
+*/
     
+    s->addTrack("Melody", GM_RAND_SYNTH_LEAD, 127, 64,false);
+    s->addTrack("Alt Voice", GM_RAND_BRASS, 127, 64,false);
+
+    s->addTrack("Guitar Left", GM_RAND_GUITAR, 127, 20,false);
+    s->addTrack("Guitar Right", GM_RAND_GUITAR, 127, 100,false);
+    s->addTrack("Guitar Center", GM_RAND_GUITAR, 127, 64,false);
+
+    s->addTrack("Bass", GM_RAND_BASS, 127, 64,false);
+
+    s->addTrack("Drums", 16, 127, 64,true);    
+//    s->addTrack("Brass", 62, 127, 64,false);
+    s->addTrack("Brass", GM_RAND_BRASS, 127, 64,false);
+  
+
     int cnt = 0;
     int chorus_cnt = 0;
     int intro_start = this->rndInt(0, 1);

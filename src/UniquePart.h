@@ -19,6 +19,7 @@ class UniquePart {
  int harmonySeed;
  int melodySeed;
  int ornamentationSeed;
+ int scale;
  string structureScript;
  string rythmScript;
  string harmonyScript;
@@ -78,5 +79,6 @@ public:
  void addHarmonic(Time,int,vector<int>);
  int alignPitchToHarm(int,int);
  void addEvent(Event);
+ void setScale(int);
 };
 #endif // UNIQUEPART_H

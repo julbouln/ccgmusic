@@ -310,6 +310,7 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
         UniquePart *up = song->getUniquePart(i);
         string scriptMelody = up->getScriptMelody();
 //       string scriptMelody = "Simple Random Melody";
+//       string scriptMelody = "Markov Melody";
 
         int melodySeed = up->getScriptMelodySeed();
         #ifdef RVERBOSE

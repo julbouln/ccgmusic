@@ -6,9 +6,16 @@ string SimpleDanceStyleArrangement::getScriptName()
 void SimpleDanceStyleArrangement::arrange(Song *s)
 {
     int bars = s->getBars();
-    s->addTrack("Melody", 2, 127, 64,false);
+/*    s->addTrack("Melody", 2, 127, 64,false);
     s->addTrack("Alt Voice", 2, 127, 64,false);
     s->addTrack("Pad", this->rndInt(89, 96), 127, 64,false);
+    */
+
+    s->addTrack("Melody", GM_RAND_PIANO, 127, 64,false);
+    s->addTrack("Alt Voice", GM_RAND_PIANO, 127, 64,false);
+    s->addTrack("Pad", GM_RAND_SYNTH_PAD, 127, 64,false);
+
+/*
     if (this->rndInt(0, 1) == 0)
     {
         s->addTrack("Bass", 36, 127, 64,false);
@@ -17,6 +24,9 @@ void SimpleDanceStyleArrangement::arrange(Song *s)
     {
         s->addTrack("Bass", this->rndInt(39, 40), 127, 64,false);
     }
+    */
+    s->addTrack("Bass", GM_RAND_BASS, 127, 64,false);
+    
     int acomp_pitch[] = {5, 6, 27, 39, 46, 63, 97, 103, 107};
     s->addTrack("Accomp", this->getRandom(acomp_pitch), 127, 64,false);
     s->addTrack("Drums", 1, 127, 64,true);

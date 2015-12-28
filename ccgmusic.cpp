@@ -31,7 +31,7 @@ void *createSong(void *id) {
 }
 
 void sigInterruptHandler(int sig) {
-    midiDriver->stopAsap=true;
+    midiDriver->stop=true;
 
 //    exit(1);
 }

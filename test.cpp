@@ -14,9 +14,10 @@ void dumpSize()
 	printf("sizeof float %d\n",sizeof(float));
 	printf("sizeof double %d\n",sizeof(double));
 	printf("sizeof size_t %d\n",sizeof(size_t));
+    printf("sizeof string %d\n",sizeof(string));
 
 printf("sizeof Time %d\n",sizeof(Time));
-printf("sizeof Note %d\n",sizeof(Note));
+printf("sizeof RenderNote %d\n",sizeof(RenderNote));
 printf("sizeof QueueMessage %d\n",sizeof(MidiRt::QueueMessage));
 
 printf("sizeof Event %d\n",sizeof(Event));
@@ -29,10 +30,17 @@ printf("sizeof Part %d\n",sizeof(RenderPart));
 
 printf("sizeof RenderPart %d\n",sizeof(RenderPart));
 
+printf("sizeof Phrase %d\n",sizeof(Phrase));
+printf("sizeof UniquePhrase %d\n",sizeof(UniquePhrase));
+printf("sizeof Sentence %d\n",sizeof(Sentence));
+
+printf("sizeof Harmonic %d\n",sizeof(Harmonic));
+
+
 
 printf("sizeof Song %d\n",sizeof(Song));
 
-printf("sizeof Track pointer %d\n",sizeof(Track*));
+printf("sizeof Track %d\n",sizeof(Track));
 
 
 
@@ -53,10 +61,10 @@ string structureScript="Modern Song Structure";
 //string arrangementScript="Piano Advanced Disco";
 //string arrangementScript="Piano Advanced Classical";
 //string arrangementScript="Simple Latin Style Arrangement";
-//string arrangementScript="Simple Dance Style Arrangement";
+string arrangementScript="Simple Dance Style Arrangement";
 //string arrangementScript="Simple Instrumental March Arrangement";
 //string arrangementScript="Simple Ballad Style Arrangement";
-string arrangementScript="Simple Punk Rock Style Arrangement";
+//string arrangementScript="Simple Punk Rock Style Arrangement";
 //string arrangementScript="Random Electro Rock";
 
 
@@ -67,11 +75,15 @@ string arrangementScript="Simple Punk Rock Style Arrangement";
 //seed=3;
 seed=134;
 //seed=time(NULL);
-for(int i=0; i<1;i++) {
+for(int i=0; i<100;i++) {
     SongCreator *songCreator = new SongCreator();
     songCreator->createSong(seed+i,240,structureScript,arrangementScript,&midiWriter);
-    midiWriter.launch();
-//    midiWriter.clear();
+
+    int renderEventCount=songCreator->song->renderEvents.size();
+    printf("RenderEvents : %d\n",renderEventCount);
+
+//    midiWriter.launch();
+    midiWriter.clear();
 
     delete songCreator;
 }

@@ -19,6 +19,13 @@ void ClassicalStructureBig::generateStructure(Song *song) {
  }
  int s1 = this->getRandomScale();
  int s2 = this->getRandomScale();
+
+song->getUniquePart(0)->setScale(s1);
+song->getUniquePart(1)->setScale(s1);
+ song->getUniquePart(2)->setScale(s2);
+ song->getUniquePart(3)->setScale(s2);
+ song->getUniquePart(4)->setScale(s2);
+
  double te1 = 1.0;
  double te2 = 1.0 + this->rndFloat(-0.25,0.5);
  if(this->rndInt(0,1) == 0) {

@@ -2,9 +2,11 @@
 void ClassicalStructureSmall::generateStructure(Song *song) {
  song->setUniqueParts(2);
  int metrum = this->rndInt(3,4);
+ int scale=this->getRandomScale();
  for(int i = 0;i < song->getUniqueParts();++i ){
        UniquePart *up = song->getUniquePart(i);
        up->setMetrum(metrum);
+       up->setScale(scale);
  }
  song->setParts(3);
  int *trans = new int[3];
@@ -21,7 +23,7 @@ void ClassicalStructureSmall::generateStructure(Song *song) {
        Part *p = song->getPart(i);
        p->setTempoMod(1.0);
        p->setTranspose(trans[i]);
-       p->setScale(this->getRandomScale());
+       p->setScale(scale);
        p->setUniquePart(i % song->getUniqueParts());
        p->setArrHint(this->rndInt(1,3));
  }

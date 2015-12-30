@@ -51,7 +51,7 @@ static enum ScaleType {
  	ACCOUSTIC_SCALE, 
 
  	BLUES_SCALE,
- 	NEAPOLITAN_MINOR_SCALE,
+/* 	NEAPOLITAN_MINOR_SCALE,
  	NEAPOLITAN_MAJOR_SCALE,
  	NEAPOLITAN_DORIAN_SCALE,
  	NEAPOLITAN_MIXOLYDIAN_SCALE,
@@ -61,7 +61,7 @@ static enum ScaleType {
  	PERSIAN_SCALE,
  	HUNGARIAN_MINOR,
  	HUNGARIAN_MAJOR,
-
+*/
  	SCALES_COUNT
  } ScaleTypes;
 
@@ -78,9 +78,6 @@ static enum ScaleType {
 
  static int chords[CHORDS_COUNT][8];
  static int scales[SCALES_COUNT][7];
-
- static int fifths[7];
- static int progressionIntervals[7];
 
  static vector<int> getChord(int);
  static int* getScaleOffsets(int);

@@ -49,6 +49,7 @@ template <typename T> static T sampleUniformObjectDistribution(T* a) {
 */
 
  static int getRandomInt(int,int);
+ static int getRandomArray(int *, int);
  static double getRandomDouble();
  static double getRandomBetween(double,double);
  static bool contains(int[],int);

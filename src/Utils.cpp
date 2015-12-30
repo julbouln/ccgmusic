@@ -7,6 +7,11 @@ int Utils::getRandomInt(int lowerBound,int upperBound) {
  return rnd;
 }
 
+int Utils::getRandomArray(int *values, int length) {
+  int rnd=rand() % length;
+  return values[rnd];
+}
+
 double Utils::getRandomDouble() {
   return (double)rand() / RAND_MAX;
 };

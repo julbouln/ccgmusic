@@ -1,19 +1,16 @@
  #include "MusicScript.h"
 
-int MusicScript::progressionIntervals[7]={ 0, 2, 4, 5, 7, 9, 11 };
-int MusicScript::fifths[7] = { 5, 0, 7, 2, 9, 4, 11};
-
 int MusicScript::chords[][8] = {
-/*
+
 {0, 2, 4,-1,-1,-1,-1, 3}, // MAJOR_TRIAD_CHORD "135" 047
 {0, 2, 4, 5,-1,-1,-1, 4}, // ADD_SIXTH_TRIAD_CHORD "1356" 0479
 {0, 2, 4, 6,-1,-1,-1, 4}, // MAJOR_SEVENTH_CHORD "1357" 04710
-*/
- 
+
+/* 
 {0, 4, 7,-1,-1,-1,-1, 3}, // MAJOR_TRIAD_CHORD "135" 047
 {0, 4, 7, 9,-1,-1,-1, 4}, // ADD_SIXTH_TRIAD_CHORD "1356" 0479
 {0, 4, 7, 10,-1,-1,-1, 4}, // MAJOR_SEVENTH_CHORD "1357" 04710
-
+*/
 /*
 {0, 3, 7,-1,-1,-1,-1, 3}, // MINOR_TRIAD_CHORD
 {0, 2, 7, -1,-1,-1,-1, 3}, // SUS2_SEVENTH_CHORD 
@@ -46,7 +43,7 @@ int MusicScript::scales[][7] = {
 
 
     { 0, 2, 3, 5, 6, 9, 10 }, // BLUES_SCALE
-
+/*
     { 0, 1, 3, 5, 7, 8, 11 }, // NEAPOLITAN_MINOR_SCALE
     { 0, 1, 4, 5, 7, 9, 11 }, // NEAPOLITAN_MAJOR_SCALE
     { 0, 1, 3, 5, 7, 9, 10 }, // NEAPOLITAN_DORIAN_SCALE
@@ -59,7 +56,7 @@ int MusicScript::scales[][7] = {
 
     { 0, 2, 3, 6, 7, 8, 11 }, // HUNGARIAN_MINOR
     { 0, 3, 4, 6, 7, 9, 10 }, // HUNGARIAN_MAJOR
-
+*/
 
   };
 

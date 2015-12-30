@@ -41,7 +41,7 @@ SongCreator::SongCreator()
 
     ornamentors["No Ornamentation"] = SongCreator::makeOrnamentor<NoOrnamentation>;
     ornamentors["Light Randomizer"] = SongCreator::makeOrnamentor<LightRandomizer>;
-//     ornamentors["Simple Ornamentation"] = SongCreator::makeOrnamentor<SimpleOrnamentation>;
+    //ornamentors["Simple Ornamentation"] = SongCreator::makeOrnamentor<SimpleOrnamentation>;
 
     arrangers["Basic Test Purpose"] = SongCreator::makeArranger<BasicTestPurposeRender>;
     arrangers["Piano Simple Arrangement"] = SongCreator::makeArranger<PianoSimpleArrangement>;
@@ -588,6 +588,7 @@ void SongCreator::renderNotesToMidi(MidiDriver *midiDriver,int metrum) {
 
         int note = Utils::clampIntToInt((*n)->getPitch(), 0, 127);
         int velocity = Utils::clampIntToInt((*n)->getVolume(), 0, 127);
+//        printf("ADD NOTE %d->%d\n",(*n)->getPitch(),note);
 
         if ((*n)->isPercussion()) {
             channel = 9;

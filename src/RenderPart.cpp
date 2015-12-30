@@ -202,8 +202,8 @@ int RenderPart::alignPitch(int chromaticChordNote, int scaleOffset)
 }
 int RenderPart::computePitch(int note)
 {
-//    return part->computePitch(note);
-    return note;
+    return part->computePitch(note);
+//    return note;
 }
 void RenderPart::addNote(Time start, Time end, int pitch, int volume)
 {

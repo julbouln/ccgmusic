@@ -32,22 +32,22 @@ void ChordMapHarmony::generateHarmony(UniquePart *up) {
  int r = 0;
  for(int i = 0;i < up->getBars() - 2;++i ){
        if(r == 0 || this->rndInt(0,2) != 0) {
-           up->addHarmonic(this->createTime(i,0),cur_chord,MusicScript::getChord(MAJOR_TRIAD_CHORD));
+           up->addHarmonic(this->createTime(i,0),cur_chord,MAJOR_TRIAD_CHORD);
            if(this->rndInt(0,1) == 0) {
                if(this->rndInt(0,1) == 0) {
                   if(this->rndInt(0,1)==0) {
-                   up->addHarmonic(this->createTime(i,this->rndInt(1,up->getMetrum() - 1)),cur_chord,MusicScript::getChord(MAJOR_SEVENTH_CHORD));
+                   up->addHarmonic(this->createTime(i,this->rndInt(1,up->getMetrum() - 1)),cur_chord,MAJOR_SEVENTH_CHORD);
                   }
                   else
                   {
-                   up->addHarmonic(this->createTime(i,this->rndInt(1,up->getMetrum() - 1)),cur_chord,MusicScript::getChord(ADD_SIXTH_TRIAD_CHORD));
+                   up->addHarmonic(this->createTime(i,this->rndInt(1,up->getMetrum() - 1)),cur_chord,ADD_SIXTH_TRIAD_CHORD);
 
                   }
                    cur_chord = map[cur_chord - 1][this->rndInt(0,map[cur_chord - 1].size() - 1)];
         }
         else {
                    cur_chord = map[cur_chord - 1][this->rndInt(0,map[cur_chord - 1].size() - 1)];
-                   up->addHarmonic(this->createTime(i,this->rndInt(1,up->getMetrum() - 1)),cur_chord,MusicScript::getChord(MAJOR_TRIAD_CHORD));
+                   up->addHarmonic(this->createTime(i,this->rndInt(1,up->getMetrum() - 1)),cur_chord,MAJOR_TRIAD_CHORD);
                    cur_chord = map[cur_chord - 1][this->rndInt(0,map[cur_chord - 1].size() - 1)];
         }
       }
@@ -66,12 +66,12 @@ void ChordMapHarmony::generateHarmony(UniquePart *up) {
     }
  }
  if(this->rndInt(0,1) == 0) {
-  up->addHarmonic(this->createTime(up->getBars() - 2,0),5,MusicScript::getChord(MAJOR_TRIAD_CHORD));
+  up->addHarmonic(this->createTime(up->getBars() - 2,0),5,MAJOR_TRIAD_CHORD);
  }
  else {
-  up->addHarmonic(this->createTime(up->getBars() - 2,0),5,MusicScript::getChord(MAJOR_SEVENTH_CHORD));
+  up->addHarmonic(this->createTime(up->getBars() - 2,0),5,MAJOR_SEVENTH_CHORD);
  }
- up->addHarmonic(this->createTime(up->getBars() - 1,0),1,MusicScript::getChord(MAJOR_TRIAD_CHORD));
+ up->addHarmonic(this->createTime(up->getBars() - 1,0),1,MAJOR_TRIAD_CHORD);
 
 //  Utils::deleteVector(map);
 

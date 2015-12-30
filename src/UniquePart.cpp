@@ -221,10 +221,6 @@ int UniquePart::getEventPitch(int index)
 // input scale degree
 int UniquePart::setEventPitch(int index, int pitch)
 {
-//    pitch=pitch%7;
-//    if(pitch < -12)
-  //      pitch+=12;
-
 //    printf("UniquePart::setEventPitch index:%d pitch:%d\n",index,pitch);
 
     events.at(index).setPitch(pitch);
@@ -320,10 +316,15 @@ int UniquePart::getEventBasis(int index)
     return harmonic->getBaseNote();
 }
 
-void UniquePart::addHarmonic(Time time, int baseNote, vector<int> chordData)
+void UniquePart::addHarmonic(Time tm, int baseNote, int chord)
 {
-//    printf("UniquePart::addHarmonic %s %d(%s)\n",time.toString().c_str(),baseNote, Utils::midiToNote(baseNote-1).c_str());
-    harmonics.push_back(new Harmonic(time, baseNote, chordData));
+        int *intervals=MusicScript::scales[scale];
+
+//    printf("ADD HARMONIC TO NOTE %d\n",baseNote);
+    vector<int> chordData=MusicScript::getChord(chord);
+    Harmonic *h=new Harmonic(tm, baseNote, chordData);
+//    printf("UniquePart::addHarmonic %s %d(%s)\n",tm.toString().c_str(),baseNote, Utils::midiToNote(intervals[baseNote-1]).c_str());
+    harmonics.push_back(h);
 }
 
 
@@ -336,17 +337,17 @@ int UniquePart::alignPitchToHarm(int eventIndex, int scaleNote)
 //    scaleNote=Utils::tone2half(scaleNote-1)+1;
 //    Event *event = events.at(eventIndex);
     Harmonic *harmonic = harmonics.at(eventHarmony.at(eventIndex));
+
     vector<int> scaleDegrees = harmonic->getScaleDegrees();
   //  for(int i=0;i<scaleDegrees.size();i++) {
  //       printf("HARMONIC : %d %d\n",i,scaleDegrees.at(i));
  //   }
     int scaleDegree = Utils::positiveMod(scaleNote-1, 7);
-//printf("UniquePart::alignPitchToHarm scale degree %d %d\n",scaleNote-1,scaleDegree);
 
     int closestNote = harmonic->getBaseNote();
 
-//   if (Utils::contains(scaleDegrees, scaleDegree))
-    if (Utils::contains(scaleDegrees, intervals[scaleDegree]))
+   if (Utils::contains(scaleDegrees, scaleDegree))
+//    if (Utils::contains(scaleDegrees, intervals[scaleDegree]))
     {
 //        printf("UniquePart::alignPitchToHarm first scale contains %d (%d/%d)\n",scaleNote-1,scaleDegree,intervals[scaleDegree]);
 
@@ -360,8 +361,8 @@ int UniquePart::alignPitchToHarm(int eventIndex, int scaleNote)
             scaleDegree = Utils::positiveMod(i-1, 7);
 //printf("UniquePart::alignPitchToHarm scale degree %d %d\n",i-1,scaleDegree);
 
-//             if (Utils::contains(scaleDegrees, scaleDegree))
-            if (Utils::contains(scaleDegrees, intervals[scaleDegree]))
+             if (Utils::contains(scaleDegrees, scaleDegree))
+//            if (Utils::contains(scaleDegrees, intervals[scaleDegree]))
             {
 
                 int distance = abs(i - scaleNote);
@@ -380,6 +381,8 @@ int UniquePart::alignPitchToHarm(int eventIndex, int scaleNote)
 
 //    return (closestNote-1)%7+1;
 //    return (closestNote-1)%12+1;
+//    printf("UniquePart::alignPitchToHarm scale degree %s %d %d\n",harmonic->getStartTime().toString().c_str(),scaleNote,closestNote);
+
     return closestNote;
 }
 void UniquePart::addEvent(Event event)

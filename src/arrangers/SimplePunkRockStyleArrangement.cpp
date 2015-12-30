@@ -58,8 +58,10 @@ void SimplePunkRockStyleArrangement::arrange(Song *s)
             s->addRenderEvent("Simple Melody", this->rndInt(0, INT_MAX), 1, s->getPartStartBar(i), s->getPartEndBar(i), 2, this->createTime(0, 0), 0.8);
             s->addRenderEvent("Fast Bass", this->rndInt(0, INT_MAX), 5, s->getPartStartBar(i), s->getPartEndBar(i), -1, this->createTime(0, 0), 1.0);
             s->addRenderEvent("Drums - Punk Rock", this->rndInt(0, INT_MAX), 6, s->getPartStartBar(i), s->getPartEndBar(i) - 1, 1, this->createTime(0, 0), 1.0);
-            s->setParam(RenderEvent::FOOT_SNARE, 1);
-            s->setParam(RenderEvent::VERSE_HIHAT, 1);
+            if(this->rndInt(0,4)>0)
+                s->setParam(RenderEvent::FOOT_SNARE, 1);
+            if(this->rndInt(0,4)>0)
+                s->setParam(RenderEvent::VERSE_HIHAT, 1);
             s->addRenderEvent("Drums - Punk Rock", this->rndInt(0, INT_MAX), 6, s->getPartEndBar(i) - 1, s->getPartEndBar(i), 1, this->createTime(0, 0), 1.0);
             s->setParam(RenderEvent::TRANSITION, 1);
             if (chorus_cnt > 1)
@@ -83,12 +85,12 @@ void SimplePunkRockStyleArrangement::arrange(Song *s)
             {
                 if (cnt > intro_start)
                 {
-                    if (this->rndInt(0, 4) != 0)
+                    if (this->rndInt(0, 2) > 0)
                     {
                         s->addRenderEvent("Drums - Punk Rock", this->rndInt(0, INT_MAX), 6, s->getPartStartBar(i), s->getPartEndBar(i) - bars_cut, 1, this->createTime(0, 0), 1.0);
                         s->setParam(RenderEvent::VERSE_HIHAT, 1);
                     }
-                    if (this->rndInt(0, 4) != 0)
+                    if (this->rndInt(0, 2) > 0)
                     {
                         s->addRenderEvent("Drums - Punk Rock", this->rndInt(0, INT_MAX), 6, s->getPartStartBar(i), s->getPartEndBar(i) - bars_cut, 1, this->createTime(0, 0), 1.0);
                         s->setParam(RenderEvent::FOOT_SNARE, 1);
@@ -140,18 +142,26 @@ void SimplePunkRockStyleArrangement::arrange(Song *s)
             cnt++;
         }
     }
-    int intro = this->rndInt(0, 1);
+    int intro = this->rndInt(0, 2);
     if (intro == 1)
     {
+        int metros[2]={GM_PERC_SIDE_STICK,GM_PERC_HAND_CLAP};
+        int metro=Utils::getRandomArray(metros,2);
         s->addRenderEvent("Metronome", this->rndInt(0, INT_MAX), 6, 0, 1, 0, this->createTime(-1, 0), 0.8);
+            s->setParam(RenderEvent::PITCH, metro);
+
     }
     else
     {
         if (intro == 0)
         {
+            int cymbals[2]={GM_PERC_RIDE_CYMBAL1,GM_PERC_RIDE_CYMBAL2};
+            int cymbal=Utils::getRandomArray(cymbals,2);
+
             s->addRenderEvent("Metronome", this->rndInt(0, INT_MAX), 6, 0, 1, 0, this->createTime(-1, 0), 0.8);
-            s->setParam(RenderEvent::PITCH, 51);
+            s->setParam(RenderEvent::PITCH, cymbal);
         }
     }
-    s->addRenderEvent("Drums - Simple Cymbal", 0, 6, bars - 1, bars, 1, this->createTime(1, 0), 1.0);
+    if(this->rndInt(0,1) > 0)
+        s->addRenderEvent("Drums - Simple Cymbal", 0, 6, bars - 1, bars, 1, this->createTime(1, 0), 1.0);
 }

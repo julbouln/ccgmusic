@@ -18,7 +18,8 @@ int SimpleFixedHarmony::progressions[][8] = {
 void SimpleFixedHarmony::generateHarmony(UniquePart *up) {
 //	vector<int> chord = this->rndChord();
 //	vector<int> chord =  MusicScript::getChord(MAJOR_TRIAD_CHORD);
-	vector<int> chord =  MusicScript::getChord(MAJOR_TRIAD_CHORD);
+//	vector<int> chord =  MusicScript::getChord(MAJOR_TRIAD_CHORD);
+	int chord = MAJOR_TRIAD_CHORD;
 
 
 

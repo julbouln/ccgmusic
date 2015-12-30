@@ -7,10 +7,10 @@
 using namespace std;
 class DrumsPunkRock : public Renderer {
 public:
- void DoFootAndSnare(RenderPart*);
+ void DoFootAndSnare(RenderPart*,int,int);
  void DoChorusHiHat(RenderPart*,int);
- void DoIntroHiHat(RenderPart*);
- void DoTransition(RenderPart*);
+ void DoIntroHiHat(RenderPart*,int);
+ void DoTransition(RenderPart*,int,int);
  void render(RenderPart*);
 };
 #endif // DRUMSPUNKROCK_H

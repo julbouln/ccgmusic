@@ -92,7 +92,7 @@ void RandomRiffHarmony::generateHarmony(UniquePart *up) {
            basis[chords - 1] = 1;
     }
        for(int c = 0;c < chords;++c    ){
-             up->addHarmonic(this->createTime(i + pattern[c]->bar,pattern[c]->pos),basis[c],MusicScript::getChord(MAJOR_TRIAD_CHORD));
+             up->addHarmonic(this->createTime(i + pattern[c]->bar,pattern[c]->pos),basis[c],MAJOR_TRIAD_CHORD);
     }
  }
 

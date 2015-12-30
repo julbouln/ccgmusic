@@ -2,11 +2,11 @@
 void DrumsDanceFootAndSnare::render(RenderPart *p) {
  vector<Pattern*> patterns;
  int w = 0;
- int pit1[] = {35,36};
+ int pit1[] = {GM_PERC_ACOUSTIC_BASS_DRUM,GM_PERC_BASS_DRUM1};
  float pat1[] = {0};
  patterns.push_back(this->newPattern(1,Utils::arrayToVector(pit1,2),Utils::arrayToVector(pat1,1),119,120));
  if(this->rndInt(0,1) == 0) {
-     int pit3[] = {35,36};
+     int pit3[] = {GM_PERC_ACOUSTIC_BASS_DRUM,GM_PERC_BASS_DRUM1};
      float pat3[] = {0.5 + this->rndInt(0,3)};
      patterns.push_back(this->newPattern(4,Utils::arrayToVector(pit3,2),Utils::arrayToVector(pat3,1),115,116));
  }
@@ -15,7 +15,7 @@ void DrumsDanceFootAndSnare::render(RenderPart *p) {
      int pit2[] = {p_pit[this->rndInt(0,9 - 1)]};
      float pat2[] = {1 + this->rndInt(-1,1) * 0.5};
      patterns.push_back(this->newPattern(2,Utils::arrayToVector(pit2,1),Utils::arrayToVector(pat2,1),100,110));
-     int pit3[] = {38,39};
+     int pit3[] = {GM_PERC_ACOUSTIC_SNARE,GM_PERC_HAND_CLAP};
      float pat3[] = {this->rndInt(0,1)};
      patterns.push_back(this->newPattern(2,Utils::arrayToVector(pit3,2),Utils::arrayToVector(pat3,1),100,110));
  }

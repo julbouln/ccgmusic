@@ -35,13 +35,14 @@ void Harmonic::setEndTime(Time t) {
 Harmonic::Harmonic(Time time,int baseNote,vector<int> chordData) {
  this->startTime = time;
  this->baseNote = baseNote;
- offsets=chordData;
-// for(int i=0;i<chordData.size();i++) 
- //	offsets.push_back(chordData.at(i) - 1);
+// offsets=chordData;
+// printf("HARMONIC %d\n",baseNote);
+ for(int i=0;i<chordData.size();i++) 
+ 	offsets.push_back((baseNote - 1 + chordData.at(i)) % 7);
 
 }
 vector<int> Harmonic::getScaleDegrees() {
-	vector<int> result;
+/*	vector<int> result;
 //	printf("Harmonic::getScaleDegrees %d\n",baseNote);
 	for(size_t i=0;i<offsets.size();i++) {
 		int t=offsets.at(i);
@@ -60,6 +61,8 @@ vector<int> Harmonic::getScaleDegrees() {
 	}
 
  return result;
+*/ 
+ return offsets;
 }
 void Harmonic::translate(int bars) {
  startTime = startTime.translateCopy(bars);

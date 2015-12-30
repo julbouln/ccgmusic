@@ -21,13 +21,9 @@ void SimpleRandomMelody::createMelody(UniquePart *up)
 
     }
     
-    int last_note = 1;
+//    int last_note = 1;
+    int last_note = this->rndInt(1,7);
 
-//    int last_note = this->rndInt(0,4);
-/*    if(last_note % 2 == 0) {
-        last_note+=1;
-    }
-    */
     while (note > 5)
     {
         note -= 7;

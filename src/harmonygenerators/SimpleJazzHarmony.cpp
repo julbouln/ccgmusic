@@ -28,80 +28,80 @@ void SimpleJazzHarmony::generateHarmony(UniquePart *up) {
  }
  if(mode == 1) {
      if(this->rndInt(0,1) == 0) {
-    up->addHarmonic(this->createTime(0,0),1,MusicScript::getChord(MAJOR_SEVENTH_CHORD));
+    up->addHarmonic(this->createTime(0,0),1,MAJOR_SEVENTH_CHORD);
    }
    else {
-    up->addHarmonic(this->createTime(0,0),3,MusicScript::getChord(MAJOR_SEVENTH_CHORD));
+    up->addHarmonic(this->createTime(0,0),3,MAJOR_SEVENTH_CHORD);
    }
      for(int i = 1;i < up->getBars() - 2;++i   ){
            int basis = this->rndInt(1,7);
            if(basis == 4) {
                if(this->rndInt(0,1) == 0) {
-         up->addHarmonic(this->createTime(i,0),basis,MusicScript::getChord(MAJOR_SEVENTH_CHORD));
+         up->addHarmonic(this->createTime(i,0),basis,MAJOR_SEVENTH_CHORD);
         }
         else {
-         up->addHarmonic(this->createTime(i,0),basis,MusicScript::getChord(ADD_SIXTH_TRIAD_CHORD));
+         up->addHarmonic(this->createTime(i,0),basis,ADD_SIXTH_TRIAD_CHORD);
         }
       }
       else {
-       up->addHarmonic(this->createTime(i,0),basis,MusicScript::getChord(MAJOR_SEVENTH_CHORD));
+       up->addHarmonic(this->createTime(i,0),basis,MAJOR_SEVENTH_CHORD);
       }
    }
      if(this->rndInt(0,1) == 0) {
-    up->addHarmonic(this->createTime(up->getBars() - 2,0),5,MusicScript::getChord(MAJOR_SEVENTH_CHORD));
+    up->addHarmonic(this->createTime(up->getBars() - 2,0),5,MAJOR_SEVENTH_CHORD);
    }
    else {
-    up->addHarmonic(this->createTime(up->getBars() - 2,0),7,MusicScript::getChord(MAJOR_SEVENTH_CHORD));
+    up->addHarmonic(this->createTime(up->getBars() - 2,0),7,MAJOR_SEVENTH_CHORD);
    }
      if(this->rndInt(0,1) == 0) {
-    up->addHarmonic(this->createTime(up->getBars() - 1,0),1,MusicScript::getChord(MAJOR_TRIAD_CHORD));
+    up->addHarmonic(this->createTime(up->getBars() - 1,0),1,MAJOR_TRIAD_CHORD);
    }
    else {
-    up->addHarmonic(this->createTime(up->getBars() - 1,0),1,MusicScript::getChord(ADD_SIXTH_TRIAD_CHORD));
+    up->addHarmonic(this->createTime(up->getBars() - 1,0),1,ADD_SIXTH_TRIAD_CHORD);
    }
  }
  else {
      if(this->rndInt(0,1) == 0) {
-    up->addHarmonic(this->createTime(0,0),1,MusicScript::getChord(MAJOR_SEVENTH_CHORD));
+    up->addHarmonic(this->createTime(0,0),1,MAJOR_SEVENTH_CHORD);
    }
    else {
-    up->addHarmonic(this->createTime(0,0),3,MusicScript::getChord(MAJOR_SEVENTH_CHORD));
+    up->addHarmonic(this->createTime(0,0),3,MAJOR_SEVENTH_CHORD);
    }
      for(int i = 0;i < up->getBars() - 1;++i   ){
            if(i != 0) {
                int basis = this->rndInt(1,7);
                if(basis == 4) {
                    if(this->rndInt(0,1) == 0) {
-           up->addHarmonic(this->createTime(i,0),basis,MusicScript::getChord(MAJOR_SEVENTH_CHORD));
+           up->addHarmonic(this->createTime(i,0),basis,MAJOR_SEVENTH_CHORD);
           }
           else {
-           up->addHarmonic(this->createTime(i,0),basis,MusicScript::getChord(ADD_SIXTH_TRIAD_CHORD));
+           up->addHarmonic(this->createTime(i,0),basis,ADD_SIXTH_TRIAD_CHORD);
           }
         }
         else {
-         up->addHarmonic(this->createTime(i,0),basis,MusicScript::getChord(MAJOR_SEVENTH_CHORD));
+         up->addHarmonic(this->createTime(i,0),basis,MAJOR_SEVENTH_CHORD);
         }
       }
            if(i != up->getBars() - 2) {
                int basis = this->rndInt(1,7);
                if(basis == 4) {
                    if(this->rndInt(0,1) == 0) {
-           up->addHarmonic(this->createTime(i,sec_placement),basis,MusicScript::getChord(MAJOR_SEVENTH_CHORD));
+           up->addHarmonic(this->createTime(i,sec_placement),basis,MAJOR_SEVENTH_CHORD);
           }
           else {
-           up->addHarmonic(this->createTime(i,sec_placement),basis,MusicScript::getChord(ADD_SIXTH_TRIAD_CHORD));
+           up->addHarmonic(this->createTime(i,sec_placement),basis,ADD_SIXTH_TRIAD_CHORD);
           }
         }
         else {
-         up->addHarmonic(this->createTime(i,sec_placement),basis,MusicScript::getChord(ADD_SIXTH_TRIAD_CHORD));
+         up->addHarmonic(this->createTime(i,sec_placement),basis,ADD_SIXTH_TRIAD_CHORD);
         }
       }
    }
      if(this->rndInt(0,1) == 0) {
-    up->addHarmonic(this->createTime(up->getBars() - 1,0),1,MusicScript::getChord(MAJOR_TRIAD_CHORD));
+    up->addHarmonic(this->createTime(up->getBars() - 1,0),1,MAJOR_TRIAD_CHORD);
    }
    else {
-    up->addHarmonic(this->createTime(up->getBars() - 1,0),3,MusicScript::getChord(MAJOR_SEVENTH_CHORD));
+    up->addHarmonic(this->createTime(up->getBars() - 1,0),3,MAJOR_SEVENTH_CHORD);
    }
  }
 }

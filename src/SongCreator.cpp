@@ -44,7 +44,8 @@ SongCreator::SongCreator()
     //ornamentors["Simple Ornamentation"] = SongCreator::makeOrnamentor<SimpleOrnamentation>;
 
     arrangers["Basic Test Purpose"] = SongCreator::makeArranger<BasicTestPurposeRender>;
-    arrangers["Piano Simple Arrangement"] = SongCreator::makeArranger<PianoSimpleArrangement>;
+//    arrangers["Piano Simple Arrangement"] = SongCreator::makeArranger<PianoSimpleArrangement>;
+    arrangers["Simple Arrangement"] = SongCreator::makeArranger<SimpleArrangement>;
     arrangers["Piano Advanced Classical"] = SongCreator::makeArranger<PianoAdvancedClassical>;
     arrangers["Piano Advanced Disco"] = SongCreator::makeArranger<PianoAdvancedDisco>;
     arrangers["Piano Advanced Boogie Woogie"] = SongCreator::makeArranger<PianoAdvancedBoogieWoogie>;

@@ -3,6 +3,7 @@
 #include "Common.h"
 #include "ChromaticEvent.h"
 #include "Time.h"
+
 using namespace std;
 class Part {
  int startBar;

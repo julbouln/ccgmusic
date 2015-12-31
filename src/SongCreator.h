@@ -41,6 +41,7 @@
 
 #include "BasicTestPurposeRender.h"
 
+#include "SimpleArrangement.h"
 #include "PianoSimpleArrangement.h"
 #include "PianoAdvancedClassical.h"
 #include "PianoAdvancedDisco.h"

@@ -100,6 +100,12 @@ int MusicScript::rndInt(int lower, int upper)
     int rnd=Utils::getRandomInt(lower, upper);
     return rnd;
 }
+
+int MusicScript::rndMax()
+{
+    return rndInt(0, INT_MAX);
+}
+
 double MusicScript::rndFloat(double lower, double upper)
 {
     return Utils::getRandomBetween(lower, upper);

@@ -10,8 +10,7 @@ class Harmonic {
  Time startTime;
  Time endTime;
  int8_t baseNote;
-// vector<int> chordData;
- vector <int> offsets;
+ int chord;
 
 public:
  ~Harmonic();
@@ -21,10 +20,9 @@ public:
  Time getStartTime();
  Time getEndTime();
  int getBaseNote();
-// vector<int> getChordData();
 
  void setEndTime(Time);
- Harmonic(Time,int,vector<int>);
+ Harmonic(Time,int,int);
  vector<int> getScaleDegrees();
  void translate(int);
 };

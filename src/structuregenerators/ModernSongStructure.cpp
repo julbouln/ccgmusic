@@ -96,13 +96,13 @@ void ModernSongStructure::generateStructure(Song* s) {
   int part = 0;
   if (intro_mode == 1) {
     s->getPart(0)->setUniquePart(0);
-    s->getPart(0)->setArrHint(0);
+    s->getPart(0)->setArrHint(MusicScript::Introduction);
     ++part;
   }
   else {
     if (intro_mode == 2) {
       s->getPart(0)->setUniquePart(1);
-      s->getPart(0)->setArrHint(0);
+      s->getPart(0)->setArrHint(MusicScript::Introduction);
       ++part;
     }
     else {
@@ -119,35 +119,35 @@ void ModernSongStructure::generateStructure(Song* s) {
   }
   for (int i = 0; i < 2; i++) {
     s->getPart(first_verse + (i * 2))->setUniquePart(verse);
-    s->getPart(first_verse + (i * 2))->setArrHint(1);
+    s->getPart(first_verse + (i * 2))->setArrHint(MusicScript::MainVoice);
   }
   if (after_bridge == 0) {
     s->getPart(first_verse + 5)->setUniquePart(verse);
-    s->getPart(first_verse + 5)->setArrHint(1);
+    s->getPart(first_verse + 5)->setArrHint(MusicScript::MainVoice);
   }
   s->getPart(first_verse + 4)->setUniquePart(bridge);
-  s->getPart(first_verse + 4)->setArrHint(3);
+  s->getPart(first_verse + 4)->setArrHint(MusicScript::Chorus);
   s->getPart(first_verse + 4)->setTranspose((trans + 5) % 12);
   s->getPart(first_verse + 4)->setScale(this->getRandomScale());
   if (start_with > 0) {
     s->getPart(part)->setUniquePart(chorus);
-    s->getPart(part)->setArrHint(3);
+    s->getPart(part)->setArrHint(MusicScript::Chorus);
   }
   for (int i = 0; i < 2; i++) {
     s->getPart(first_verse + (i * 2) + 1)->setUniquePart(chorus);
-    s->getPart(first_verse + (i * 2) + 1)->setArrHint(3);
+    s->getPart(first_verse + (i * 2) + 1)->setArrHint(MusicScript::Chorus);
   }
   if (after_bridge == 0) {
     ++first_verse;
   }
   s->getPart(first_verse + 5)->setUniquePart(chorus);
-  s->getPart(first_verse + 5)->setArrHint(3);
+  s->getPart(first_verse + 5)->setArrHint(MusicScript::Chorus);
   s->getPart(first_verse + 6)->setUniquePart(chorus);
-  s->getPart(first_verse + 6)->setArrHint(3);
+  s->getPart(first_verse + 6)->setArrHint(MusicScript::Chorus);
   if (mangle_ending > 0) {
     trans = (trans + this->rndInt(1, 3)) % 12;
     s->getPart(first_verse + 7)->setUniquePart(chorus);
-    s->getPart(first_verse + 7)->setArrHint(3);
+    s->getPart(first_verse + 7)->setArrHint(MusicScript::Chorus);
     s->getPart(first_verse + 7)->setTranspose(trans);
     s->getPart(first_verse + 6)->setTranspose(trans);
   }

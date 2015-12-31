@@ -15,7 +15,7 @@ MidiDriver *midiDriver;
     int port = 0;
     string driver = "file";
     string structureScript = "One Part Simple Structure";
-    string arrangementScript = "Piano Simple Arrangement";
+    string arrangementScript = "Simple Arrangement";
     string outputFile = "output.mid";
 
     SongCreator *songCreator;

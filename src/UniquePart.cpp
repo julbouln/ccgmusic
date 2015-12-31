@@ -14,7 +14,7 @@ UniquePart::~UniquePart()
 }
 
 void UniquePart::clearUniquePhrases() {
-        Utils::deleteVector(uniquePhrases);
+    Utils::deleteVector(uniquePhrases);
 //    Utils::deleteVector(sentences);
 
 }
@@ -24,11 +24,11 @@ UniquePart::UniquePart()
     scale = MusicScript::MAJOR_SCALE;
     metrum = 4;
 
-    structureSeed = 20;
-    rythmSeed = 20;
-    harmonySeed = 20;
-    melodySeed = 20;
-    ornamentationSeed = 20;
+    structureSeed = 1;
+    rythmSeed = 1;
+    harmonySeed = 1;
+    melodySeed = 1;
+    ornamentationSeed = 1;
 
     structureScript = "Fixed Classical";
     rythmScript = "Random Static Rythm";
@@ -77,9 +77,8 @@ void UniquePart::assignEventsToHarmony()
         {
             t2 = harmonics.at(i+1)->getStartTime();
         }
-  //      printf("before %s\n",harmonics.at(h1).getEndTime().toString().c_str());
+
         harmonics.at(h1)->setEndTime(t2);
-//        printf("after %s\n",harmonics.at(h1).getEndTime().toString().c_str());
 
         for(size_t j=0;j<events.size();j++)
         {
@@ -130,8 +129,6 @@ void UniquePart::assignEventsToHarmony()
             }
         }
     }
-
-//    printf("eventHarmony map size %d\n",eventHarmony.size());
 }
 
 
@@ -217,12 +214,9 @@ int UniquePart::getEventPitch(int index)
     return events.at(index).getPitch();
 }
 
-
 // input scale degree
 int UniquePart::setEventPitch(int index, int pitch)
 {
-//    printf("UniquePart::setEventPitch index:%d pitch:%d\n",index,pitch);
-
     events.at(index).setPitch(pitch);
     return pitch;
 }
@@ -310,20 +304,13 @@ void UniquePart::setScriptOrnamentationSeed(int seed)
 // get event scale degree
 int UniquePart::getEventBasis(int index)
 {
-//    Event *event = events.at(index);
-
     Harmonic *harmonic = harmonics.at(eventHarmony.at(index));
     return harmonic->getBaseNote();
 }
 
 void UniquePart::addHarmonic(Time tm, int baseNote, int chord)
 {
-        int *intervals=MusicScript::scales[scale];
-
-//    printf("ADD HARMONIC TO NOTE %d\n",baseNote);
-    vector<int> chordData=MusicScript::getChord(chord);
-    Harmonic *h=new Harmonic(tm, baseNote, chordData);
-//    printf("UniquePart::addHarmonic %s %d(%s)\n",tm.toString().c_str(),baseNote, Utils::midiToNote(intervals[baseNote-1]).c_str());
+    Harmonic *h=new Harmonic(tm, baseNote, chord);
     harmonics.push_back(h);
 }
 
@@ -331,17 +318,11 @@ void UniquePart::addHarmonic(Time tm, int baseNote, int chord)
 // input scale degree / output scale degree
 int UniquePart::alignPitchToHarm(int eventIndex, int scaleNote)
 {
-//    int *intervals=MusicScript::progressionIntervals;
     int *intervals=MusicScript::scales[scale];
-    //MusicScript::scales[MusicScript::MAJOR_SCALE];
-//    scaleNote=Utils::tone2half(scaleNote-1)+1;
-//    Event *event = events.at(eventIndex);
     Harmonic *harmonic = harmonics.at(eventHarmony.at(eventIndex));
 
     vector<int> scaleDegrees = harmonic->getScaleDegrees();
-  //  for(int i=0;i<scaleDegrees.size();i++) {
- //       printf("HARMONIC : %d %d\n",i,scaleDegrees.at(i));
- //   }
+
     int scaleDegree = Utils::positiveMod(scaleNote-1, 7);
 
     int closestNote = harmonic->getBaseNote();
@@ -359,7 +340,7 @@ int UniquePart::alignPitchToHarm(int eventIndex, int scaleNote)
         for (int i = scaleNote - 7; i < scaleNote + 7; i++ )
         {
             scaleDegree = Utils::positiveMod(i-1, 7);
-//printf("UniquePart::alignPitchToHarm scale degree %d %d\n",i-1,scaleDegree);
+            //printf("UniquePart::alignPitchToHarm scale degree %d %d\n",i-1,scaleDegree);
 
              if (Utils::contains(scaleDegrees, scaleDegree))
 //            if (Utils::contains(scaleDegrees, intervals[scaleDegree]))
@@ -377,12 +358,6 @@ int UniquePart::alignPitchToHarm(int eventIndex, int scaleNote)
         }
     }
     
-//    printf("UniquePart::alignPitchToHarm scale result %d %d : %d %d %d %d\n",eventIndex,scaleNote-1,scaleDegree,closestNote-1,closestNote%7,(closestNote-1)%7+1);
-
-//    return (closestNote-1)%7+1;
-//    return (closestNote-1)%12+1;
-//    printf("UniquePart::alignPitchToHarm scale degree %s %d %d\n",harmonic->getStartTime().toString().c_str(),scaleNote,closestNote);
-
     return closestNote;
 }
 void UniquePart::addEvent(Event event)

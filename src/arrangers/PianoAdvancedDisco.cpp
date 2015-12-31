@@ -6,11 +6,11 @@ string PianoAdvancedDisco::getScriptName()
 void PianoAdvancedDisco::arrange(Song *s)
 {
     int bars = s->getBars();
-    s->addTrack("Melody", 6, 127, 64,false);
-    s->addTrack("Alt Voice", 5, 127, 64,false);
-    s->addTrack("Accomp", 5, 127, 64,false);
-    s->addTrack("Chorus Intro", 4, 127, 64,false);
-    s->addTrack("Accomp boost", 6, 127, 64,false);
+    s->addTrack("Melody", GM_ELECTRIC_PIANO_2, 127, 64,false);
+    s->addTrack("Alt Voice", GM_ELECTRIC_PIANO_1, 127, 64,false);
+    s->addTrack("Accomp", GM_ELECTRIC_PIANO_1, 127, 64,false);
+    s->addTrack("Chorus Intro", GM_HONKYTONK_PIANO, 127, 64,false);
+    s->addTrack("Accomp boost", GM_ELECTRIC_PIANO_2, 127, 64,false);
     int intro_seed = this->rndInt(0, INT_MAX);
     for (int i = 0; i < s->getParts(); ++i )
     {

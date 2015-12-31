@@ -16,6 +16,13 @@ class MusicScript : public Seedable {
 
 public:
 
+static enum ArrangementHint {
+	Introduction=0,
+	MainVoice, // 1
+	AltVoice, // 2
+	Chorus // 3
+} ArrangementHints;
+
 static enum ChordType {
 	MAJOR_TRIAD_CHORD=0,
 	ADD_SIXTH_TRIAD_CHORD,
@@ -88,6 +95,7 @@ static enum ScaleType {
  int getSeed();
  void resetSeed();
  int rndInt(int,int);
+ int rndMax();
  double rndFloat(double,double);
  Time createTime(int,double);
  int getRandomScale();

@@ -358,6 +358,9 @@ int UniquePart::alignPitchToHarm(int eventIndex, int scaleNote)
         }
     }
     
+//    printf("align %d\n",closestNote);
+
+
     return closestNote;
 }
 void UniquePart::addEvent(Event event)

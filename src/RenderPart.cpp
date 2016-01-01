@@ -215,8 +215,8 @@ void RenderPart::addNote(Time start, Time end, int pitch, int volume)
     {
 //        printf("RenderPart::addNote %s/%s %d %d/%s\n",start.toString().c_str(),end.toString().c_str(),pitch,pitch/12,Utils::midiToNote(pitch).c_str());
 
-        if(pitch < 21)
-            printf("ERROR invalid note pitch %d\n",pitch);
+//        if(pitch < 21)
+  //          printf("ERROR invalid note pitch %d\n",pitch);
 
         RenderNote *note = new RenderNote(start, end, pitch, (volume * renderEvent->getVolMult()), trackIndex, false);
         song->getNotes()->push_back(note);

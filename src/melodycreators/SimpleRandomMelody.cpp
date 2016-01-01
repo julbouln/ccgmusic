@@ -18,6 +18,14 @@ void SimpleRandomMelody::createMelody(UniquePart *up)
             int p= this->rndInt(-2,2);
             note += p;
         }
+        if (note < up->getEventBasis(0) - 8 && this->rndInt(0, 2) == 0)
+        {
+            note = up->getEventBasis(0) + this->rndInt(-2, 4);
+        }
+        if (note > up->getEventBasis(0) + 8 && this->rndInt(0, 2) == 0)
+        {
+            note = up->getEventBasis(0) - this->rndInt(-2, 4);
+        }
 
     }
     

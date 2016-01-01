@@ -309,8 +309,10 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
     for (int i = 0; i < song->getUniqueParts(); i++)
     {
         UniquePart *up = song->getUniquePart(i);
-        string scriptMelody = up->getScriptMelody();
-//       string scriptMelody = "Simple Random Melody";
+//        string scriptMelody = up->getScriptMelody();
+       string scriptMelody = "Simple Random Melody";
+//       string scriptMelody = "Random Phrased Melody";
+//       string scriptMelody = "Wide Random Melody";
 //       string scriptMelody = "Markov Melody";
 
         int melodySeed = up->getScriptMelodySeed();
@@ -588,6 +590,10 @@ void SongCreator::renderNotesToMidi(MidiDriver *midiDriver,int metrum) {
         long offTime = (long)(192 * (end.mBar + end.mPos / metrum)) + offset;
 
         int note = Utils::clampIntToInt((*n)->getPitch(), 0, 127);
+        if(note < 21 || note > 108) {
+            printf("ERROR invalid midi note %d\n",note);
+        }
+//        printf("add note %d -> %d\n",(*n)->getPitch(),note);
         int velocity = Utils::clampIntToInt((*n)->getVolume(), 0, 127);
 //        printf("ADD NOTE %d->%d\n",(*n)->getPitch(),note);
 

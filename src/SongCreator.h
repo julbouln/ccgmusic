@@ -197,6 +197,8 @@ enum structuresEnum {
 
     ~SongCreator();
     SongCreator();
+    int trackToChannel(bool,int);
+
     void createSong(int, int, string, string,MidiDriver *);
     void initMidi(MidiDriver *);
     void renderNotesToMidi(MidiDriver *,int);

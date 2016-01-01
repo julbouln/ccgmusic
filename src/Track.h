@@ -23,6 +23,7 @@ public:
  bool isPercussion();
  void setAsPercussion();
 
+
  vector<RenderEvent*> *getRenderEvents();
 };
 #endif // TRACK_H

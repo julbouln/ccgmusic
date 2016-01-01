@@ -309,8 +309,8 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
     for (int i = 0; i < song->getUniqueParts(); i++)
     {
         UniquePart *up = song->getUniquePart(i);
-//        string scriptMelody = up->getScriptMelody();
-       string scriptMelody = "Simple Random Melody";
+        string scriptMelody = up->getScriptMelody();
+//       string scriptMelody = "Simple Random Melody";
 //       string scriptMelody = "Random Phrased Melody";
 //       string scriptMelody = "Wide Random Melody";
 //       string scriptMelody = "Markov Melody";
@@ -481,6 +481,17 @@ void SongCreator::createSong(int seed, int tempo, string structureScript, string
 
 }
 
+int SongCreator::trackToChannel(bool is_percussion, int i) {
+    // reserved channel 1
+        int channel = i+1;
+    if (is_percussion) {
+            channel = 9;
+        } else {
+            if (i > 7)
+                channel = i + 3 + 1;
+        }
+        return channel;
+}
 
 
 void SongCreator::initMidi(MidiDriver *midiDriver)
@@ -495,14 +506,7 @@ void SongCreator::initMidi(MidiDriver *midiDriver)
         int pan = track->getPan();
         int vol = track->getVol();
 
-        int channel = i;
-
-        if (track->isPercussion()) {
-            channel = 9;
-        } else {
-            if (i > 7)
-                channel = i + 3;
-        }
+        int channel = trackToChannel(track->isPercussion(),i);
 
         midiDriver->setTrackName(i, track->getName());
         midiDriver->sendControlChange(0, i, channel, 0xA, pan);
@@ -583,7 +587,8 @@ void SongCreator::renderNotesToMidi(MidiDriver *midiDriver,int metrum) {
             }
 
         int trackIndex = (*n)->getTrackIndex();
-        int channel = trackIndex;
+                int channel = trackToChannel((*n)->isPercussion(),trackIndex);
+
         Time start = (*n)->getStart();
         Time end = (*n)->getEnd();
         long onTime = (long)(192 * (start.mBar + start.mPos / metrum)) + offset;
@@ -597,12 +602,6 @@ void SongCreator::renderNotesToMidi(MidiDriver *midiDriver,int metrum) {
         int velocity = Utils::clampIntToInt((*n)->getVolume(), 0, 127);
 //        printf("ADD NOTE %d->%d\n",(*n)->getPitch(),note);
 
-        if ((*n)->isPercussion()) {
-            channel = 9;
-        } else {
-            if (trackIndex > 7)
-                channel = trackIndex + 3;
-        }
 
         //                            printf("play Note %ld:%ld %d pitch:%d velocity:%d\n",onTime,offTime,trackIndex,note,velocity);
 
